@@ -4,12 +4,19 @@
  * and open the template in the editor.
  */
 package beans;
-
+import java.util.*; 
 /**
  *
  * @author jzhang387
  */
 public class FlightBean {
     private String filgtNo;
-    private 
+    private String from;
+    private String to;
+    private Date deptTime;
+    private Date arrivTime;
+    private int remainSeat;
+    private double discount;
+    private int price;
+    private String airType;
 }
