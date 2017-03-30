@@ -10,5 +10,6 @@ package beans;
  * @author jzhang387
  */
 public class FlightBean {
-    
+    private String filgtNo;
+    private 
 }
