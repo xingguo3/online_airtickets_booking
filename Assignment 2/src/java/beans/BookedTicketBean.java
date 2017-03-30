@@ -10,5 +10,9 @@ package beans;
  * @author jzhang387
  */
 public class BookedTicketBean {
-    
+    private String userID;
+    private String bookingID;
+    private String flightNo;
+    private String status;
+    private Date date;
 }
