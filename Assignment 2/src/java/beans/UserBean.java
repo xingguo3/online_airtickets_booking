@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 package beans;
-
+import java.util;
 /**
  *
  * @author jzhang387
  */
 public class UserBean {
+    private String id;
+    private String lastName;
+    private String firstName;
+    private String email;
     
 }
