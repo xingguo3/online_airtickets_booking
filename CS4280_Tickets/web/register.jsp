@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <a href="" >Sign up</a>
         <a href="" >Login</a>
+        <a href="http://localhost:8080/CS4280_Tickets/RegistHandler" >Sign up</a>
     </body>
 </html>

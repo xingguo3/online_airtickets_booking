@@ -41,23 +41,24 @@ public class addNewUsers extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
     */
-    private static int CustomerID=100;
+    private static int CustomerID=110;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = (String)request.getAttribute("username");
+        String username = (String)request.getParameter("username");
         //String gender = (String)request.getAttribute("gender");
-        String password = (String)request.getAttribute("password");
-        String email = (String)request.getAttribute("email  ");
-        String firstname = (String)request.getAttribute("firstname");
-        String lastname = (String)request.getAttribute("lastname");
+        String password = (String)request.getParameter("password");
+        String email = (String)request.getParameter("email");
+        String firstname = (String)request.getParameter("firstname");
+        String lastname = (String)request.getParameter("lastname");
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String strQL = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ','+username+','+ 'M'+','+password+','+email+','+firstname+','+lastname+','+  "'0', '0', 0, '0', '0')";
-        String strQl = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", 'chingming', 'ching','M', 'notok', 'ching', 'ming', '0', '0', 0, '0', '0')";
+        
+        String strQL = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", '"+username+"', '"+password+ "', 'M', '"+email+"', '"+firstname+"', '"+lastname+"', "+  "'0', '0', 0, '0', '0')";
+        //String strQl = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", 'chingming', 'ching','M', 'notok', 'ching', 'ming', '0', '0', 0, '0', '0')";
         Connection con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
         Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = stmt.executeQuery(strQl);
+        ResultSet rs = stmt.executeQuery(strQL);
         if (rs != null) {
             rs.close();
         }
@@ -67,7 +68,6 @@ public class addNewUsers extends HttpServlet {
         if (con != null) {
             con.close();
         }
-        
     }
     
     public void setCustomerID(){

@@ -8,6 +8,18 @@
         <servlet-name>addNewUsers</servlet-name>
         <servlet-class>Lookup.addNewUsers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistHandler</servlet-name>
+        <servlet-class>handler.RegistHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchFlight</servlet-name>
+        <servlet-class>Lookup.searchFlight</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFlightHandler</servlet-name>
+        <servlet-class>handler.SearchFlightHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -15,6 +27,18 @@
     <servlet-mapping>
         <servlet-name>addNewUsers</servlet-name>
         <url-pattern>/addNewUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistHandler</servlet-name>
+        <url-pattern>/RegistHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchFlight</servlet-name>
+        <url-pattern>/searchFlight</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFlightHandler</servlet-name>
+        <url-pattern>/SearchFlightHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
