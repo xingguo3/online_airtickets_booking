@@ -12,8 +12,12 @@
 */
 package handler;
 
+import Lookup.Registration;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegistHandler extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException, SQLException {
        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -52,44 +56,22 @@ public class RegistHandler extends HttpServlet {
                 pageNum = "1";
             }
             else if (pageNum != null && pageNum.equals("2")) {
-                
-//                 response.addCookie( new Cookie("username",request.getParameter("username")));  
-//                 //response.addCookie( new Cookie("gender",request.getParameter("gender"))); 
-//                 response.addCookie( new Cookie("password",request.getParameter("password")));
-//                 response.addCookie( new Cookie("firstname",request.getParameter("firstname")));
-//                 response.addCookie( new Cookie("lastname",request.getParameter("lastname")));
-//                 response.addCookie( new Cookie("email",request.getParameter("email")));
-//                 
+//                
+    
                 String username="",email="",password="",firstname="", lastname="",gender="";
-//                Cookie[] cookies = request.getCookies();
-//                for (int i = 0;  i <cookies.length; i++) {
-//                    if (cookies[i].getName().equals("username")) 
-//                        username=cookies[i].getValue();
-//                    else if (cookies[i].getName().equals("email")) 
-//                        email=cookies[i].getValue();
-//                    else if (cookies[i].getName().equals("password")) 
-//                        password=cookies[i].getValue();
-//                    else if (cookies[i].getName().equals("firstname")) 
-//                        firstname=cookies[i].getValue();
-//                    else if (cookies[i].getName().equals("lastname")) 
-//                        lastname=cookies[i].getValue();
-////                    if (cookies[i].getName().equals("gender")) 
-////                        gender=cookies[i].getValue();
-//                }
       
                 username = request.getParameter("username");
                 email = request.getParameter("email");
+                gender = request.getParameter("gender");
                 firstname = request.getParameter("firstname");
                 lastname = request.getParameter("lastname");
                 password = request.getParameter("password");
-                request.setAttribute("username", username);
-                request.setAttribute("password", password);
-                request.setAttribute("email", email);
-                request.setAttribute("firstname", firstname);
-                request.setAttribute("lastname", lastname);
+               
+                Registration reg;
+                reg = new Registration(username, "M", password, email, firstname, lastname);
+                reg.insert();
 //                RequestDispatcher rd = request.getRequestDispatcher("../Lookup.addNewUsers.java");
 //                rd.forward(request, response);
-                //response.sendRedirect("http://localhost:8080/CS4280_Tickets/addNewUsers");
                 
                 // Page 2 Layout - Summary
                 // display the form information by obtaining the values from cookies
@@ -97,11 +79,12 @@ public class RegistHandler extends HttpServlet {
                 html.append("<p><b>Thank you for your registration.</b></p><br />");
                 html.append("<p>Summary:</p>");
                 html.append("<p>Name</br><LI>"+ lastname + ' ' + firstname+" </p>");
-                //html.append("<p>Gender</br><LI>"+gender+" </p>");
+                html.append("<p>Gender</br><LI>"+gender+" </p>");
                 html.append("<p>User Name</br><LI>"+ username+" </p>");
                 html.append("<p>Password</br><LI>"+password+" </p>");
                 html.append("<p>Email</br><LI>"+email+" </p>");
                 html.append("<p>Click here to redirect to login page</p>");
+                
                 
             }
             else {
@@ -109,36 +92,39 @@ public class RegistHandler extends HttpServlet {
                 html.append("<legend>Please fill in the form below</legend>");
                 html.append("<input type='hidden' name='page' value='2' />");
                 html.append("<p>user name *<br/><input type='text' name='username' style='width:100%;' value='' /></p>");
-//                html.append("<p>gender *<br/>\n" +
-//                            "  <input type=\"radio\" name=\"gender\" value=\"male\" checked> Male<br>\n" +
-//                            "  <input type=\"radio\" name=\"gender\" value=\"female\"> Female<br>\n" +
-//                            "  <input type=\"radio\" name=\"gender\" value=\"other\"> Other\n" +
-//                            "</p>");
+                html.append("<p>gender *<br/>\n" +
+                            "  <input type=\"radio\" name=\"gender\" value=\"male\" checked> Male<br>\n" +
+                            "  <input type=\"radio\" name=\"gender\" value=\"female\"> Female<br>\n" +
+                            "  <input type=\"radio\" name=\"gender\" value=\"other\"> Other\n" +
+                            "</p>");
                 html.append("<p>Password *<br/><input type='text' name='password' style='width:100%;' value='' /></p>");
                 html.append("<p>First Name *<br/><input type='text' name='firstname' style='width:100%;' value='' /></p>");
                 html.append("<p>Last Name *<br/><input type='text' name='lastname' style='width:100%;' value='' /></p>");
                 html.append("<p>Email *<br/><input type='text' name='email' style='width:100%;' value='' /></p>");
-                html.append("<p><input type='submit' value='Continue' onclick='javascript: return SubmitForm()' /></p>");
+                html.append("<p><input type='submit' value='Continue' /></p>");
+                
             }
             //onclick='javascript: return SubmitForm()'
             html.append("</fieldset>");
             html.append("</form>");
-            html.append("<script type='text/javascript'>");
-            html.append("function SubmitForm(){");
-            html.append("if(document.forms['redirect'].onsubmit()){");
-            html.append("document.forms['redirect'].action='"+ request.getRequestURI() +"';");
-            html.append("document.forms['redirect'].submit();");
-            html.append("document.forms['redirect'].action='http://localhost:8080/CS4280_Tickets/addNewUsers';");
-            html.append("document.forms['redirect'].submit();");
-            html.append("} return true; }");
-            html.append("</script>");
-            html.append("</body></html>");
+//            html.append("<script type='text/javascript'>");
+//            html.append("function SubmitForm(){");
+//            html.append("if(document.forms['redirect'].onsubmit()){");
+//            html.append("document.forms['redirect'].action='"+ request.getRequestURI() +"';");
+//            html.append("document.forms['redirect'].submit();");
+//            html.append("document.forms['redirect'].action='http://localhost:8080/CS4280_Tickets/addNewUsers';");
+//            html.append("document.forms['redirect'].submit();");
+//            html.append("} return true; }");
+//            html.append("</script>");
+//            html.append("</body></html>");
                         
             out.print (html.toString());
         }
         catch (NullPointerException e) {
             // return a Bad Request (400) Error
             response.sendError(response.SC_BAD_REQUEST, e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
         out.close();
@@ -151,13 +137,21 @@ public class RegistHandler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
         
     @Override
