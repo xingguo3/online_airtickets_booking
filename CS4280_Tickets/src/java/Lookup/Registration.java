@@ -14,7 +14,7 @@ import java.sql.*;
 public class Registration {
     private static int CustomerID=666;
     
-   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+   static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  
    static final String DB_URL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db";
    
    static final String USER = "aiad092";
@@ -27,13 +27,14 @@ public class Registration {
     private String firstname;
     private String lastname;
    
-   public Registration(String s1, String s2, String s3, String s4, String s5, String s6) throws ClassNotFoundException, SQLException {
+   public Registration(String s1, String s2, String s3, String s4, String s5, String s6) {
         this.username=s1;
         this.gender=s2;
         this.password=s3;
         this.email=s4;
         this.firstname=s5;
         this.lastname=s6;
+   
         
    }
 
@@ -70,25 +71,49 @@ public class Registration {
         return this.lastname;
     }
    
-   public void insert() throws SQLException{
+    public boolean isExist() throws SQLException, ClassNotFoundException{
+        Connection con = null;
+        Statement stmt = null;
+        
+        try{
+
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+           con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+
+           stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           String strQl = "SELECT username FROM dbo.userList WHERE username = '"+ this.getUsername() +"'";
+           stmt.executeQuery(strQl);
+           
+  
+        }finally{
+            if (stmt!=null) {
+                con.close();
+            } 
+           try{
+              if(con!=null)
+                 con.close();
+           }catch(SQLException se){
+              se.printStackTrace();
+           }
+        }
+
+        return true;
+    }
+    
+   public void insert() throws SQLException, ClassNotFoundException{
+       //System.out.printf("successful");
         Connection con = null;
         Statement stmt = null;
         try{
 
-           Class.forName("com.mysql.jdbc.Driver");
-           con = DriverManager.getConnection(DB_URL, USER, PASS);
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+           con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
 
-           //stmt = con.createStatement();
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           //String strQL = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+"', '"+this.getPassword()+ "', '"+this.getGender()+"', '"+this.getFirstname()+"', '"+this.getLastname()+"', "+  "'0', '0', 0, '0', '0'，'"+"this.getEmail()"+"')";
-           String strQl = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", 'chingming', 'ching','M', 'ching', 'ming', '0', '0', 0, '0', '0','sfda')";
-           //stmt.executeQuery(strQL);
+           //tring strQL = "INSERT INTO dbo.userList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+"', '"+this.getPassword()+ "', "+this.getGender()+", '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0'，'" +this.getEmail()+"')";
+           String strQl = "INSERT INTO dbo.userList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+ "', '"+this.getPassword()+"','"+this.getGender()+"', '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0','"+this.getEmail()+"')";
            stmt.executeQuery(strQl);
-
-        }catch(SQLException se){
-           se.printStackTrace();
-        }catch(Exception e){
-           e.printStackTrace();
+           
         }finally{
             if (stmt!=null) {
                 con.close();

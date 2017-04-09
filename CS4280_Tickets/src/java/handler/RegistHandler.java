@@ -68,23 +68,22 @@ public class RegistHandler extends HttpServlet {
                 password = request.getParameter("password");
                
                 Registration reg;
-                reg = new Registration(username, "M", password, email, firstname, lastname);
-                reg.insert();
-//                RequestDispatcher rd = request.getRequestDispatcher("../Lookup.addNewUsers.java");
-//                rd.forward(request, response);
-                
-                // Page 2 Layout - Summary
-                // display the form information by obtaining the values from cookies
-                html.append("<legend>Successful</legend>");
-                html.append("<p><b>Thank you for your registration.</b></p><br />");
-                html.append("<p>Summary:</p>");
-                html.append("<p>Name</br><LI>"+ lastname + ' ' + firstname+" </p>");
-                html.append("<p>Gender</br><LI>"+gender+" </p>");
-                html.append("<p>User Name</br><LI>"+ username+" </p>");
-                html.append("<p>Password</br><LI>"+password+" </p>");
-                html.append("<p>Email</br><LI>"+email+" </p>");
-                html.append("<p>Click here to redirect to login page</p>");
-                
+                reg = new Registration(username, gender, password, email, firstname, lastname);
+                if(reg.isExist()){
+                    html.append("<p><b>Username already exists.</b></p><br />");
+                }
+                else{
+                    reg.insert();
+                    html.append("<legend>Successful</legend>");
+                    html.append("<p><b>Thank you for your registration.</b></p><br />");
+                    html.append("<p>Summary:</p>");
+                    html.append("<p>Name</br><LI>"+ lastname + ' ' + firstname+" </p>");
+                    html.append("<p>Gender</br><LI>"+gender+" </p>");
+                    html.append("<p>User Name</br><LI>"+ username+" </p>");
+                    html.append("<p>Password</br><LI>"+password+" </p>");
+                    html.append("<p>Email</br><LI>"+email+" </p>");
+                    html.append("<p>Click here to redirect to login page</p>");
+                }
                 
             }
             else {
@@ -123,8 +122,6 @@ public class RegistHandler extends HttpServlet {
         catch (NullPointerException e) {
             // return a Bad Request (400) Error
             response.sendError(response.SC_BAD_REQUEST, e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
         out.close();

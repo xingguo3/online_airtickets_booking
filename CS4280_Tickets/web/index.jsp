@@ -75,7 +75,7 @@
         </form>
 </section>
         <p><a href="./login.jsp">login</a><p/>
-        <p>No Account? <a href="./register.jsp">Register</a></p>
+        <p>No Account? <a href="./RegistHandler">Register</a></p>
     </body>
     
 </html>
