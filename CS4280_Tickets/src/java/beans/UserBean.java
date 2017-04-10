@@ -18,6 +18,10 @@ public class UserBean {
     private String firstName;
     private int mile;
     private int bonus;
+    private int online;
+    private int membership;
+    
+            
     
     
     public void setId(String _id){
@@ -66,5 +70,17 @@ public class UserBean {
     }
     public int getBonus(){
         return bonus;
+    }
+    public void setMembership(int _memship){
+        membership=_memship;
+    }
+    public int getMembership(){
+        return membership;
+    }
+    public void setOnline(int _online){
+        online=_online;
+    }
+    public int getOnline(){
+        return online;
     }
 }
