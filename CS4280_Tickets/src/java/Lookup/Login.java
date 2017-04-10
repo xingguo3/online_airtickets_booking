@@ -37,15 +37,21 @@ public class Login {
         Connection con = null;
         Statement stmt = null;
         String pswd = null;
+        
         try{
-
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String strQl = "SELECT password FROM dbo.userList WHERE username = '"+ this.getUsername() +"'";
+           String strQl = "SELECT Password FROM dbo.userList " + "WHERE Username = '"+this.getPassword()+"'";
            ResultSet rs = stmt.executeQuery(strQl);
-           pswd = rs.getString("password"); 
+           while(rs.next()){
+            String pswds = rs.getString("Password"); 
+             if(pswds!=null&&pswds.equals(this.getPassword()))
+                return true;
+            pswd = pswds;
+           }
+           
+           rs.close();
         }finally{
             if (stmt!=null) {
                 con.close();
@@ -57,8 +63,7 @@ public class Login {
               se.printStackTrace();
            }
         }
-        if(pswd.equals(this.getPassword()))
-            return true;
+       
         return false;
     }
 
