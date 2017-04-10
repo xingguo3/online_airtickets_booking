@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <servlet>
+        <servlet-name>SignUp</servlet-name>
+        <servlet-class>handler.SignUp</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addNewUsers</servlet-name>
+        <servlet-class>Lookup.addNewUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistHandler</servlet-name>
+        <servlet-class>handler.RegistHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchFlight</servlet-name>
+        <servlet-class>Lookup.searchFlight</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFlightHandler</servlet-name>
+        <servlet-class>handler.SearchFlightHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginHandler</servlet-name>
+        <servlet-class>handler.LoginHandler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUp</servlet-name>
+        <url-pattern>/index.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addNewUsers</servlet-name>
+        <url-pattern>/addNewUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistHandler</servlet-name>
+        <url-pattern>/RegistHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchFlight</servlet-name>
+        <url-pattern>/searchFlight</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFlightHandler</servlet-name>
+        <url-pattern>/SearchFlightHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginHandler</servlet-name>
+        <url-pattern>/LoginHandler</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
