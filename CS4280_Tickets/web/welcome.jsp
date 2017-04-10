@@ -12,9 +12,9 @@
         <title>Welcome to CityExpress</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="beans.UserBean" scope="application" />
-        <h1>Hello, <%= user.getFirstName()%> <%= user.getLastName()%></h1>
-        <jsp:getProperty name="user" property="firstName" />
-        <p><jsp:getProperty name="user" property="firstName" /></p>
+        <jsp:useBean id="userbean" class="beans.UserBean" scope="session" />
+        <h1>Hello, <%= userbean.getFirstName()%> <%= userbean.getLastName()%></h1>
+        <jsp:getProperty name="userbean" property="firstName" />
+       
     </body>
 </html>

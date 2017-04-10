@@ -35,7 +35,7 @@ public class LoginHandler extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
+       // try {
             response.setContentType("text/html;charset=UTF-8");
             String username="", password="";
             username = request.getParameter("username");
@@ -48,10 +48,11 @@ public class LoginHandler extends HttpServlet {
 //                ub.setEmail(lg.getEmail());
                 ub.setFirstName("first");
                 ub.setLastName("last");
-                ub.setId("user");
-//                HttpSession httpSession = request.getSession();
-//                httpSession.setAttribute("online", ub); 
-                response.sendRedirect("./welcome.jsp");
+//                ub.setId("userId");
+                
+                HttpSession httpSession = request.getSession();
+                httpSession.setAttribute("userbean", ub);
+                request.getRequestDispatcher("./welcome.jsp").forward(request, response);
                 
             }else{
                 try (PrintWriter out = response.getWriter()) {
