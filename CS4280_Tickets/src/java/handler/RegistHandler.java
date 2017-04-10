@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegistHandler extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException, SQLException {
+    throws ServletException, IOException, SQLException, ClassNotFoundException {
        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -106,16 +106,6 @@ public class RegistHandler extends HttpServlet {
             //onclick='javascript: return SubmitForm()'
             html.append("</fieldset>");
             html.append("</form>");
-//            html.append("<script type='text/javascript'>");
-//            html.append("function SubmitForm(){");
-//            html.append("if(document.forms['redirect'].onsubmit()){");
-//            html.append("document.forms['redirect'].action='"+ request.getRequestURI() +"';");
-//            html.append("document.forms['redirect'].submit();");
-//            html.append("document.forms['redirect'].action='http://localhost:8080/CS4280_Tickets/addNewUsers';");
-//            html.append("document.forms['redirect'].submit();");
-//            html.append("} return true; }");
-//            html.append("</script>");
-//            html.append("</body></html>");
                         
             out.print (html.toString());
         }
@@ -138,6 +128,8 @@ public class RegistHandler extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
         
@@ -147,6 +139,8 @@ public class RegistHandler extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegistHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

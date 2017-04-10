@@ -12,10 +12,10 @@
         <title>Login Page</title>
     </head>
     <body>
-        <form method='POST' action='' style='width:600px;'>
-            <p>username *<br/><input type='text' name='username' style='width:100%;' value='' /></p>
-            <p>password *<br/><input type='text' name='password' style='width:100%;' value='' /></p>
+        <FORM method='POST' action="./LoginHandler" style='width:600px;'>
+            <p>username *<br/><input type='text' name='username' style='width:40%;' value='' /></p>
+            <p>password *<br/><input type='text' name='password' style='width:40%;' value='' /></p>
             <p><input type='submit' value='Login' /></p>
-        </form>
+        </FORM>
     </body>
 </html>
