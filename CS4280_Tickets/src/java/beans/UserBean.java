@@ -14,7 +14,6 @@ public class UserBean {
     private int gender;
     private String userName;
     private String email;
-    private String password;
     private String lastName;
     private String firstName;
     private int mile;
@@ -55,11 +54,6 @@ public class UserBean {
     }
     public String getEmail(){
         return email;
-    } public void setPassword(String _pswd){
-        password=_pswd;
-    }
-    public String getPassword(){
-        return password;
     }
     public void setMile(int _mile){
         mile=_mile;
