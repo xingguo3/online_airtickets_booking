@@ -34,18 +34,31 @@ public class LoginHandler extends HttpServlet {
             Login lg = new Login(username, password);
             
             if(lg.isValid()&&username!=null&&password!=null){
+                if(lg.getRole()==4){ //manager
+                    UserBean ub = new UserBean();
+                    ub.setBonus(lg.getBonus());
+                    ub.setEmail(lg.getEmail());
+                    ub.setFirstName(lg.getUsername());
+                    ub.setLastName(lg.getPassword());
+                    ub.setId("userId");
+
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("userbean", ub);
+                    request.getRequestDispatcher("./managerIndex.jsp").forward(request, response);
+                }
+                else{ // customer
                 //create a bean and then store the bean into a session
-                UserBean ub = new UserBean();
-//                ub.setBonus(lg.getBonus());
-//                ub.setEmail(lg.getEmail());
-                ub.setFirstName(lg.getUsername());
-                ub.setLastName(lg.getPassword());
-//                ub.setId("userId");
-                
-                HttpSession httpSession = request.getSession();
-                httpSession.setAttribute("userbean", ub);
-                request.getRequestDispatcher("./welcome.jsp").forward(request, response);
-                
+                    UserBean ub = new UserBean();
+                    ub.setBonus(lg.getBonus());
+                    ub.setEmail(lg.getEmail());
+                    ub.setFirstName(lg.getUsername());
+                    ub.setLastName(lg.getPassword());
+                    ub.setId("userId");
+
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("userbean", ub);
+                    request.getRequestDispatcher("./welcome.jsp").forward(request, response);
+                }
             }else{
 //                if(){}
                 try (PrintWriter out = response.getWriter()) {

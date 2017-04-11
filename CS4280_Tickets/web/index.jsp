@@ -34,11 +34,11 @@
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
             Departure Date: 
-            <INPUT TYPE="TEXT" class="date" NAME="startDate" SIZE=8>
+            <INPUT TYPE="TEXT" class="date" NAME="startDate" style='width:10%'>
             <input type=button value="Select Date" onclick="displayDatePicker('startDate', this);"><BR>
             <div id="return">
                 Return Date : 
-            <INPUT TYPE="TEXT" class="date" NAME="returnDate" SIZE=8>
+            <INPUT TYPE="TEXT" class="date" NAME="returnDate" style='width:10%'>
             <input type=button name="rdCalendar" value="Select Date" onclick="displayDatePicker('returnDate', this);"><BR>
             </div>
             <P>
