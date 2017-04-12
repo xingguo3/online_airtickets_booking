@@ -49,8 +49,8 @@ public class LoginHandler extends HttpServlet {
                 else{ // customer
                 //create a bean and then store the bean into a session
                     UserBean ub = new UserBean();
-                    ub.setBonus(lg.getBonus());
-                    ub.setEmail(lg.getEmail());
+                    //ub.setBonus(lg.getBonus());
+                    //ub.setEmail(lg.getEmail());
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
                     ub.setId("userId");

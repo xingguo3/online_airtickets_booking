@@ -42,7 +42,7 @@ public class Login {
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String strQl = "SELECT Password FROM dbo.userList " + "WHERE Username = '"+this.getPassword()+"'";
+           String strQl = "SELECT Password FROM dbo.userList " + "WHERE UserName = '"+this.getUsername()+"'";
            ResultSet rs = stmt.executeQuery(strQl);
            while(rs.next()){
             String pswds = rs.getString("Password"); 
@@ -88,6 +88,6 @@ public class Login {
     }
 
     public int getRole() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
     }
 }

@@ -43,7 +43,7 @@ public class RegistHandler extends HttpServlet {
             html.append("</head>");
             html.append("<body>");
             html.append("<h1>Registration</h1>");
-            html.append("<form id='redirect' method='POST' style='width:600px;'>");
+            html.append("<form action='' method='POST' style='width:600px;'>");
             // + request.getRequestURI() +
             html.append("<fieldset>");
             String pageNum = request.getParameter("page");
@@ -55,9 +55,8 @@ public class RegistHandler extends HttpServlet {
                 html.append("<p style='color: red'>" + error + "</p>");
                 pageNum = "1";
             }
-            else if (pageNum != null && pageNum.equals("2")) {
-//                
-    
+            else if (pageNum != null) {
+                
                 String username="",email="",password="",firstname="", lastname="",gender="";
       
                 username = request.getParameter("username");
@@ -66,14 +65,15 @@ public class RegistHandler extends HttpServlet {
                 firstname = request.getParameter("firstname");
                 lastname = request.getParameter("lastname");
                 password = request.getParameter("password");
-               
+//               
                 Registration reg;
                 reg = new Registration(username, gender, password, email, firstname, lastname);
-                if(reg.isExist()){
-                    html.append("<p><b>Username already exists.</b></p><br />");
-                }
-                else{
-                    reg.insert();
+//                if(reg.isExist()){
+//                    html.append("<p><b>Username already exists.</b></p><br />");
+//                }
+//                else{
+                    html.append("<legend>Successful</legend>");
+                    html.append("<p><b>Thank you for your registration.</b></p><br />");
                     html.append("<legend>Successful</legend>");
                     html.append("<p><b>Thank you for your registration.</b></p><br />");
                     html.append("<p>Summary:</p>");
@@ -83,7 +83,8 @@ public class RegistHandler extends HttpServlet {
                     html.append("<p>Password</br><LI>"+password+" </p>");
                     html.append("<p>Email</br><LI>"+email+" </p>");
                     html.append("<p>Click here to redirect to login page</p>");
-                }
+                    //reg.insert();
+               // }
                 
             }
             else {
