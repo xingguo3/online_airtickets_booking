@@ -24,8 +24,8 @@ public class searchFlight {
     public static ArrayList<FlightBean> searchSingleFlight(String from,String to,String date){
         Connection con=null;
         PreparedStatement prst=null;
-        ArrayList flightList;
-        flightList = new ArrayList<FlightBean>();
+        ArrayList<FlightBean> flightList;
+        flightList = new ArrayList<>();
         try {
             String[] dateParts=date.split("-");
             int month=Integer.parseInt(dateParts[0]);
@@ -35,15 +35,16 @@ public class searchFlight {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-            String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina Like ? AND year="
-                    +year+" AND month="+month+"AND day="+day;
+            String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina LIKE ? AND year="
+                    +year+" AND month="+month+" AND day="+day;
             prst=con.prepareStatement(sql);
-            prst.setString(1, from);
-            prst.setString(2,to);
+            prst.setString(1, "%"+from+"%");
+            prst.setString(2,"%"+to+"%");
             ResultSet rs =prst.executeQuery();
             while(rs.next()){
                 FlightBean f=new FlightBean();
-                f.setFlightNo(String.valueOf(rs.getInt("fNumber")));
+                f.setFID(rs.getInt("FID"));
+                f.setFlightNo(rs.getString("fNumber"));
                 f.setFrom(rs.getString("Departure"));
                 f.setTo(rs.getString("Destina"));
                 f.setPrice(rs.getInt("Price"));

@@ -12,19 +12,24 @@
 <%@page import="beans.FlightBean" %>
 
 <!DOCTYPE html>
- <jsp:useBean id="flight" scope="session" class="beans.FlightBean" />
+<jsp:useBean id="flight" scope="session" class="beans.FlightBean" />
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <% ArrayList deptList=(ArrayList)request.getAttribute("deptFlight");
-        ArrayList returnList=(ArrayList)request.getAttribute("deptFlight");
-        %>
-   
+    <% ArrayList<FlightBean> deptList = (ArrayList<FlightBean>) request.getAttribute("deptFlight");
+        ArrayList<FlightBean> returnList = (ArrayList<FlightBean>) request.getAttribute("deptFlight");
+    %>
+
     <body>
         <h1>Search Result:</h1>
         <table>
+
+            <% if (deptList.size() == 0){ %>
+            <tr>No Flight Found</tr>
+
+            <% }else if (deptList.size() != 0) { %>
             <tr>
                 <td>Flight No</td>
                 <td>From</td>
@@ -34,40 +39,45 @@
                 <td>Price</td>
                 <td></td>
             </tr>
-            <% if(deptList.size()==0) %>
-                <tr>No Flight Found</tr>
+            <% for (FlightBean dept : deptList) {
+                    out.print("<tr><td>" + dept.getFlightNo() + "</td>");
+                    out.print("<tr><td>" + dept.getFrom() + "</td>");
+                    out.print("<tr><td>" + dept.getTo() + "</td>");
+                    out.print("<tr><td>" + dept.getDeptTime().toString() + "</td>");
+                    out.print("<tr><td>" + dept.getArrivTime().toString() + "</td>");
+                    out.print("<tr><td>" + dept.getPrice() + "</td>");
+                    out.print("<td> <a href='FlightBookHandler?fno=" + dept.getFlightNo() + "'>Book</a></td><tr>");
+                }%>
             
-            <% if(deptList.size()!=0){ %>
-                <c:forEach items="${deptList}" var="dept">
-                    <tr>
-                    
-                    <td>  ${dept.flightNo}</td>
-                    <td>  ${dept.from}</td>
-                    <td>  ${dept.to}</td>
-                    <td>  ${dept.deptTime}</td>
-                    <td>  ${dept.arrivTime}</td>
-                    <td>  ${dept.price} HKD</td>
-                    <td>  <a href="bookTicket.jsp">Book</a></td>
-                </tr>  
-                </c:foreach>
             <% } %>
-            </c:if>
-            <% if(deptList.size()==0) %>
-                <tr>No Return Flight Found</tr>
+
             
-            <% if(returnList.size()!=0) {%>
-             <c:forEach items="${returnList}" var="return">
-                <tr>
-                    <td>  ${return.flightNo}</td>
-                    <td>  ${return.from}</td>
-                    <td>  ${return.to}</td>
-                    <td>  ${return.deptTime}</td>
-                    <td>  ${return.arrivTime}</td>
-                    <td>  ${return.price} HKD</td>
-                    <td>  <a href="bookTicket.jsp">Book</a>    </td>
-                </tr>  
-            </c:forEach>
-            <% } %>
+        </table>
+            </br>
+        <table>
+            <% if (deptList.size() == 0) {%>
+            <tr>No Return Flight Found</tr>
+            <%} else if (returnList.size() != 0) {%>
+
+            <tr>
+                <td>Flight No</td>
+                <td>From</td>
+                <td>To</td>
+                <td>Departure Time</td>
+                <td>Arrive Time</td>
+                <td>Price</td>
+                <td></td>
+            </tr>
+            <% for (FlightBean return : returnList) {
+                    out.print("<tr><td>" + return.getFlightNo() + "</td>");
+                    out.print("<tr><td>" + return.getFrom() + "</td>");
+                    out.print("<tr><td>" + return.getTo() + "</td>");
+                    out.print("<tr><td>" + return.getDeptTime().toString() + "</td>");
+                    out.print("<tr><td>" + return.getArrivTime().toString() + "</td>");
+                    out.print("<tr><td>" + return.getPrice() + "</td>");
+                    out.print("<td> <a href='FlightBookHandler?fno=" + return.getFlightNo() + "'>Book</a></td><tr>");
+                }%>
+            <% }%>
         </table>
     </body>
 </html>
