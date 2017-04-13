@@ -18,6 +18,11 @@ public class Login {
     
     private String username;
     private String password;
+    private int membership;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private int bonus;
     
     public Login(String s1, String s2){
         this.username=s1;
@@ -37,20 +42,17 @@ public class Login {
         Connection con = null;
         Statement stmt = null;
         String pswd = null;
-        
+
         try{
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String strQl = "SELECT Password FROM dbo.userList " + "WHERE UserName = '"+this.getUsername()+"'";
+           String strQl = "SELECT Password, Role, Email, firstName, lastName, bonus FROM dbo.userList " + "WHERE UserName = '"+this.getUsername()+"'";
            ResultSet rs = stmt.executeQuery(strQl);
            while(rs.next()){
-            String pswds = rs.getString("Password"); 
-             if(pswds!=null&&pswds.equals(this.getPassword()))
-                return true;
-            pswd = pswds;
+            pswd = rs.getString("Password"); 
+            this.membership = rs.getInt("Role");
            }
-           
            rs.close();
         }finally{
             if (stmt!=null) {
@@ -63,7 +65,9 @@ public class Login {
               se.printStackTrace();
            }
         }
-       
+        if(pswd!=null&&pswd.equals(this.getPassword())){
+            return true;
+        }
         return false;
     }
 
@@ -78,7 +82,7 @@ public class Login {
     public String getEmail() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     public int getBonus() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -88,6 +92,6 @@ public class Login {
     }
 
     public int getRole() {
-        return 0;
+        return this.membership;
     }
 }

@@ -68,10 +68,10 @@ public class RegistHandler extends HttpServlet {
 //               
                 Registration reg;
                 reg = new Registration(username, gender, password, email, firstname, lastname);
-//                if(reg.isExist()){
-//                    html.append("<p><b>Username already exists.</b></p><br />");
-//                }
-//                else{
+                if(reg.isExist()){
+                    html.append("<p><b>Username already exists.</b></p><br />");
+                }
+                else{
                     html.append("<legend>Successful</legend>");
                     html.append("<p><b>Thank you for your registration.</b></p><br />");
                     html.append("<legend>Successful</legend>");
@@ -83,8 +83,8 @@ public class RegistHandler extends HttpServlet {
                     html.append("<p>Password</br><LI>"+password+" </p>");
                     html.append("<p>Email</br><LI>"+email+" </p>");
                     html.append("<p>Click here to redirect to login page</p>");
-                    //reg.insert();
-               // }
+                    reg.insert();
+                }
                 
             }
             else {

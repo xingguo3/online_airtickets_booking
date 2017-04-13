@@ -9,9 +9,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Manage Tickets</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <FORM action='./' method ='POST'>
+            <LEGEND>Search Tickets</legend>
+            <input type='hidden' name='page' value='manager' />
+            <input name='from' type='text' value=''/>
+            <input name = 'to' type='text' value = ''/>
+            <input name = 'date'type='date'/>
+            <input type='submit' value='Submit'/>
+        </FORM>
+        <a href=''>add new flights</a>
     </body>
 </html>

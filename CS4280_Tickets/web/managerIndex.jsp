@@ -9,9 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Manager</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <a href='./ManageBookingHandler'>manage booking (refund) </a>
+        <a href='./managerTicket.jsp'>manage tickets information</a>
+        <a href='./viewStat.jsp'>view statistics</a>
     </body>
 </html>

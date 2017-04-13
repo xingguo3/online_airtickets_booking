@@ -31,6 +31,7 @@
         <input type="button" value="round trip" onclick="enableReturn()">
         
         <FORM id="round" ACTION="SearchFlightHandler" METHOD="POST">
+            <input type='hidden' name='page' value='passager' />
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
             Departure Date: 
