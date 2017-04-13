@@ -14,7 +14,7 @@
     <body>
         <FORM action='./' method ='POST'>
             <LEGEND>Search Tickets</legend>
-            <input type='hidden' name='page' value='manager' />
+            <input type='hidden' name='role' value='manager' />
             <input name='from' type='text' value=''/>
             <input name = 'to' type='text' value = ''/>
             <input name = 'date'type='date'/>
