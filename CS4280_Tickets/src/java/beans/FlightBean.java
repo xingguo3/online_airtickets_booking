@@ -12,6 +12,7 @@ import java.util.*;
  * @author jzhang387
  */
 public class FlightBean {
+    private int fID;
     private String flightNo;
     private String from;
     private String to;
@@ -23,6 +24,12 @@ public class FlightBean {
     private String airType;
     private int status;
     
+    public void setFID(int id){
+        fID=id;
+    }
+    public int getFID(){
+        return fID;
+    }
     public void setFlightNo(String _flightNo){
         flightNo=_flightNo;
     }

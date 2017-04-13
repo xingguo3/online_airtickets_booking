@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import beans.FlightBean;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -38,14 +39,15 @@ public class SearchFlightHandler extends HttpServlet {
         to = request.getParameter("destination");
         deptDate = request.getParameter("startDate");
         returnDate = request.getParameter("returnDate");
-        ArrayList deptFlight = new ArrayList<FlightBean>();
-        ArrayList returnFlight = new ArrayList<FlightBean>();
+        ArrayList<FlightBean> deptFlight = new ArrayList<>();
+        ArrayList<FlightBean> returnFlight = new ArrayList<>();
         deptFlight = searchFlight.searchSingleFlight(from, to, deptDate);
         request.setAttribute("deptFlight", deptFlight);
-        if (!returnDate.equals("") && returnDate != null) {
+        if (!returnDate.equals("")) {
             returnFlight = searchFlight.searchSingleFlight(to, from, returnDate);
             request.setAttribute("returnFlight",returnFlight);
         }
+       
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
         dispatcher.forward(request, response);
         
