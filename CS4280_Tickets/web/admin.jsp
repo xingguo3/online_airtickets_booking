@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Mar 28, 2017, 7:21:39 PM
+    Document   : admin
+    Created on : Apr 13, 2017, 10:54:48 AM
     Author     : GUOXING
 --%>
 
@@ -12,6 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <p>view manager</p>
+        <p>delete manager</p>
+        <p>add new manager</p>
     </body>
 </html>

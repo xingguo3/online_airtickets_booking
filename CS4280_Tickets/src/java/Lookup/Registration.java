@@ -12,7 +12,7 @@ import java.sql.*;
  * @author GUOXING
  */
 public class Registration {
-    private static int CustomerID=666;
+    private static int CustomerID=111;
     
    static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  
    static final String DB_URL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db";
@@ -26,21 +26,31 @@ public class Registration {
     private String email;
     private String firstname;
     private String lastname;
-   
+    private int membership;
+    
    public Registration(String s1, String s2, String s3, String s4, String s5, String s6) {
         this.username=s1;
         this.gender=s2;
         this.password=s3;
         this.email=s4;
         this.firstname=s5;
-        this.lastname=s6;
-   
-        
+        this.lastname=s6;     
    }
+   
+   public Registration(String s1, String s2, String s3, String s4, String s5, String s6, int s7) {
+        this.username=s1;
+        this.gender=s2;
+        this.password=s3;
+        this.email=s4;
+        this.firstname=s5;
+        this.lastname=s6; 
+        this.membership=s7;
+   }
+   
 
    
     public void setCustomerID(){
-        this.CustomerID = 666;
+        this.CustomerID = 111;
     }
     public int getCustomerID(){
         CustomerID++;
@@ -70,21 +80,31 @@ public class Registration {
     public String getLastname(){
         return this.lastname;
     }
+    
+    public int getMembership(){
+        return this.membership;
+    }
    
     public boolean isExist() throws SQLException, ClassNotFoundException{
         Connection con = null;
         Statement stmt = null;
-        
+        int isExist = 0;
         try{
 
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String strQl = "SELECT username FROM dbo.userList WHERE username = '"+ this.getUsername() +"'";
-           stmt.executeQuery(strQl);
+           String strQl = "SELECT UserName FROM dbo.userList WHERE UserName = '"+ this.getUsername() +"'";
+           ResultSet rs = stmt.executeQuery(strQl);
+           if(rs.next()){
+               rs.close();
+               isExist = 0;
+           }else{
+               rs.close();
+               isExist = 1;
+           }
            
-  
         }finally{
             if (stmt!=null) {
                 con.close();
@@ -96,8 +116,9 @@ public class Registration {
               se.printStackTrace();
            }
         }
-
-        return true;
+        if(isExist==0)
+            return true;
+        return false;
     }
     
    public void insert() throws SQLException, ClassNotFoundException{

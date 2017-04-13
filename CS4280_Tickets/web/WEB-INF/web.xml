@@ -24,6 +24,26 @@
         <servlet-name>LoginHandler</servlet-name>
         <servlet-class>handler.LoginHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchBooking</servlet-name>
+        <servlet-class>handler.SearchBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdataTicketHandler</servlet-name>
+        <servlet-class>handler.UpdataTicketHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewStatHandler</servlet-name>
+        <servlet-class>handler.ViewStatHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageRefundHandler</servlet-name>
+        <servlet-class>handler.ManageRefundHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageBookingHandler</servlet-name>
+        <servlet-class>handler.ManageBookingHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -48,12 +68,32 @@
         <servlet-name>LoginHandler</servlet-name>
         <url-pattern>/LoginHandler</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBooking</servlet-name>
+        <url-pattern>/SearchBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdataTicketHandler</servlet-name>
+        <url-pattern>/UpdataTicketHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewStatHandler</servlet-name>
+        <url-pattern>/ViewStatHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageRefundHandler</servlet-name>
+        <url-pattern>/ManageRefundHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageBookingHandler</servlet-name>
+        <url-pattern>/ManageBookingHandler</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>welcome.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -24,36 +24,43 @@ import javax.servlet.http.HttpSession;
  */
 public class LoginHandler extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
+        try {
             response.setContentType("text/html;charset=UTF-8");
             String username="", password="";
             username = request.getParameter("username");
             password = request.getParameter("password");
-            //Login lg = new Login(username, password);
-            if(username!=null&&password!=null){
+            Login lg = new Login(username, password);
+            
+            if(lg.isValid()&&username!=null&&password!=null){
+                if(lg.getRole()==4){ //manager
+                    UserBean ub = new UserBean();
+                    ub.setBonus(lg.getBonus());
+                    ub.setEmail(lg.getEmail());
+                    ub.setFirstName(lg.getUsername());
+                    ub.setLastName(lg.getPassword());
+                    ub.setId("userId");
+
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("userbean", ub);
+                    request.getRequestDispatcher("./managerIndex.jsp").forward(request, response);
+                }
+                else{ // customer
                 //create a bean and then store the bean into a session
-                UserBean ub = new UserBean();
-//                ub.setBonus(lg.getBonus());
-//                ub.setEmail(lg.getEmail());
-                ub.setFirstName("first");
-                ub.setLastName("last");
-                ub.setId("user");
-//                HttpSession httpSession = request.getSession();
-//                httpSession.setAttribute("online", ub); 
-                response.sendRedirect("./welcome.jsp");
-                
+                    UserBean ub = new UserBean();
+                    //ub.setBonus(lg.getBonus());
+                    //ub.setEmail(lg.getEmail());
+                    ub.setFirstName(lg.getUsername());
+                    ub.setLastName(lg.getPassword());
+                    ub.setId("userId");
+
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("userbean", ub);
+                    request.getRequestDispatcher("./welcome.jsp").forward(request, response);
+                }
             }else{
+//                if(){}
                 try (PrintWriter out = response.getWriter()) {
                     /* TODO output your page here. You may use following sample code. */
                     out.println("<!DOCTYPE html>");
@@ -68,10 +75,10 @@ public class LoginHandler extends HttpServlet {
                     out.println("</html>");
                 }
             }
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(LoginHandler.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(LoginHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,33 +92,22 @@ public class LoginHandler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        processRequest(request, response);
-//    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        processRequest(request, response);
-//    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
-//    public String getServletInfo() {
-//        return "Short description";
-//    }// </editor-fold>
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
-//}
+}
