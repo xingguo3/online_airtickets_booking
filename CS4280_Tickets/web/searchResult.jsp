@@ -34,12 +34,13 @@
                 <td>Price</td>
                 <td></td>
             </tr>
-            <c:if test="${deptList.length == 0}">
+            <% if(deptList.size()==0) %>
                 <tr>No Flight Found</tr>
-            </c:if>
-            <c:if test="${deptList.length != 0}">
-            <c:forEach items="${deptList}" var="dept">
-                <tr>
+            
+            <% if(deptList.size()!=0){ %>
+                <c:forEach items="${deptList}" var="dept">
+                    <tr>
+                    
                     <td>  ${dept.flightNo}</td>
                     <td>  ${dept.from}</td>
                     <td>  ${dept.to}</td>
@@ -48,12 +49,13 @@
                     <td>  ${dept.price} HKD</td>
                     <td>  <a href="bookTicket.jsp">Book</a></td>
                 </tr>  
-            </c:forEach>
+                </c:foreach>
+            <% } %>
             </c:if>
-            <c:if test="${returnList.length == 0}">
+            <% if(deptList.size()==0) %>
                 <tr>No Return Flight Found</tr>
-            </c:if>
-            <c:if test="${returnList.length != 0}">
+            
+            <% if(returnList.size()!=0) {%>
              <c:forEach items="${returnList}" var="return">
                 <tr>
                     <td>  ${return.flightNo}</td>
@@ -65,7 +67,7 @@
                     <td>  <a href="bookTicket.jsp">Book</a>    </td>
                 </tr>  
             </c:forEach>
-            </c:if>
+            <% } %>
         </table>
     </body>
 </html>

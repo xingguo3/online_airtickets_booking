@@ -17,6 +17,14 @@
             document.getElementById('return').style.visibility = "visible"; 
             
          }
+         function validate(){
+             if(document.forms["form"].departure.value==""||document.forms["form"].destination.value==""||document.forms["form"].startDate.value==""){
+            alert   ("You must input all fields");
+             return false;  
+         }
+         return true;
+               
+         }
 
     </script>
 <html>
@@ -26,12 +34,12 @@
     </head>
     <body>
         <jsp:useBean id="userbean" class="beans.UserBean" scope="session" />
-        <h1>Hello, <%= userbean.getFirstName()%> <%= userbean.getLastName()%></h1>
+        <h1>Hello,  <%= userbean.getFirstName()%> <%= userbean.getLastName()%></c:if></h1>
         <h1>Welcome to Air Web</h1><BR>
         <input type="button" value="single trip" onclick="disableReturn()">
         <input type="button" value="round trip" onclick="enableReturn()">
         
-        <FORM id="round" ACTION="SearchFlightHandler" METHOD="POST">
+        <FORM name="form" ACTION="SearchFlightHandler" METHOD="POST">
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
             Departure Date: 
@@ -43,7 +51,7 @@
             <input type=button name="rdCalendar" value="Select Date" onclick="displayDatePicker('returnDate', this);"><BR>
             </div>
             <P>
-                <INPUT TYPE="SUBMIT" NAME="flights" VALUE="Search">
+                <INPUT onclick="return validate();" TYPE="SUBMIT" NAME="flights" VALUE="Search" >
             </p>
         </FORM>
         <a href=''>Show my account level</a>
