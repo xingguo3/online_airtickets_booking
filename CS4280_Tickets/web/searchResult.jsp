@@ -53,12 +53,12 @@
 
             
         </table>
-            </br>
         <table>
-            <% if (deptList.size() == 0) {%>
-            <tr>No Return Flight Found</tr>
-            <%} else if (returnList.size() != 0) {%>
 
+            <% if (deptList.size() == 0){ %>
+            <tr>No Flight Found</tr>
+
+            <% }else if (deptList.size() != 0) { %>
             <tr>
                 <td>Flight No</td>
                 <td>From</td>
@@ -68,16 +68,21 @@
                 <td>Price</td>
                 <td></td>
             </tr>
-            <% for (FlightBean return : returnList) {
-                    out.print("<tr><td>" + return.getFlightNo() + "</td>");
-                    out.print("<tr><td>" + return.getFrom() + "</td>");
-                    out.print("<tr><td>" + return.getTo() + "</td>");
-                    out.print("<tr><td>" + return.getDeptTime().toString() + "</td>");
-                    out.print("<tr><td>" + return.getArrivTime().toString() + "</td>");
-                    out.print("<tr><td>" + return.getPrice() + "</td>");
-                    out.print("<td> <a href='FlightBookHandler?fno=" + return.getFlightNo() + "'>Book</a></td><tr>");
+            <% for (FlightBean dept : deptList) {
+                    out.print("<tr><td>" + dept.getFlightNo() + "</td>");
+                    out.print("<tr><td>" + dept.getFrom() + "</td>");
+                    out.print("<tr><td>" + dept.getTo() + "</td>");
+                    out.print("<tr><td>" + dept.getDeptTime().toString() + "</td>");
+                    out.print("<tr><td>" + dept.getArrivTime().toString() + "</td>");
+                    out.print("<tr><td>" + dept.getPrice() + "</td>");
+                    out.print("<td> <a href='FlightBookHandler?fno=" + dept.getFlightNo() + "'>Book</a></td></tr>");
                 }%>
-            <% }%>
+            
+            <% } %>
+
+            
         </table>
+            </br>
+        
     </body>
 </html>
