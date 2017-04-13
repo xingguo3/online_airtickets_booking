@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="./css/datepicker.css"/>
 <script type="text/javascript" src="./js/datepicker.js"></script>
     <script type="text/javascript">
         function disableReturn(){

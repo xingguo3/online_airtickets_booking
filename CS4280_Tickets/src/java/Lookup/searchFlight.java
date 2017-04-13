@@ -43,7 +43,7 @@ public class searchFlight {
             ResultSet rs =prst.executeQuery();
             while(rs.next()){
                 FlightBean f=new FlightBean();
-                f.setFlightNo(rs.getString("fNumber"));
+                f.setFlightNo(String.valueOf(rs.getInt("fNumber")));
                 f.setFrom(rs.getString("Departure"));
                 f.setTo(rs.getString("Destina"));
                 f.setPrice(rs.getInt("Price"));
@@ -51,7 +51,8 @@ public class searchFlight {
                 f.setDeptTime(rs.getDate("TakeOff"));
                 f.setArrivTime(rs.getDate("Land"));
                 f.setStatus(rs.getInt("Status"));
-                flightList.add(f);
+                if(f.getRemainSeat()>0)
+                    flightList.add(f);
             }
         
             rs.close();
