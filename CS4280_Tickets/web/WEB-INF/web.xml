@@ -44,6 +44,10 @@
         <servlet-name>ManageBookingHandler</servlet-name>
         <servlet-class>handler.ManageBookingHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FlightBookHandler</servlet-name>
+        <servlet-class>handler.FlightBookHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -88,12 +92,16 @@
         <servlet-name>ManageBookingHandler</servlet-name>
         <url-pattern>/ManageBookingHandler</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlightBookHandler</servlet-name>
+        <url-pattern>/FlightBookHandler</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>welcome.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

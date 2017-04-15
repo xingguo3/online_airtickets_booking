@@ -16,8 +16,8 @@ public class FlightBean {
     private String flightNo;
     private String from;
     private String to;
-    private Date deptTime;
-    private Date arrivTime;
+    private String deptTime;
+    private String arrivTime;
     private int remainSeat;
     private double discount;
     private int price;
@@ -72,16 +72,16 @@ public class FlightBean {
     public String getAirType(){
         return airType;
     }
-    public void setDeptTime(Date _deptTime){
+    public void setDeptTime(String _deptTime){
         deptTime=_deptTime;
     }
-    public Date getDeptTime(){
+    public String getDeptTime(){
         return deptTime;
     }
-    public void setArrivTime(Date _arrivTime){
+    public void setArrivTime(String _arrivTime){
         arrivTime=_arrivTime;
     }
-    public Date getArrivTime(){
+    public String getArrivTime(){
         return arrivTime;
     }
     public void setStatus(int _status){

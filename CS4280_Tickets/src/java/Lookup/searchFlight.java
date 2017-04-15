@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -49,8 +50,10 @@ public class searchFlight {
                 f.setTo(rs.getString("Destina"));
                 f.setPrice(rs.getInt("Price"));
                 f.setRemainSeat(rs.getInt("RemainSeat"));
-                f.setDeptTime(rs.getDate("TakeOff"));
-                f.setArrivTime(rs.getDate("Land"));
+                Timestamp t=rs.getTimestamp("TakeOff");
+                f.setDeptTime(t.toString());
+                t=rs.getTimestamp("Land");
+                f.setArrivTime(t.toString());
                 f.setStatus(rs.getInt("Status"));
                 if(f.getRemainSeat()>0)
                     flightList.add(f);
@@ -70,5 +73,17 @@ public class searchFlight {
         }
         return flightList;
 
+    }
+    
+    public String getTime(Connection con,int fid) throws SQLException{
+        Statement stmt=con.createStatement();
+        String sql="SELECT convert(varchar(8), TakeOff, 108) from abo.flight where fid="+fid;
+        ResultSet rs=stmt.executeQuery(sql);
+        String time=null;
+        while(rs.next())
+            time= rs.getString(0);
+        stmt.close();
+        return time;
+        
     }
 }

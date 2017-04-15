@@ -43,25 +43,34 @@ public class SearchFlightHandler extends HttpServlet {
         ArrayList returnFlight = new ArrayList<FlightBean>();
         deptFlight = searchFlight.searchSingleFlight(from, to, deptDate);
         request.setAttribute("deptFlight", deptFlight);
-        
+        if (!returnDate.equals("") && returnDate != null) {
+                returnFlight = searchFlight.searchSingleFlight(to, from, returnDate);
+                request.setAttribute("returnFlight",returnFlight);
+        }
         String role=null;
         role = request.getParameter("role");
         if(role.equals("passager")){
             
-            if (!returnDate.equals("") && returnDate != null) {
-                returnFlight = searchFlight.searchSingleFlight(to, from, returnDate);
-                request.setAttribute("returnFlight",returnFlight);
+            
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
                 dispatcher.forward(request, response);
-            }
+            
         }
         else if(role.equals("manager")){
             HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){}
+            if(httpSession != null){
+            
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
+                dispatcher.forward(request, response);
+            
+            }
         }
         else{
             HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){}
+            if(httpSession != null){
+                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
+                dispatcher.forward(request, response);
+            }
         }
         
         
