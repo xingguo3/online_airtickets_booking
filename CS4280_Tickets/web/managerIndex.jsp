@@ -13,7 +13,7 @@
     </head>
     <body>
         <a href='./ManageBookingHandler'>manage booking (refund) </a>
-        <a href='./managerTicket.jsp'>manage tickets information</a>
+        <a href='./manageTicket.jsp'>manage tickets information</a>
         <a href='./viewStat.jsp'>view statistics</a>
     </body>
 </html>

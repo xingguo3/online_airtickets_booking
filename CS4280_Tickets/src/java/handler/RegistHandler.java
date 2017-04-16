@@ -43,11 +43,20 @@ public class RegistHandler extends HttpServlet {
             html.append("</head>");
             html.append("<body>");
             html.append("<h1>Registration</h1>");
-            html.append("<form action='' method='POST' style='width:600px;'>");
+            html.append("<form action='./RegistHandler' method='POST' style='width:600px;'>");
             // + request.getRequestURI() +
             html.append("<fieldset>");
             String pageNum = request.getParameter("page");
             String error = "Error.";
+            String username="",email="",password="",firstname="", lastname="",gender="";
+      
+            username = request.getParameter("username");
+            email = request.getParameter("email");
+            gender = request.getParameter("gender");
+            firstname = request.getParameter("firstname");
+            lastname = request.getParameter("lastname");
+            password = request.getParameter("password");
+//               
             if (pageNum != null && pageNum.equals("2")
             && request.getParameter("username").equals("")&& request.getParameter("email").equals("")&& request.getParameter("password").equals("")
             ) {
@@ -55,23 +64,15 @@ public class RegistHandler extends HttpServlet {
                 html.append("<p style='color: red'>" + error + "</p>");
                 pageNum = "1";
             }
-            else if (pageNum != null) {
-                
-                String username="",email="",password="",firstname="", lastname="",gender="";
-      
-                username = request.getParameter("username");
-                email = request.getParameter("email");
-                gender = request.getParameter("gender");
-                firstname = request.getParameter("firstname");
-                lastname = request.getParameter("lastname");
-                password = request.getParameter("password");
-//               
+            else if (pageNum != null && pageNum.equals("2") ){
+
                 Registration reg;
                 reg = new Registration(username, gender, password, email, firstname, lastname);
-                if(reg.isExist()){
-                    html.append("<p><b>Username already exists.</b></p><br />");
-                }
-                else{
+//                if(reg.isExist()){
+//                    html.append("<p><b>Username already exists.</b></p><br />");
+//                }
+//                else{
+                    reg.insert();
                     html.append("<legend>Successful</legend>");
                     html.append("<p><b>Thank you for your registration.</b></p><br />");
                     html.append("<legend>Successful</legend>");
@@ -82,9 +83,9 @@ public class RegistHandler extends HttpServlet {
                     html.append("<p>User Name</br><LI>"+ username+" </p>");
                     html.append("<p>Password</br><LI>"+password+" </p>");
                     html.append("<p>Email</br><LI>"+email+" </p>");
-                    html.append("<p>Click here to redirect to login page</p>");
-                    reg.insert();
-                }
+                    
+                    
+//                }
                 
             }
             else {

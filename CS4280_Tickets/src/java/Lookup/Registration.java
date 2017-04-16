@@ -12,7 +12,7 @@ import java.sql.*;
  * @author GUOXING
  */
 public class Registration {
-    private static int CustomerID=111;
+    private static int CustomerID=206;
     
    static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  
    static final String DB_URL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db";
@@ -37,20 +37,20 @@ public class Registration {
         this.lastname=s6;     
    }
    
-   public Registration(String s1, String s2, String s3, String s4, String s5, String s6, int s7) {
-        this.username=s1;
-        this.gender=s2;
-        this.password=s3;
-        this.email=s4;
-        this.firstname=s5;
-        this.lastname=s6; 
-        this.membership=s7;
-   }
+//   public Registration(String s1, String s2, String s3, String s4, String s5, String s6, int s7) {
+//        this.username=s1;
+//        this.gender=s2;
+//        this.password=s3;
+//        this.email=s4;
+//        this.firstname=s5;
+//        this.lastname=s6; 
+//        this.membership=s7;
+//   }
    
 
    
     public void setCustomerID(){
-        this.CustomerID = 111;
+        this.CustomerID = 197;
     }
     public int getCustomerID(){
         CustomerID++;
@@ -95,7 +95,7 @@ public class Registration {
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String strQl = "SELECT UserName FROM dbo.userList WHERE UserName = '"+ this.getUsername() +"'";
+           String strQl = "SELECT UserName FROM dbo.usersList WHERE UserName = '"+ this.getUsername() +"'";
            ResultSet rs = stmt.executeQuery(strQl);
            if(rs.next()){
                rs.close();
@@ -132,12 +132,12 @@ public class Registration {
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            //tring strQL = "INSERT INTO dbo.userList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+"', '"+this.getPassword()+ "', "+this.getGender()+", '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0'，'" +this.getEmail()+"')";
-           String strQl = "INSERT INTO dbo.userList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+ "', '"+this.getPassword()+"','"+this.getGender()+"', '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0','"+this.getEmail()+"')";
-           stmt.executeQuery(strQl);
+           String strQl = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+ "', '"+this.getPassword()+"','"+this.getGender()+"', '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0','"+this.getEmail()+"')";
+           stmt.execute(strQl);
            
         }finally{
             if (stmt!=null) {
-                con.close();
+                stmt.close();
             } 
            try{
               if(con!=null)

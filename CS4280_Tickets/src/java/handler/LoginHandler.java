@@ -36,8 +36,8 @@ public class LoginHandler extends HttpServlet {
             if(lg.isValid()&&username!=null&&password!=null){
                 if(lg.getRole()==4){ //manager
                     UserBean ub = new UserBean();
-                    ub.setBonus(lg.getBonus());
-                    ub.setEmail(lg.getEmail());
+//                    ub.setBonus(lg.getBonus());
+//                    ub.setEmail(lg.getEmail());
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
                     ub.setId("userId");
@@ -61,6 +61,8 @@ public class LoginHandler extends HttpServlet {
                 }
             }else{
 //                if(){}
+                String email = lg.getEmail();
+                int bonus = lg.getBonus();
                 try (PrintWriter out = response.getWriter()) {
                     /* TODO output your page here. You may use following sample code. */
                     out.println("<!DOCTYPE html>");
@@ -69,6 +71,9 @@ public class LoginHandler extends HttpServlet {
                     out.println("<title>Login Failed</title>");
                     out.println("</head>");
                     out.println("<body>");
+                    out.println("<p>"+email+"</p>");
+                    out.println("<p>"+bonus+"</p>");
+                    out.println("<p>"+lg.getRole()+"</p>");
                     out.println("<h1>wrong username or password, please try again</h1>");
                     out.println("<a href = \"login.jsp\">Click here to login again</a>");
                     out.println("</body>");

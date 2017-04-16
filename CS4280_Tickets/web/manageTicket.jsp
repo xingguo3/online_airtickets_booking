@@ -11,13 +11,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manage Tickets</title>
     </head>
+
     <body>
-        <FORM action='./' method ='POST'>
+        <FORM action='./SearchFlightHandler' method ='POST'>
             <LEGEND>Search Tickets</legend>
             <input type='hidden' name='role' value='manager' />
-            <input name='from' type='text' value=''/>
-            <input name = 'to' type='text' value = ''/>
-            <input name = 'date'type='date'/>
+            <input name='departure' type='text' value=''/>
+            <input name = 'destination' type='text' value = ''/>
+            <input name = 'startDate' type='date'/>
             <input type='submit' value='Submit'/>
         </FORM>
         <a href=''>add new flights</a>

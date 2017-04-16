@@ -22,7 +22,7 @@ public class Login {
     private String email;
     private String firstName;
     private String lastName;
-    private int bonus;
+    private int bonus=-1;
     
     public Login(String s1, String s2){
         this.username=s1;
@@ -42,18 +42,40 @@ public class Login {
         Connection con = null;
         Statement stmt = null;
         String pswd = null;
+        boolean isV = false;
 
         try{
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String strQl = "SELECT Password, Role, Email, firstName, lastName, bonus FROM dbo.userList " + "WHERE UserName = '"+this.getUsername()+"'";
-           ResultSet rs = stmt.executeQuery(strQl);
-           while(rs.next()){
-            pswd = rs.getString("Password"); 
-            this.membership = rs.getInt("Role");
+           String strQl = "SELECT * FROM dbo.userList";
+           //, Email, firstName, lastName, bonus
+          
+           ResultSet rs = stmt.executeQuery("SELECT Password FROM dbo.usersList WHERE UserName = 'GUOXING'");
+           if (rs != null && rs.last() != false) {
+               this.setBonus(rs.getRow());
+               rs.beforeFirst();
+           }
+            
+           while(rs != null && rs.next() != false){
+               
+               String pswds=rs.getString("Password");
+                //pswd = rs.getString("Password"); 
+                //this.setEmail(pswds);
+                //this.setRole(rs.getBigDecimal("Membership").intValue());
+                //setRole(4);
+                String pasd = pswds;
+                this.setEmail(pasd);
+               
+                String tmp = this.getPassword();
+                 setRole(tmp.length());
+                if(pasd!=null&&(tmp.equals(pasd))){
+                    isV=true;               
+                }
+                //break;
            }
            rs.close();
+            
         }finally{
             if (stmt!=null) {
                 con.close();
@@ -65,10 +87,8 @@ public class Login {
               se.printStackTrace();
            }
         }
-        if(pswd!=null&&pswd.equals(this.getPassword())){
-            return true;
-        }
-        return false;
+        
+        return isV;
     }
 
     public String getLastname() {
@@ -79,18 +99,28 @@ public class Login {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String getEmail() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setEmail(String a){
+        this.email=a;
     }
     
+    public String getEmail() {
+        return this.email;
+    }
+    public void setBonus(int a){
+        this.bonus=a;
+    }
     public int getBonus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.bonus;
     }
 
     public String getUserId() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    public void setRole(int a){
+        this.membership=a;
+    }
+    
     public int getRole() {
         return this.membership;
     }
