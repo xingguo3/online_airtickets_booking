@@ -5,6 +5,7 @@
  */
 package Lookup;
 
+import beans.FlightBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,19 +16,9 @@ import java.sql.Statement;
  *
  * @author GUOXING
  */
-public class DeleteFlights {
-    
-    private int FlightID;
-    
-    public DeleteFlights(int fid){
-        this.FlightID = fid;
-    }
-    
-    public int getFlightID(){
-        return this.FlightID;
-    }
-    
-    public void delete() throws ClassNotFoundException, SQLException{
+public class MgrFlights {
+    public static void DeleteFlights(FlightBean f) throws ClassNotFoundException, SQLException{
+        f =searchFlight.searchByFid(f.getFID());
         Connection con = null;
         Statement stmt = null;
         try{
@@ -37,7 +28,7 @@ public class DeleteFlights {
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            String cancelTick=null;
-           cancelTick = "SELECT UID , ActualPrice FROM dbo.history WHERE fid = '"+this.getFlightID()+"'";
+           cancelTick = "SELECT UID , ActualPrice FROM dbo.history WHERE fid = '"+f.getFID()+"'";
            ResultSet rs = stmt.executeQuery(cancelTick);
            while(rs.next()){
                int UID = rs.getInt("UID");
@@ -46,7 +37,7 @@ public class DeleteFlights {
                stmt.executeQuery(refund);
            }
            String strQl = null;
-           strQl = "DELETE FROM dbo.Flights WHERE fid = '"+this.getFlightID()+"'";
+           strQl = "DELETE FROM dbo.Flights WHERE fid = '"+f.getFID()+"'";
            stmt.execute(strQl);
            
         }finally{
@@ -60,8 +51,5 @@ public class DeleteFlights {
               se.printStackTrace();
            }
         }
-
-   }
-    
-    
+    }
 }

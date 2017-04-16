@@ -5,10 +5,14 @@
  */
 package handler;
 
+import Lookup.MgrFlights;
 import Lookup.searchFlight;
 import beans.FlightBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +35,13 @@ public class DeleteFlightHandler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8"); 
         int fid = Integer.parseInt(request.getParameter("fid"));
         String round = request.getParameter("trip");
         FlightBean f;
         f = searchFlight.searchByFid(fid);
-        boolean delete;
+        boolean delete = false;
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<script type='text/javascript'>");
@@ -54,8 +58,11 @@ public class DeleteFlightHandler extends HttpServlet {
             out.println("<p>Flight No.: "+f.getFlightNo()+"</p>");
             out.println("<p>From: "+f.getFrom()+"</p>");
             out.println("<p>To: "+f.getTo()+"</p>");
-            out.println("<button onclick = './'>Delete</button>");
-            out.println("<button onclick = './mgrSearchResult.jsp'>Cancel</button>");
+            out.println("<button onclick = ''>Delete</button>");
+            out.println("<button onclick = ''>Cancel</button>");
+            if(delete == true){
+                MgrFlights.DeleteFlights(f);
+            }
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,7 +80,13 @@ public class DeleteFlightHandler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -87,7 +100,13 @@ public class DeleteFlightHandler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
