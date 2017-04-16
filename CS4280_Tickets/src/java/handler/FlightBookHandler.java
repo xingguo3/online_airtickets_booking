@@ -35,29 +35,30 @@ public class FlightBookHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                 int fid=Integer.parseInt(request.getParameter("fid"));
-                String round=request.getParameter("trip");
-                FlightBean f;
-                if(round.equals("go")){
-                    ArrayList<FlightBean> deptList = (ArrayList<FlightBean>) request.getAttribute("deptFlight");
-                    for(FlightBean dept:deptList){
-                        if(dept.getFID()==fid)
-                            f=dept;
-                    }
-                }
-                if(round.equals("back")){
-                     ArrayList<FlightBean> rtList = (ArrayList<FlightBean>) request.getAttribute("returnFlight");
-                     for(FlightBean rt:rtList){
-                        if(rt.getFID()==fid)
-                            f=rt;
-                    }
-                }
+                //String round=request.getParameter("trip");
+//                FlightBean f;
+//                if(round.equals("go")){
+//                    ArrayList<FlightBean> deptList = (ArrayList<FlightBean>) request.getAttribute("deptFlight");
+//                    for(FlightBean dept:deptList){
+//                        if(dept.getFID()==fid)
+//                            f=dept;
+//                    }
+//                }
+//                if(round.equals("back")){
+//                     ArrayList<FlightBean> rtList = (ArrayList<FlightBean>) request.getAttribute("returnFlight");
+//                     for(FlightBean rt:rtList){
+//                        if(rt.getFID()==fid)
+//                            f=rt;
+//                    }
+//                }
                 String role=null;
                 role = request.getParameter("role");
-                 if(role==null||role.equals("passager")){
-            
-            
+        if(role==null||role.equals("passager")){
+            HttpSession httpSession = request.getSession(false);
+            if(httpSession == null){
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
+            }
             
         }
         else if(role.equals("manager")){
