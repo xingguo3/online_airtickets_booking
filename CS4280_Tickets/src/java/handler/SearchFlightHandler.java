@@ -57,7 +57,9 @@ public class SearchFlightHandler extends HttpServlet {
         else if(role.equals("manager")){
             HttpSession httpSession = request.getSession(false);
             if(httpSession != null){
-            
+                httpSession.setAttribute("delfrom", from);
+                httpSession.setAttribute("delto", to);
+                httpSession.setAttribute("deltime", deptDate);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
                 dispatcher.forward(request, response);
             

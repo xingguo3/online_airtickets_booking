@@ -34,37 +34,39 @@ public class DeleteFlightHandler extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8"); 
         int fid = Integer.parseInt(request.getParameter("fid"));
         String round = request.getParameter("trip");
+        String action = request.getParameter("action");
         FlightBean f;
         f = searchFlight.searchByFid(fid);
-        boolean delete = false;
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<script type='text/javascript'>");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/javascript/delete.js");
-            out.println("</script>");
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteFlightHandler</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Sure to delete below tickets:</h1>");
-            out.println("<p>Flight ID: "+(f.getFID())+"</p>");            
-            out.println("<p>Flight No.: "+f.getFlightNo()+"</p>");
-            out.println("<p>From: "+f.getFrom()+"</p>");
-            out.println("<p>To: "+f.getTo()+"</p>");
-            out.println("<button onclick = ''>Delete</button>");
-            out.println("<button onclick = ''>Cancel</button>");
-            if(delete == true){
-                MgrFlights.DeleteFlights(f);
+        if(action==null){
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet DeleteFlightHandler</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Sure to delete below tickets:</h1>");
+                out.println("<p>Flight ID: "+(f.getFID())+"</p>");            
+                out.println("<p>Flight No.: "+f.getFlightNo()+"</p>");
+                out.println("<p>From: "+f.getFrom()+"</p>");
+                out.println("<p>To: "+f.getTo()+"</p>");
+                out.println("<button onclick='" + request.getRequestURI() + "?action=delete&FID=" + f.getFID() + "'>Delete</button>");
+                out.println("<button onclick = 'window.history.back()'>Cancel</button>");
+
+                out.println("</body>");
+                out.println("</html>");
             }
-            out.println("</body>");
-            out.println("</html>");
+        }else{
+            if (action.equalsIgnoreCase("delete")) {
+                this.deleteProcess(request, response);
+            }
         }
     }
 
@@ -89,6 +91,17 @@ public class DeleteFlightHandler extends HttpServlet {
         }
     }
 
+    private void deleteProcess(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+        response.setContentType("text/html;charset=UTF-8"); 
+        int fid = Integer.parseInt(request.getParameter("fid"));
+        FlightBean f;
+        f = searchFlight.searchByFid(fid);
+        MgrFlights.DeleteFlights(f);
+        
+    }
+    
+    
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
