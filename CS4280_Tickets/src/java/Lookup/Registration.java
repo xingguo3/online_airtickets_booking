@@ -12,7 +12,7 @@ import java.sql.*;
  * @author GUOXING
  */
 public class Registration {
-    private static int CustomerID=206;
+    private static int CustomerID=5;
     
    static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  
    static final String DB_URL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db";
@@ -37,15 +37,15 @@ public class Registration {
         this.lastname=s6;     
    }
    
-//   public Registration(String s1, String s2, String s3, String s4, String s5, String s6, int s7) {
-//        this.username=s1;
-//        this.gender=s2;
-//        this.password=s3;
-//        this.email=s4;
-//        this.firstname=s5;
-//        this.lastname=s6; 
-//        this.membership=s7;
-//   }
+   public Registration(String s1, String s2, String s3, String s4, String s5, String s6, int s7) {
+        this.username=s1;
+        this.gender=s2;
+        this.password=s3;
+        this.email=s4;
+        this.firstname=s5;
+        this.lastname=s6; 
+        this.membership=s7;
+   }
    
 
    

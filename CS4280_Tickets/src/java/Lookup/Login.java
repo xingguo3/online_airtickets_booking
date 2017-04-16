@@ -51,7 +51,7 @@ public class Login {
            String strQl = "SELECT * FROM dbo.userList";
            //, Email, firstName, lastName, bonus
           
-           ResultSet rs = stmt.executeQuery("SELECT Password FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
+           ResultSet rs = stmt.executeQuery("SELECT Password, Membership FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
            
            
            while(rs != null && rs.next() != false){
@@ -59,7 +59,7 @@ public class Login {
                String pswds=rs.getString("Password");
                 //pswd = rs.getString("Password"); 
                 //this.setEmail(pswds);
-                //this.setRole(rs.getBigDecimal("Membership").intValue());
+                this.setRole(rs.getInt("Membership"));
                 //setRole(4);
                 String pasd = pswds;
                
