@@ -12,7 +12,7 @@ import java.sql.*;
  * @author GUOXING
  */
 public class Registration {
-    private static int CustomerID=5;
+    private static int CustomerID=6;
     
    static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  
    static final String DB_URL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db";
@@ -132,7 +132,7 @@ public class Registration {
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            //tring strQL = "INSERT INTO dbo.userList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+"', '"+this.getPassword()+ "', "+this.getGender()+", '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0'，'" +this.getEmail()+"')";
-           String strQl = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+ "', '"+this.getPassword()+"','"+this.getGender()+"', '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0','"+this.getEmail()+"')";
+           String strQl = "INSERT INTO dbo.usersList VALUES ("+ this.getCustomerID()+ ", '"+this.getUsername()+ "', '"+this.getPassword()+"','"+this.getGender()+"', '"+this.getFirstname()+"', '"+this.getLastname()+"', '0', '0', 0, '0', '0','"+this.getEmail()+"', '0')";
            stmt.execute(strQl);
            
         }finally{

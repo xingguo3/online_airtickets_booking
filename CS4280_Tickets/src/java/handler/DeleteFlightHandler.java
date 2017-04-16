@@ -5,8 +5,11 @@
  */
 package handler;
 
+import Lookup.searchFlight;
+import beans.FlightBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,16 +32,30 @@ public class DeleteFlightHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8"); 
+        int fid = Integer.parseInt(request.getParameter("fid"));
+        String round = request.getParameter("trip");
+        FlightBean f;
+        f = searchFlight.searchByFid(fid);
+        boolean delete;
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            out.println("<script type='text/javascript'>");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/javascript/delete.js");
+            out.println("</script>");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet DeleteFlightHandler</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteFlightHandler at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Sure to delete below tickets:</h1>");
+            out.println("<p>Flight ID: "+(f.getFID())+"</p>");            
+            out.println("<p>Flight No.: "+f.getFlightNo()+"</p>");
+            out.println("<p>From: "+f.getFrom()+"</p>");
+            out.println("<p>To: "+f.getTo()+"</p>");
+            out.println("<button onclick = './'>Delete</button>");
+            out.println("<button onclick = './mgrSearchResult.jsp'>Cancel</button>");
             out.println("</body>");
             out.println("</html>");
         }

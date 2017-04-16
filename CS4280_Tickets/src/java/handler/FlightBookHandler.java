@@ -44,11 +44,11 @@ public class FlightBookHandler extends HttpServlet {
         String role = null;
         role = request.getParameter("role");
         if (role == null || role.equals("passager")) {
-            HttpSession httpSession = request.getSession(false);
-            if (httpSession == null) {
+//            HttpSession httpSession = request.getSession(false);
+//            if (httpSession == null) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
-            }
+//            }
 
         }else {
             HttpSession httpSession = request.getSession(false);
