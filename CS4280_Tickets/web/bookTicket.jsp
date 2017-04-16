@@ -18,30 +18,37 @@
     
     <% FlightBean f=(FlightBean)request.getAttribute("book");
         UserBean user=(UserBean)request.getSession().getAttribute("userbean");
+        int price=f.getPrice();
     %>
     <body>
         <h1>Book Tickets for Your <%=request.getAttribute("round")%> Trip</h1>
-        <form action="ManageBookingHandler" method="post" id="form">
+        <form action="ConfirmBookHandler" method="post" id="form">
         <p>Flight No: <%= f.getFlightNo()%></p>
         <p>Departure Time: <%= f.getDeptTime()%></p>
         <p>Arrive Time: <%=f.getArrivTime()%></p>
         <input type="hidden" name="fid" value="<%f.getFID();%>">
-        <input type="text" name="lastname1" value="<% user.getLastName();%>">
-        <input type="text" name="lastname1" value="<% user.getFirstName();%>">
-        <button onclick="addPassenger()" value="Add One More Passenger">
-        <div id="second"></div>
-        <p>Price: <section id="price"></section> HKD</p>
+        <p>Last Name:<input type="text" name="lastname" ></p>
+        <p>First Name:<input type="text" name="firstname"></p>
+<!--        <button onclick="addPassenger()" type="button" value="Add One More Passenger">Add One More Passenger</button>   -->
+<!--        <div id="second"></div> -->
+        <p>Price: <%=f.getPrice()%> HKD</p>
+        <button onclick="return validate();" type='submit' value="confirm">Confirm</button>
         </form>
     </body>
     <script type="text/javascript">
-        var pNo=1;
-        var price=<% f.getPrice();%>;
-        function addPasenger(){
-            pNo=pNo+1;
-            document.getElementById("second").innerHTML=" <input type="hidden" name="fid" value="<%f.getFID();%>">
-            <input type="text" name="lastname"+pNo value="<% user.getLastName();%>">
-            <input type="text" name="lastname"+pNo value="<% user.getFirstName();%>">";
-            document.getElementById("second").innerHTML=pNo*price;
+        function conf(){
+            if(confirm("Are you sure to book?")){
+                   return true;
+            }
+            return false;    
+        }
+        function validate(){
+            if(document.forms["form"].lastname.value==""||document.forms["form"].firstname.value==""){
+                    alert("You must input all fields");
+                     return false;  
+                   }
+                   
+             return conf();
         }
         </script>
 </html>

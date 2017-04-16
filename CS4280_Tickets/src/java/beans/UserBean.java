@@ -10,7 +10,7 @@ package beans;
  * @author jzhang387
  */
 public class UserBean {
-    private String id;
+    private int id;
     private int gender;
     private String userName;
     private String email;
@@ -24,10 +24,10 @@ public class UserBean {
             
     
     
-    public void setId(String _id){
+    public void setId(int _id){
         id=_id;
     }
-    public String getId(){
+    public int getId(){
         return id;
     }
     public void setLastName(String _lname){
