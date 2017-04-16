@@ -5,22 +5,18 @@
  */
 package handler;
 
-import Lookup.searchFlight;
 import java.io.IOException;
-import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import beans.FlightBean;
-import javax.servlet.RequestDispatcher;
 
 /**
  *
  * @author GUOXING
  */
-public class SearchFlightHandler extends HttpServlet {
+public class DeleteFlightHandler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,50 +29,20 @@ public class SearchFlightHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-        String from, to, deptDate, returnDate;
-        from = request.getParameter("departure");
-        to = request.getParameter("destination");
-        deptDate = request.getParameter("startDate");
-        returnDate = request.getParameter("returnDate");
-        ArrayList deptFlight = new ArrayList<FlightBean>();
-        ArrayList returnFlight = new ArrayList<FlightBean>();
-        deptFlight = searchFlight.searchSingleFlight(from, to, deptDate);
-        request.setAttribute("deptFlight", deptFlight);
-        if (!returnDate.equals("") && returnDate != null) {
-                returnFlight = searchFlight.searchSingleFlight(to, from, returnDate);
-                request.setAttribute("returnFlight",returnFlight);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteFlightHandler</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteFlightHandler at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        String role=null;
-        role = request.getParameter("role");
-        if(role.equals("passager")){
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
-                dispatcher.forward(request, response);
-            
-        }
-        else if(role.equals("manager")){
-            HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){
-            
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
-                dispatcher.forward(request, response);
-            
-            }
-        }
-        else{
-            HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){
-                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
-                dispatcher.forward(request, response);
-            }
-        }
-        
-        
-        
-       
     }
-
-   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

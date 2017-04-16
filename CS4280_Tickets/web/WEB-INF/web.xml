@@ -48,6 +48,14 @@
         <servlet-name>FlightBookHandler</servlet-name>
         <servlet-class>handler.FlightBookHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateFlightHandler</servlet-name>
+        <servlet-class>handler.UpdateFlightHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteFlightHandler</servlet-name>
+        <servlet-class>handler.DeleteFlightHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -95,6 +103,14 @@
     <servlet-mapping>
         <servlet-name>FlightBookHandler</servlet-name>
         <url-pattern>/FlightBookHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFlightHandler</servlet-name>
+        <url-pattern>/UpdateFlightHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteFlightHandler</servlet-name>
+        <url-pattern>/DeleteFlightHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
