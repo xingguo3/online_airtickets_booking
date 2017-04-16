@@ -53,7 +53,7 @@ public class Login {
           
            ResultSet rs = stmt.executeQuery("SELECT Password FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
            
-            
+           
            while(rs != null && rs.next() != false){
                
                String pswds=rs.getString("Password");

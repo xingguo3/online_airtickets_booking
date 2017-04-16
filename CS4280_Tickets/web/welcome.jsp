@@ -43,7 +43,7 @@
         <FORM name="form" ACTION="SearchFlightHandler" METHOD="POST">
 
         <FORM id="round" ACTION="SearchFlightHandler" METHOD="POST">
-            <input type='hidden' name='page' value='customer' />
+            <input type='hidden' name='role' value='customer' />
 
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
