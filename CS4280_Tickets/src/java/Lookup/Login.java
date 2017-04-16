@@ -51,7 +51,7 @@ public class Login {
            String strQl = "SELECT * FROM dbo.userList";
            //, Email, firstName, lastName, bonus
           
-           ResultSet rs = stmt.executeQuery("SELECT Password FROM dbo.usersList WHERE UserName = 'GUOXING'");
+           ResultSet rs = stmt.executeQuery("SELECT Password FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
            if (rs != null && rs.last() != false) {
                this.setBonus(rs.getRow());
                rs.beforeFirst();
