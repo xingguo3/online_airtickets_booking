@@ -42,21 +42,21 @@ public class FlightBookHandler extends HttpServlet {
         request.setAttribute("round", round);
         request.setAttribute("action", "book");
         String role = null;
-        role = request.getParameter("role");
-        if (role == null || role.equals("passager")) {
-//            HttpSession httpSession = request.getSession(false);
-//            if (httpSession == null) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-                dispatcher.forward(request, response);
-//            }
-
-        }else {
-            HttpSession httpSession = request.getSession(false);
-            if (httpSession != null) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
-                dispatcher.forward(request, response);
-            }
+        HttpSession httpSession = request.getSession(false);
+        role = (String) httpSession.getAttribute("role");
+        if(role ==null||httpSession ==null){
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
         }
+        if (httpSession != null&&role=="customer") {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
+            dispatcher.forward(request, response);
+        }
+        if (httpSession != null&&role=="manager") {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
+            dispatcher.forward(request, response);
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

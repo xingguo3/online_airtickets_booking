@@ -41,9 +41,10 @@ public class LoginHandler extends HttpServlet {
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
                     ub.setId("userId");
-
+                    String role = "manager";
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);
+                    httpSession.setAttribute("role", role);
                     request.getRequestDispatcher("./managerIndex.jsp").forward(request, response);
                 }
                 else{ // customer
@@ -54,9 +55,10 @@ public class LoginHandler extends HttpServlet {
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
                     ub.setId("userId");
-
+                    String role = "customer";
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);
+                    httpSession.setAttribute("role", role);
                     if(request.getParameter("action").equals("book"))
                         request.getRequestDispatcher("./FlightBookHandler").forward(request, response);
                     request.getRequestDispatcher("./welcome.jsp").forward(request, response);
