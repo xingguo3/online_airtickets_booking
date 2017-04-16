@@ -19,6 +19,14 @@
             document.getElementById('return').style.visibility = "visible"; 
             
          }
+         function validate(){
+             if(document.forms["form"].departure.value==""||document.forms["form"].destination.value==""||document.forms["form"].startDate.value==""){
+            alert   ("You must input all fields");
+             return false;  
+         }
+         return true;
+               
+         }
 
     </script>
     <head>
@@ -30,7 +38,7 @@
         <input type="button" value="single trip" onclick="disableReturn()">
         <input type="button" value="round trip" onclick="enableReturn()">
         
-        <FORM id="round" ACTION="SearchFlightHandler" METHOD="POST">
+        <FORM id="form" ACTION="SearchFlightHandler" METHOD="POST">
             <input type='hidden' name='role' value='passager' />
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
@@ -43,7 +51,7 @@
             <input type=button name="rdCalendar" value="Select Date" onclick="displayDatePicker('returnDate', this);"><BR>
             </div>
             <P>
-                <INPUT TYPE="SUBMIT" NAME="flights" VALUE="Search">
+                <INPUT onclick="return validate();" TYPE="SUBMIT" NAME="flights" VALUE="Search">
             </p>
         </FORM>
 

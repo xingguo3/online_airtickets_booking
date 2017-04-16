@@ -5,6 +5,7 @@
  */
 package handler;
 
+import Lookup.searchFlight;
 import beans.FlightBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,65 +32,30 @@ public class FlightBookHandler extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                int fid=Integer.parseInt(request.getParameter("fid"));
-                //String round=request.getParameter("trip");
-//                FlightBean f;
-//                if(round.equals("go")){
-//                    ArrayList<FlightBean> deptList = (ArrayList<FlightBean>) request.getAttribute("deptFlight");
-//                    for(FlightBean dept:deptList){
-//                        if(dept.getFID()==fid)
-//                            f=dept;
-//                    }
-//                }
-//                if(round.equals("back")){
-//                     ArrayList<FlightBean> rtList = (ArrayList<FlightBean>) request.getAttribute("returnFlight");
-//                     for(FlightBean rt:rtList){
-//                        if(rt.getFID()==fid)
-//                            f=rt;
-//                    }
-//                }
-                String role=null;
-                role = request.getParameter("role");
-        if(role==null||role.equals("passager")){
+        int fid = Integer.parseInt(request.getParameter("fid"));
+        String round = request.getParameter("trip");
+        FlightBean f;
+        f = searchFlight.searchByFid(fid);
+        request.setAttribute("book", f);
+        request.setAttribute("round", round);
+        request.setAttribute("action", "book");
+        String role = null;
+        role = request.getParameter("role");
+        if (role == null || role.equals("passager")) {
             HttpSession httpSession = request.getSession(false);
-            if(httpSession == null){
+            if (httpSession == null) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             }
-            
-        }
-        else if(role.equals("manager")){
+
+        }else {
             HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){
-            
+            if (httpSession != null) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
                 dispatcher.forward(request, response);
-            
             }
-        }
-        else{
-            HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){
-                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
-                dispatcher.forward(request, response);
-            }
-        }
-                
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FlightBookHandler</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FlightBookHandler at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 

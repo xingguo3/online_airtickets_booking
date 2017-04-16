@@ -57,6 +57,8 @@ public class LoginHandler extends HttpServlet {
 
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);
+                    if(request.getParameter("action").equals("book"))
+                        request.getRequestDispatcher("./FlightBookHandler").forward(request, response);
                     request.getRequestDispatcher("./welcome.jsp").forward(request, response);
                 }
             }else{

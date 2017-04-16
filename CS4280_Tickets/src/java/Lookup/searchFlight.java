@@ -77,13 +77,48 @@ public class searchFlight {
     
     public String getTime(Connection con,int fid) throws SQLException{
         Statement stmt=con.createStatement();
-        String sql="SELECT convert(varchar(8), TakeOff, 108) from abo.flight where fid="+fid;
+        String sql="SELECT convert(varchar(8), TakeOff, 108) from dbo.flight where fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         String time=null;
         while(rs.next())
-            time= rs.getString(0);
+            time= rs.getString(1);
         stmt.close();
         return time;
         
     }
+
+    public static FlightBean searchByFid(int fid){
+        Connection con=null;
+        FlightBean f=new FlightBean();
+        try {
+            
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+            
+            Statement stmt=con.createStatement();
+            String sql="select * from dbo.flight where fid="+fid;
+            ResultSet rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                
+                f.setFID(rs.getInt("FID"));
+                f.setFlightNo(rs.getString("fNumber"));
+                f.setFrom(rs.getString("Departure"));
+                f.setTo(rs.getString("Destina"));
+                f.setPrice(rs.getInt("Price"));
+                f.setRemainSeat(rs.getInt("RemainSeat"));
+                Timestamp t=rs.getTimestamp("TakeOff");
+                f.setDeptTime(t.toString());
+                t=rs.getTimestamp("Land");
+                f.setArrivTime(t.toString());
+                f.setStatus(rs.getInt("Status"));
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(searchFlight.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return f;
+    }
 }
+

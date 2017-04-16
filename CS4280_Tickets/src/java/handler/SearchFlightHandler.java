@@ -50,8 +50,6 @@ public class SearchFlightHandler extends HttpServlet {
         String role=null;
         role = request.getParameter("role");
         if(role.equals("passager")){
-            
-            
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
                 dispatcher.forward(request, response);
             
