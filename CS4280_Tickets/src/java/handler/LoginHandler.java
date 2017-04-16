@@ -73,9 +73,9 @@ public class LoginHandler extends HttpServlet {
                     out.println("<title>Login Failed</title>");
                     out.println("</head>");
                     out.println("<body>");
-                    out.println("<p>"+email+"</p>");
-                    out.println("<p>"+bonus+"</p>");
-                    out.println("<p>"+lg.getRole()+"</p>");
+//                    out.println("<p>"+email+"</p>");
+//                    out.println("<p>"+bonus+"</p>");
+//                    out.println("<p>"+lg.getRole()+"</p>");
                     out.println("<h1>wrong username or password, please try again</h1>");
                     out.println("<a href = \"login.jsp\">Click here to login again</a>");
                     out.println("</body>");

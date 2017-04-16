@@ -52,10 +52,7 @@ public class Login {
            //, Email, firstName, lastName, bonus
           
            ResultSet rs = stmt.executeQuery("SELECT Password FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
-           if (rs != null && rs.last() != false) {
-               this.setBonus(rs.getRow());
-               rs.beforeFirst();
-           }
+           
             
            while(rs != null && rs.next() != false){
                
@@ -65,10 +62,8 @@ public class Login {
                 //this.setRole(rs.getBigDecimal("Membership").intValue());
                 //setRole(4);
                 String pasd = pswds;
-                this.setEmail(pasd);
                
                 String tmp = this.getPassword();
-                 setRole(tmp.length());
                 if(pasd!=null&&(tmp.equals(pasd))){
                     isV=true;               
                 }
