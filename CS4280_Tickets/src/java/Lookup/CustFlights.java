@@ -23,6 +23,7 @@ public class CustFlights {
     public static boolean bookFlight(int fid,int uid,String fname,String lname){
         Connection con=null;
         Statement stmt=null;
+        PreparedStatement prst=null;
         try {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -30,10 +31,13 @@ public class CustFlights {
             int status=getFlightStatus(fid,con);
             int price=getFlightPrice(fid,con);
             int id=getHisColNo(con);
-            String sql="Insert into history values("+id+", "+fid+", "+uid+", "+lname+", "+fname+
-                    ", 2,"+status+", "+price+", GETDATE())";
-            stmt=con.createStatement();
-            stmt.executeUpdate(sql);
+            
+            //String sql="Insert into history values("+id+", "+fid+", "+uid+", "+lname+", "+fname+
+              //      ", 2,"+status+", "+price+", GETDATE())";
+            //stmt=con.createStatement();
+            //stmt.executeUpdate(sql);
+            String sql="Insert into history values(?,?,?,?,?,2,?,?,GETDATE()";
+            prst=con.prepareStatement(sql);
             con.commit();
             return true;
         } catch (ClassNotFoundException ex) {
