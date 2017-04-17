@@ -17,6 +17,7 @@ import java.sql.Statement;
  * @author GUOXING
  */
 public class MgrFlights {
+    
     public static void DeleteFlights(FlightBean f) throws ClassNotFoundException, SQLException{
         f =searchFlight.searchByFid(f.getFID());
         Connection con = null;
@@ -39,6 +40,34 @@ public class MgrFlights {
            String strQl = null;
            strQl = "DELETE FROM dbo.Flight WHERE FID = '"+f.getFID()+"'";
            stmt.execute(strQl);
+           
+        }finally{
+            if (stmt!=null) {
+                stmt.close();
+            } 
+           try{
+              if(con!=null)
+                 con.close();
+           }catch(SQLException se){
+              se.printStackTrace();
+           }
+        }
+    }
+    
+    public static void AddFlights(String value) throws ClassNotFoundException, SQLException{
+        
+        Connection con = null;
+        Statement stmt = null;
+        try{
+
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+           con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+
+           stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           
+           String strQl = null;
+           strQl = "INSERT INTO dbo.Flight VALUES(value)";
+           stmt.executeQuery(strQl);
            
         }finally{
             if (stmt!=null) {

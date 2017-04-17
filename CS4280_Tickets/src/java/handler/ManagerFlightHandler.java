@@ -144,7 +144,26 @@ public class ManagerFlightHandler extends HttpServlet {
     }
 
     private void doAddNewProcess(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        <p>From: <input type='text' name='from'/></p>
+//            <p>to: <input type='text' name='to'/></p>
+//            <p>Date: <input type='date' name='date'/></p>
+//            <p>Take off: <input type='datetime' name='takeoff' value='yy-mm-dd hh-mm-ss'/></p>
+//            <p>Land: <input type='datetime' name='land' value='yy-mm-dd hh-mm-ss'/></p>
+//            <p>Price: <input type='text' name='price'/></p>
+//            <p>Total Seats: <input type='text' name='seats'/></p>
+//            <p><input type='submit' value='Confirm'/><p>
+        String fno = request.getParameter("fno");            
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+        String date = request.getParameter("date");
+        String takeoff = request.getParameter("takeoff");
+        String land = request.getParameter("land");
+        String price = request.getParameter("price");
+        String seats= request.getParameter("seats");
+        String[] datearray = date.split("-");
+        String fid = datearray[0]+datearray[1]+fno.substring(fno.length()-2,fno.length());
+        String value=
+        VALUES('4305771', 'HX772', 'HKG','BKK','2017-04-30','2017-04-30 07:50:00','2017-04-30 09:45:00','1350','110','1','Hong Kong Airline', '2017','4', '30');
     }
 
     private void doDeleteFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
