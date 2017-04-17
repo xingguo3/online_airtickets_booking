@@ -67,7 +67,7 @@ public class MgrFlights {
            
            String strQl = null;
            strQl = "INSERT INTO dbo.Flight VALUES("+value+")";
-           stmt.executeQuery(strQl);
+           stmt.execute(strQl);
            
         }finally{
             if (stmt!=null) {
