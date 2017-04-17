@@ -58,7 +58,10 @@ public class SearchFlightHandler extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
             dispatcher.forward(request, response);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/GUOXing
         else if (httpSession != null&&role=="manager") {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
                 dispatcher.forward(request, response);

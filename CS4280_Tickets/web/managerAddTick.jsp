@@ -34,15 +34,16 @@
     </head>
     <body>
         <h1>Fill in below form</h1>
-        <form action="/ManagerFlightHandler" method='POST'>
+        <form action="./ManagerFlightHandler" method='POST'>
             <input type='hidden' name='action' value='addnew'/>
             <p>Flight No.: <input type='text' name='fno'/></p>
             <p>From: <input type='text' name='from'/></p>
             <p>to: <input type='text' name='to'/></p>
             <p>Date: <input class="date" name='date'/>
             <input type=button value="Select Date" onclick="displayDatePicker('date', this);"></p>
-            <p>Take off: <input type='texe' name='takeoff' value='yyyy-mm-dd hh-mm-ss'/></p>
-            <p>Land: <input type='text' name='land' value='yyyy-mm-dd hh-mm-ss'/></p>
+            <p>Take off: <input type='texe' name='takeoff' value='yyyy-mm-dd hh:mm:ss'/></p>
+            <p>Land: <input type='text' name='land' value='yyyy-mm-dd hh:mm:ss'/></p>
+            <p>Company: <input type='text' name='company'/></p>
             <p>Price(HKD): <input type='text' name='price'/></p>
             <p>Total Seats: <input type='text' name='seats'/></p>
             <p><input type='submit' value='Confirm' onclick="return validate();"/><p>

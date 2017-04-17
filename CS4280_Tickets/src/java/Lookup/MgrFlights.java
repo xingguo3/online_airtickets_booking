@@ -66,7 +66,7 @@ public class MgrFlights {
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            
            String strQl = null;
-           strQl = "INSERT INTO dbo.Flight VALUES(value)";
+           strQl = "INSERT INTO dbo.Flight VALUES("+value+")";
            stmt.executeQuery(strQl);
            
         }finally{
