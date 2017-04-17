@@ -5,9 +5,11 @@
  */
 package handler;
 
+import Lookup.CustFlights;
 import beans.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,16 @@ public class ConfirmBookHandler extends HttpServlet {
             String lname=request.getParameter("lastname");
             int uid=u.getId();
             Boolean result=CustFlights.bookFlight(fid,uid,fname,lname);
-            
+            if(!result){
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                    out.println("Book failed. Please search again");
+                    out.println("<a href='./welcome.jsp'>Go To Search</a>");
+            }
+            else{
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/manageBooking.jsp");
+                dispatcher.forward(request, response);
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

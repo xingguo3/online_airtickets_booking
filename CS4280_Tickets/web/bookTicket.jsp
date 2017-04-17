@@ -26,7 +26,7 @@
         <p>Flight No: <%= f.getFlightNo()%></p>
         <p>Departure Time: <%= f.getDeptTime()%></p>
         <p>Arrive Time: <%=f.getArrivTime()%></p>
-        <input type="hidden" name="fid" value="<%f.getFID();%>">
+        <input type="hidden" name="fid" value='<%=f.getFID()%>'>
         <p>Last Name:<input type="text" name="lastname" ></p>
         <p>First Name:<input type="text" name="firstname"></p>
 <!--        <button onclick="addPassenger()" type="button" value="Add One More Passenger">Add One More Passenger</button>   -->
