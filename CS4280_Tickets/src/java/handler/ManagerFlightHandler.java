@@ -144,14 +144,6 @@ public class ManagerFlightHandler extends HttpServlet {
     }
 
     private void doAddNewProcess(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
-//        <p>From: <input type='text' name='from'/></p>
-//            <p>to: <input type='text' name='to'/></p>
-//            <p>Date: <input type='date' name='date'/></p>
-//            <p>Take off: <input type='datetime' name='takeoff' value='yy-mm-dd hh-mm-ss'/></p>
-//            <p>Land: <input type='datetime' name='land' value='yy-mm-dd hh-mm-ss'/></p>
-//            <p>Price: <input type='text' name='price'/></p>
-//            <p>Total Seats: <input type='text' name='seats'/></p>
-//            <p><input type='submit' value='Confirm'/><p>
         String fno = request.getParameter("fno");            
         String from = request.getParameter("from");
         String to = request.getParameter("to");
@@ -164,8 +156,16 @@ public class ManagerFlightHandler extends HttpServlet {
         String[] datearray = date.split("-");
         String fid = datearray[0]+datearray[1]+fno.substring(fno.length()-3,fno.length());
         String value="'"+ fid + "', '"+ fno + "', '"+ from + "', '"+ to + "', '"+ datearray[2]+"-"+datearray[0]+"-"+datearray[1] + "', '"+ takeoff + "', '"+ land + "', '"+ price + "', '"+ seats + "', '1', '"+ company + "', '"+ datearray[2] + "', '"+ datearray[0] + "', '"+ datearray[1] + "'";
-        //VALUES('4305771', 'HX772', 'HKG','BKK','2017-04-30','2017-04-30 07:50:00','2017-04-30 09:45:00','1350','110','1','Hong Kong Airline', '2017','4', '30');
-       MgrFlights.AddFlights(value);
+        MgrFlights.AddFlights(value);
+       PrintWriter out = response.getWriter();
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<body><p>Successful! </p>");
+                out.println("<p><a href='./managerIndex.jsp'>Click here to continue.<a></p>");
+        out.println("</body>");
+        out.println("</html>");
     }
 
     private void doDeleteFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
