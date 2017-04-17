@@ -44,6 +44,6 @@
             <input type=button value="Select Date" onclick="displayDatePicker('startDate', this);">
             <input type='submit' value='Submit'/>
         </FORM>
-        <a href=''>add new flights</a>
+        <a href='./managerAddTick.jsp'>add new flights</a>
     </body>
 </html>

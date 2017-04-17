@@ -147,12 +147,28 @@ public class ManagerFlightHandler extends HttpServlet {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void doDeleteFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+    private void doDeleteFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
         int fid = Integer.parseInt(request.getParameter("FID"));
         String round = request.getParameter("trip");
         FlightBean f;
         f = searchFlight.searchByFid(fid);
         MgrFlights.DeleteFlights(f);
+        String time = f.getDeptTime();
+        String[] dateParts=time.split(" ");
+        String ymd=(dateParts[0]);
+        String tmp=(dateParts[1]);
+        String[] time1 = ymd.split("-");
+        String mdy = time1[1]+"-"+time1[2]+"-"+time1[0];
+        PrintWriter out;
+        out = response.getWriter();
+        out.println("<html>");
+        out.println("<body>");
+                
+        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017&returnDate='>Delete</a>");
+        out.println("</body>");
+                out.println("</html>");
+//        RequestDispatcher rd = getServletContext().getRequestDispatcher("/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017");
+//        rd.forward(request, response);   
     }
 
 }
