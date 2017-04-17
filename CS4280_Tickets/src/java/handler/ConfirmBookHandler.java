@@ -41,8 +41,8 @@ public class ConfirmBookHandler extends HttpServlet {
             if(!result){
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                    out.println("Book failed. Please search again");
-                    out.println("<a href='./welcome.jsp'>Go To Search</a>");
+                out.println("Book failed. Please search again");
+                out.println("<a href='./welcome.jsp'>Go To Search</a>");
             }
             else{
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/manageBooking.jsp");
