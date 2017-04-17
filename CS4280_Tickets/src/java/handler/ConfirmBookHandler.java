@@ -32,7 +32,10 @@ public class ConfirmBookHandler extends HttpServlet {
             throws ServletException, IOException {
             int fid=Integer.parseInt(request.getParameter("fid"));
             UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+            String fname=request.getParameter("firstname");
+            String lname=request.getParameter("lastname");
             int uid=u.getId();
+            Boolean result=CustFlights.bookFlight(fid,uid,fname,lname);
             
     }
 
