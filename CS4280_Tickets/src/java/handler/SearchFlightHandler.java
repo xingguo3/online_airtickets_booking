@@ -48,34 +48,27 @@ public class SearchFlightHandler extends HttpServlet {
                 request.setAttribute("returnFlight",returnFlight);
         }
         String role=null;
-        role = request.getParameter("role");
-        if(role.equals("passager")){
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
-                dispatcher.forward(request, response);
-            
+        HttpSession httpSession = request.getSession(false);
+        role = (String) httpSession.getAttribute("role");
+        if(role ==null||httpSession ==null){
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
+            dispatcher.forward(request, response);
         }
-        else if(role.equals("manager")){
-            HttpSession httpSession = request.getSession(false);
-            if(httpSession != null){
-                httpSession.setAttribute("delfrom", from);
-                httpSession.setAttribute("delto", to);
-                httpSession.setAttribute("deltime", deptDate);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
-                dispatcher.forward(request, response);
-            
-            }
+        if (httpSession != null&&role=="customer") {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
+            dispatcher.forward(request, response);
         }
+<<<<<<< HEAD
         else{
             HttpSession httpSession = request.getSession(false);
             if(httpSession != null){
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
+=======
+        if (httpSession != null&&role=="manager") {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
+>>>>>>> origin/GUOXing
                 dispatcher.forward(request, response);
-            }
-        }
-        
-        
-        
-       
+        }  
     }
 
    
