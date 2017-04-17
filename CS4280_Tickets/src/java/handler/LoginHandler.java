@@ -40,7 +40,7 @@ public class LoginHandler extends HttpServlet {
 //                    ub.setEmail(lg.getEmail());
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
-                    ub.setId(0);
+                    ub.setId(lg.getUserId());
                     String role = "manager";
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);
@@ -54,7 +54,7 @@ public class LoginHandler extends HttpServlet {
                     //ub.setEmail(lg.getEmail());
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
-                    ub.setId(0);
+                    ub.setId(lg.getUserId());
                     String role = "customer";
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);

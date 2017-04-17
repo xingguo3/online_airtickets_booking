@@ -16,6 +16,7 @@ public class Login {
     static final String USER = "aiad092";
     static final String PASS = "aiad092";
     
+    private int userID;
     private String username;
     private String password;
     private int membership;
@@ -51,11 +52,11 @@ public class Login {
            String strQl = "SELECT * FROM dbo.userList";
            //, Email, firstName, lastName, bonus
           
-           ResultSet rs = stmt.executeQuery("SELECT Password, Membership FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
+           ResultSet rs = stmt.executeQuery("SELECT UserID, Password, Membership FROM dbo.usersList WHERE UserName = '"+this.getUsername()+"'");
            
            
            while(rs != null && rs.next() != false){
-               
+               this.setUserID(rs.getInt("UserID"));
                String pswds=rs.getString("Password");
                 //pswd = rs.getString("Password"); 
                 //this.setEmail(pswds);
@@ -107,9 +108,13 @@ public class Login {
     public int getBonus() {
         return this.bonus;
     }
+    
+    public void setUserID(int a){
+        this.userID = a;
+    }
 
-    public String getUserId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getUserId() {
+        return this.userID;
     }
     
     public void setRole(int a){
