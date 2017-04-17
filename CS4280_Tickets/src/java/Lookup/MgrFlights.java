@@ -27,17 +27,17 @@ public class MgrFlights {
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           String cancelTick=null;
-           cancelTick = "SELECT UID , ActualPrice FROM dbo.history WHERE fid = '"+f.getFID()+"'";
-           ResultSet rs = stmt.executeQuery(cancelTick);
-           while(rs.next()){
-               int UID = rs.getInt("UID");
-               int price = rs.getInt("ActualPrice");
-               String refund = "UPDATE dbo.usersList SET Account = '"+price+"' WHERE UserID = '"+UID+"'";
-               stmt.executeQuery(refund);
-           }
+//           String cancelTick=null;
+//           cancelTick = "SELECT UID , ActualPrice FROM dbo.history WHERE fid = '"+f.getFID()+"'";
+//           ResultSet rs = stmt.executeQuery(cancelTick);
+//           while(rs.next()){
+//               int UID = rs.getInt("UID");
+//               int price = rs.getInt("ActualPrice");
+//               String refund = "UPDATE dbo.usersList SET Account = '"+price+"' WHERE UserID = '"+UID+"'";
+//               stmt.executeQuery(refund);
+//           }
            String strQl = null;
-           strQl = "DELETE FROM dbo.Flights WHERE fid = '"+f.getFID()+"'";
+           strQl = "DELETE FROM dbo.Flight WHERE FID = '"+f.getFID()+"'";
            stmt.execute(strQl);
            
         }finally{

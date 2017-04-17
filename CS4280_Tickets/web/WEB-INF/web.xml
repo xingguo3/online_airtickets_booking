@@ -57,6 +57,10 @@
         <servlet-class>handler.DeleteFlightHandler</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ManagerFlightHandler</servlet-name>
+        <servlet-class>handler.ManagerFlightHandler</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteFlights</servlet-name>
         <servlet-class>Lookup.DeleteFlights</servlet-class>
     </servlet>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>DeleteFlightHandler</servlet-name>
         <url-pattern>/DeleteFlightHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerFlightHandler</servlet-name>
+        <url-pattern>/ManagerFlightHandler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteFlights</servlet-name>

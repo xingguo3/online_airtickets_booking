@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author GUOXING
  */
-public class DeleteFlightHandler extends HttpServlet {
+public class ManagerFlightHandler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,12 +38,30 @@ public class DeleteFlightHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8"); 
-        int fid = Integer.parseInt(request.getParameter("fid"));
-        String round = request.getParameter("trip");
+        
         String action = request.getParameter("action");
-        FlightBean f;
-        f = searchFlight.searchByFid(fid);
-        if(action==null){
+        
+        if (action != null) {
+            // call different action depends on the action parameter
+            if (action.equalsIgnoreCase("update")) {
+                this.doUpdateProcess(request, response);
+            }
+            else if (action.equalsIgnoreCase("delete")) {
+                this.doDeleteProcess(request, response);
+            }
+            else if (action.equalsIgnoreCase("addnew")) {
+                this.doAddNewProcess(request, response);
+            }else if(action.equalsIgnoreCase("dodelete")){
+                this.doDeleteFromJDBC(request, response);
+            }
+        }
+    }
+
+    private void doDeleteProcess(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+        int fid = Integer.parseInt(request.getParameter("fid"));
+            String round = request.getParameter("trip");
+            FlightBean f;
+            f = searchFlight.searchByFid(fid);
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
@@ -57,19 +75,17 @@ public class DeleteFlightHandler extends HttpServlet {
                 out.println("<p>Flight No.: "+f.getFlightNo()+"</p>");
                 out.println("<p>From: "+f.getFrom()+"</p>");
                 out.println("<p>To: "+f.getTo()+"</p>");
-                out.println("<button onclick='" + request.getRequestURI() + "?action=delete&FID=" + f.getFID() + "'>Delete</button>");
+                out.println("<p>"+request.getRequestURI()+"</p>");
+                out.println("<a href='/CS4280_Tickets/ManagerFlightHandler?action=dodelete&FID=" + fid + "'>Delete</a>");
                 out.println("<button onclick = 'window.history.back()'>Cancel</button>");
 
                 out.println("</body>");
                 out.println("</html>");
-            }
-        }else{
-            if (action.equalsIgnoreCase("delete")) {
-                this.deleteProcess(request, response);
-            }
+            } catch (IOException ex) {
+            Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -85,19 +101,10 @@ public class DeleteFlightHandler extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void deleteProcess(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
-        response.setContentType("text/html;charset=UTF-8"); 
-        int fid = Integer.parseInt(request.getParameter("fid"));
-        FlightBean f;
-        f = searchFlight.searchByFid(fid);
-        MgrFlights.DeleteFlights(f);
-        
     }
     
     
@@ -116,9 +123,9 @@ public class DeleteFlightHandler extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DeleteFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -131,5 +138,21 @@ public class DeleteFlightHandler extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void doUpdateProcess(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void doAddNewProcess(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void doDeleteFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+        int fid = Integer.parseInt(request.getParameter("FID"));
+        String round = request.getParameter("trip");
+        FlightBean f;
+        f = searchFlight.searchByFid(fid);
+        MgrFlights.DeleteFlights(f);
+    }
 
 }

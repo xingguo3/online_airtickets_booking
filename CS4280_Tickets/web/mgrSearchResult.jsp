@@ -46,9 +46,9 @@
                     out.print("<td>" + dept.getDeptTime() + "</td>");
                     out.print("<td>" + dept.getArrivTime() + "</td>");
                     out.print("<td>" + dept.getPrice() + "HKD</td>");
-                    out.print("<td> <a href='"+request.getContextPath()+"/UpdateFlightHandler?fid=" + dept.getFID() 
-                            + "&trip=go'>Update</a></td></tr>");
-                    out.print("<td> <a href='"+request.getContextPath()+"/DeleteFlightHandler?fid=" + dept.getFID() 
+                    out.print("<td><a href='"+request.getContextPath()+"/ManagerFlightHandler?action=update&fid=" + dept.getFID() 
+                            + "&trip=go'>Update</a></td>");
+                    out.print("<td><a href='"+request.getContextPath()+"/ManagerFlightHandler?action=delete&fid=" + dept.getFID() 
                             + "&trip=go'>Delete</a></td></tr>");
                 }%>
             
