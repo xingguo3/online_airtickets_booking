@@ -31,13 +31,17 @@ public class CustFlights {
             int status=getFlightStatus(fid,con);
             int price=getFlightPrice(fid,con);
             int id=getHisColNo(con);
-            
-            //String sql="Insert into history values("+id+", "+fid+", "+uid+", "+lname+", "+fname+
-              //      ", 2,"+status+", "+price+", GETDATE())";
-            //stmt=con.createStatement();
-            //stmt.executeUpdate(sql);
-            String sql="Insert into history values(?,?,?,?,?,2,?,?,GETDATE()";
+            String sql="Insert into dbo.history values(?,?,?,?,?,2,?,?,GETDATE())";
             prst=con.prepareStatement(sql);
+            prst.setInt(1, id);
+            prst.setInt(2, fid);
+            prst.setInt(3, uid);
+            prst.setString(4, lname);
+            prst.setString(5, fname);
+            prst.setInt(6, status);
+            prst.setInt(7, price);
+            prst.execute();
+            updateSeatNo(fid,con);
             con.commit();
             return true;
         } catch (ClassNotFoundException ex) {
@@ -65,7 +69,7 @@ public class CustFlights {
         ResultSet rs=stmt.executeQuery(sql);
         int status=1;
         while(rs.next())
-            status=rs.getInt("status");
+            status=rs.getInt(1);
         return status;
         
     }
@@ -76,7 +80,7 @@ public class CustFlights {
         ResultSet rs=stmt.executeQuery(sql);
         int price=1;
         while(rs.next())
-            price=rs.getInt("price");
+            price=rs.getInt(1);
         return price;
         
     }
