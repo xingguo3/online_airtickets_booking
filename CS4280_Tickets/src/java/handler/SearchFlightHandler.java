@@ -49,12 +49,13 @@ public class SearchFlightHandler extends HttpServlet {
         }
         String role=null;
         HttpSession httpSession = request.getSession(false);
-        role = (String) httpSession.getAttribute("role");
-        if(role ==null||httpSession ==null){
+        
+        if(httpSession ==null){
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
             dispatcher.forward(request, response);
         }
-        else if (httpSession != null&&role=="customer") {
+        role = (String) httpSession.getAttribute("role");
+        if (httpSession != null&&role=="customer") {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
             dispatcher.forward(request, response);
         }
