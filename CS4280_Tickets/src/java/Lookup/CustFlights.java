@@ -21,6 +21,39 @@ import beans.FlightBean;
  */
 public class CustFlights {
     public static boolean bookFlight(int fid,int uid,String fname,String lname){
+        Connection con=null;
+        Statement stmt=null;
+        try {
+            
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+            
+            String sql="Insert into history values((count(*) FROM dbo.history)+1, "+fid+", "+uid+", "+lname+", "+fname+
+                    ", CURRENT_TIMESTAMP, 2,)";
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+           
+    }
+    
+    public void updateSeatNo(int fid,Connection con) throws SQLException{
+        Statement stmt=con.createStatement();
+        String sql="update dbo.flight set remainseat=(select remainseat from dbo.flight where fid= "+fid+" )-1 where fid="+fid;
+        stmt.execute(sql);
+    }
+    public int getFlightStatus(int fid, Connection con) throws SQLException{
+        Statement stmt=con.createStatement();
+        String sql="select status from dbo.flight where fid="+fid;
+        ResultSet rs=stmt.executeQuery(sql);
+        int status=1;
+        while(rs.next())
+            status=rs.getInt("status");
+        return status;
         
     }
+    
+    
 }

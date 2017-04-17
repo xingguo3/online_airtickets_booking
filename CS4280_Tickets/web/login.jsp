@@ -15,9 +15,9 @@
         <FORM method='POST' action="./LoginHandler" style='width:600px;'>
             <p>username *<br/><input type='text' name='username' style='width:40%;' value='' /></p>
             <p>password *<br/><input type='text' name='password' style='width:40%;' value='' /></p>
-            <input type="hidden" name="action" value="<%request.getAttribute("action");%>">
-            <input type="hidden" name="fid" value="<%request.getParameter("fid");%>">
-            <input type="hidden" name="trip" value="<%request.getAttribute("round");%>">
+            <input type="hidden" name="action" value="<%request.getAttribute("action").toString();%>">
+            <input type="hidden" name="fid" value="<%request.getAttribute("fid").toString();%>">
+            <input type="hidden" name="trip" value="<%request.getAttribute("round").toString();%>"
             <p><input type='submit' value='Login' /></p>
         </FORM>
     </body>

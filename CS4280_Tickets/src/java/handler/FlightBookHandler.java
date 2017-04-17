@@ -39,24 +39,35 @@ public class FlightBookHandler extends HttpServlet {
         FlightBean f;
         f = searchFlight.searchByFid(fid);
         request.setAttribute("book", f);
+        request.setAttribute("fid", f.getFID());
         request.setAttribute("round", round);
         request.setAttribute("action", "book");
         String role = null;
         HttpSession httpSession = request.getSession(false);
-        role = (String) httpSession.getAttribute("role");
-        if(role ==null||httpSession ==null){
+        if(httpSession==null){
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./login.jsp");
+            dispatcher.forward(request, response);
+        }
+        else{
+            role = (String) httpSession.getAttribute("role");
+        
+        if(role ==null){
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
-        if (httpSession != null&&role=="customer") {
+        else if(role=="passenger"){
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
+        }
+        else if (httpSession != null&&role=="customer") {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
             dispatcher.forward(request, response);
         }
-        if (httpSession != null&&role=="manager") {
+        else if (httpSession != null&&role=="manager") {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
             dispatcher.forward(request, response);
         }
-        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
