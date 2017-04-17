@@ -40,7 +40,7 @@ public class CustFlights {
             prst.setString(5, fname);
             prst.setInt(6, status);
             prst.setInt(7, price);
-            prst.execute();
+            prst.executeQuery();
             updateSeatNo(fid,con);
             con.commit();
             return true;

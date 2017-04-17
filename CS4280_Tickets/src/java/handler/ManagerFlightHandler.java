@@ -166,14 +166,6 @@ public class ManagerFlightHandler extends HttpServlet {
         String value="'"+ fid + "', '"+ fno + "', '"+ from + "', '"+ to + "', '"+ datearray[2]+"-"+datearray[0]+"-"+datearray[1] + "', '"+ takeoff + "', '"+ land + "', '"+ price + "', '"+ seats + "', '1', '"+ company + "', '"+ datearray[2] + "', '"+ datearray[0] + "', '"+ datearray[1] + "'";
         //VALUES('4305771', 'HX772', 'HKG','BKK','2017-04-30','2017-04-30 07:50:00','2017-04-30 09:45:00','1350','110','1','Hong Kong Airline', '2017','4', '30');
        MgrFlights.AddFlights(value);
-       PrintWriter out = response.getWriter();
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<body><p>"+value+"</p>");
-        out.println("</body>");
-        out.println("</html>");
     }
 
     private void doDeleteFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
