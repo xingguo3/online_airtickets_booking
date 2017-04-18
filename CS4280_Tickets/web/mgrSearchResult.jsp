@@ -87,6 +87,6 @@
             
         </table>
             </br>
-        
+        <a href="./managerIndex.jsp">Go back</a>
     </body>
 </html>

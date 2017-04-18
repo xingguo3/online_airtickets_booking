@@ -165,8 +165,7 @@ public class ManagerFlightHandler extends HttpServlet {
             out.println("<p>Price: <input name='price'  type='text' value='"+f.getPrice()+"'/></p>");
             out.println("<p>Seats: <input name='seats' type='text' value='"+f.getRemainSeat()+"'/></p>");
             out.println("<p>Status: " +
-                            "<input type=\"radio\" name=\"status\" value=\"0\" checked> Cancel this Flight<br>\n" +
-                            "    <input type=\"radio\" name=\"status\" value=\"1\"> Normal<br>\n" +
+                            "    <input type=\"radio\" name=\"status\" value=\"1\" checked> Normal<br>\n" +
                             "    <input type=\"radio\" name=\"status\" value=\"2\"> Delay\n" +
                             "</p>");
             out.println("<input type='submit' value='Update'/></form>");
@@ -213,7 +212,6 @@ public class ManagerFlightHandler extends HttpServlet {
         String time = f.getDeptTime();
         String[] dateParts=time.split(" ");
         String ymd=(dateParts[0]);
-        String tmp=(dateParts[1]);
         String[] time1 = ymd.split("-");
         String mdy = time1[1]+"-"+time1[2]+"-"+time1[0];
         PrintWriter out;
@@ -221,7 +219,7 @@ public class ManagerFlightHandler extends HttpServlet {
         out.println("<html>");
         out.println("<body>");
                 
-        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017&returnDate='>Done</a>");
+        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate="+mdy+"&returnDate='>Done</a>");
         out.println("</body>");
         out.println("</html>");
 //        RequestDispatcher rd = getServletContext().getRequestDispatcher("/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017");
@@ -236,12 +234,18 @@ public class ManagerFlightHandler extends HttpServlet {
         int seats = Integer.parseInt(request.getParameter("seats"));
         int status = Integer.parseInt(request.getParameter("status"));
         MgrFlights.UpdateFlight(fid, takeoff, land, price, seats, status);
+        FlightBean f;
+        f = searchFlight.searchByFid(fid);
+        String time = f.getDeptTime();
+        String[] dateParts=time.split(" ");
+        String ymd=(dateParts[0]);
+        String[] time1 = ymd.split("-");
+        String mdy = time1[1]+"-"+time1[2]+"-"+time1[0];
         PrintWriter out;
         out = response.getWriter();
         out.println("<html>");
         out.println("<body>");
-        out.println("<p>"+status+"</p>");
-        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-15-2017&returnDate='>Done</a>");
+        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate="+mdy+"&returnDate='>Done</a>");
         out.println("</body>");
         out.println("</html>");
             
