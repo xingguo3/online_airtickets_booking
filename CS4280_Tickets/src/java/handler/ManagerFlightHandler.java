@@ -157,9 +157,9 @@ public class ManagerFlightHandler extends HttpServlet {
             out.println("<p>Flight No.: "+f.getFlightNo()+"</p>");
             out.println("<p>From: "+f.getFrom()+"</p>");
             out.println("<p>To: "+f.getTo()+"</p>");
-            out.println("<form action='/CS4280_Tickets/ManagerFlightHandle' method='POST'>");
-            out.println("<input action='doupdate' type='hidden'>");
-            out.println("<input fid='"+f.getFID()+"' type='hidden'>");
+            out.println("<form action='/CS4280_Tickets/ManagerFlightHandler' method='POST'>");
+            out.println("<input name='action' value='doupdate' type='hidden'>");
+            out.println("<input name='fid' value='"+f.getFID()+"' type='hidden'>");
             out.println("<p>Takeoff: <input name='takeoff' type='text' value='"+f.getDeptTime()+"'/></p>");
             out.println("<p>Land: <input name='land'  type='text' value='"+f.getArrivTime()+"'/></p>");
             out.println("<p>Price: <input name='price'  type='text' value='"+f.getPrice()+"'/></p>");
@@ -221,31 +221,29 @@ public class ManagerFlightHandler extends HttpServlet {
         out.println("<html>");
         out.println("<body>");
                 
-        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017&returnDate='>Delete</a>");
+        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017&returnDate='>Done</a>");
         out.println("</body>");
         out.println("</html>");
 //        RequestDispatcher rd = getServletContext().getRequestDispatcher("/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017");
 //        rd.forward(request, response);   
     }
 
-    private void doUpdateFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, SQLException, SQLException, SQLException {
+    private void doUpdateFromJDBC(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, SQLException, SQLException, SQLException, IOException {
         int fid = Integer.parseInt(request.getParameter("fid"));
         String takeoff = request.getParameter("takeoff");
         String land = request.getParameter("land");
         int price = Integer.parseInt(request.getParameter("price"));
         int seats = Integer.parseInt(request.getParameter("seats"));
         int status = Integer.parseInt(request.getParameter("status"));
-        if(status==0){
-            FlightBean f;
-            f = searchFlight.searchByFid(fid);
-            try {
-                MgrFlights.DeleteFlights(f);
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            
-        }
+        MgrFlights.UpdateFlight(fid, takeoff, land, price, seats, status);
+        PrintWriter out;
+        out = response.getWriter();
+        out.println("<html>");
+        out.println("<body>");
+        out.println("<p>"+status+"</p>");
+        out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-15-2017&returnDate='>Done</a>");
+        out.println("</body>");
+        out.println("</html>");
             
     }
 

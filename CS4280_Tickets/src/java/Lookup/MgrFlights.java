@@ -92,7 +92,7 @@ public class MgrFlights {
                con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
 
                String strQl = null;
-               strQl="UPDATE dbo.Flight SET takepff=?, land=?,price=?,seats=?, status=? WHERE FID=?";
+               strQl="UPDATE dbo.Flight SET Takeoff=?, Land=?,Price=?,RemainSeat=?, Status=? WHERE FID=?";
                PreparedStatement ps = con.prepareStatement(strQl);
                ps.setString(1, takeoff);
                ps.setString(2, land);
@@ -100,7 +100,6 @@ public class MgrFlights {
                ps.setInt(4, seats);
                ps.setInt(5, status);
                ps.setInt(6, fid);
-             
                ps.execute();
             }finally{
                 if (stmt!=null) {
