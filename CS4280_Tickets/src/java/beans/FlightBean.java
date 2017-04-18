@@ -23,7 +23,7 @@ public class FlightBean {
     private int price;
     private String airType;
     private int status;
-    
+   
     public void setFID(int id){
         fID=id;
     }

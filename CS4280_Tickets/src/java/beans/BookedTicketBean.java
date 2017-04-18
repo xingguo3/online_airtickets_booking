@@ -22,6 +22,21 @@ public class BookedTicketBean {
     private String fname;
     private Date bTime; 
     private String fStatus;
+    private FlightBean f;
+    
+    public void setFlight(FlightBean fb ){
+        f=fb;
+    }
+    public FlightBean getFlight(){
+        return f;
+    }
+    public void setBTime(Date d){
+        bTime=d;
+    }
+    
+    public Date getBTime(){
+        return bTime;
+    }
     
     public void setId(int _id){
         id=_id;

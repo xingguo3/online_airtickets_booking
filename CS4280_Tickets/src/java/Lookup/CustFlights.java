@@ -127,6 +127,9 @@ public class CustFlights {
                  b.setUserID(rs.getInt("UID"));
                  b.setActualPrice(rs.getInt("ActualPrice"));
                  b.setFStatus(rs.getInt("FlightStatus"));
+                 b.setBTime(rs.getDate("bookingTime"));
+                 FlightBean f=searchFlight.searchByFid(rs.getInt("FID"));
+                 b.setFlight(f);
                  blist.add(b);
              }
              rs.close();
