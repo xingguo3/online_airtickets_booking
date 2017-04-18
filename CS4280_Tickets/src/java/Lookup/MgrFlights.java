@@ -8,6 +8,7 @@ package Lookup;
 import beans.FlightBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,5 +81,38 @@ public class MgrFlights {
               se.printStackTrace();
            }
         }
+    }    
+    
+    public static void UpdateFlight(int fid, String takeoff, String land, int price, int seats, int status) throws ClassNotFoundException, SQLException{
+            Connection con = null;
+            Statement stmt = null;
+            try{
+
+               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+               con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+
+               String strQl = null;
+               strQl="UPDATE dbo.Flight SET takepff=?, land=?,price=?,seats=?, status=? WHERE FID=?";
+               PreparedStatement ps = con.prepareStatement(strQl);
+               ps.setString(1, takeoff);
+               ps.setString(2, land);
+               ps.setInt(3, price);
+               ps.setInt(4, seats);
+               ps.setInt(5, status);
+               ps.setInt(6, fid);
+             
+               ps.execute();
+            }finally{
+                if (stmt!=null) {
+                    stmt.close();
+                } 
+               try{
+                  if(con!=null)
+                     con.close();
+               }catch(SQLException se){
+                  se.printStackTrace();
+               }
+            }
+        
     }
 }
