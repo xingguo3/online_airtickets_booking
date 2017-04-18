@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Lookup;
+import beans.BookedTicketBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ import beans.FlightBean;
 public class CustFlights {
     public static boolean bookFlight(int fid,int uid,String fname,String lname){
         Connection con=null;
-        Statement stmt=null;
+      //  Statement stmt=null;
         PreparedStatement prst=null;
         try {
             
@@ -43,6 +44,8 @@ public class CustFlights {
             prst.execute();
             updateSeatNo(fid,con);
             con.commit();
+            prst.close();
+            con.close();
             return true;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,6 +57,7 @@ public class CustFlights {
                 Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
+        
         return false;
            
     }
@@ -62,6 +66,7 @@ public class CustFlights {
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         String sql="update dbo.flight set remainseat=(select remainseat from dbo.flight where fid= "+fid+" )-1 where fid="+fid;
         stmt.execute(sql);
+ //       stmt.close();
     }
     public static int getFlightStatus(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -70,6 +75,8 @@ public class CustFlights {
         int status=1;
         while(rs.next())
             status=rs.getInt(1);
+        stmt.close();
+        rs.close();
         return status;
         
     }
@@ -81,6 +88,8 @@ public class CustFlights {
         int price=1;
         while(rs.next())
             price=rs.getInt(1);
+        stmt.close();
+        rs.close();
         return price;
         
     }
@@ -92,6 +101,42 @@ public class CustFlights {
         int n=1;
         while(rs.next())
             n=rs.getInt(1);
+        stmt.close();
+        rs.close();
         return n+1;
+    }
+    
+    public static ArrayList<BookedTicketBean> findHistoryByUid(int uid){
+        Connection con=null;
+        Statement stmt=null;
+        ResultSet rs=null;
+        ArrayList<BookedTicketBean> blist=new ArrayList<>();
+         try{
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             String sql="select * from dbo.history where uid= "+uid;
+             stmt=con.createStatement();
+             rs=stmt.executeQuery(sql);
+             while(rs.next()){
+                 BookedTicketBean b=new BookedTicketBean();
+                 b.setId(rs.getInt("ID"));
+                 b.setFlightId(rs.getInt("FID"));
+                 b.setLname(rs.getString("LastName"));
+                 b.setFname(rs.getString("FirstName"));
+                 b.setStatus(rs.getInt("BookingStatus"));
+                 b.setUserID(rs.getInt("UID"));
+                 b.setActualPrice(rs.getInt("ActualPrice"));
+                 b.setFStatus(rs.getInt("FlightStatus"));
+                 blist.add(b);
+             }
+             rs.close();
+             stmt.close();
+             con.close();
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return blist;
     }
 }

@@ -45,7 +45,7 @@ public class ConfirmBookHandler extends HttpServlet {
                 out.println("<a href='./welcome.jsp'>Go To Search</a>");
             }
             else{
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/manageBooking.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManageBookingHandler");
                 dispatcher.forward(request, response);
             }
     }
