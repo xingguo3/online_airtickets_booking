@@ -166,7 +166,7 @@ public class ManagerFlightHandler extends HttpServlet {
             out.println("<p>Seats: <input name='seats' type='text' value='"+f.getRemainSeat()+"'/></p>");
             out.println("<p>Status: " +
                             "    <input type=\"radio\" name=\"status\" value=\"1\" checked> Normal<br>\n" +
-                            "    <input type=\"radio\" name=\"status\" value=\"2\"> Delay\n" +
+                            "    <input type=\"radio\" name=\"status\" value=\"0\"> Delay\n" +
                             "</p>");
             out.println("<input type='submit' value='Update'/></form>");
             out.println("<button onclick = 'window.history.back()'>Cancel</button>");
