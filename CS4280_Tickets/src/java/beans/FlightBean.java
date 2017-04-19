@@ -22,7 +22,7 @@ public class FlightBean {
     private double discount;
     private int price;
     private String airType;
-    private int status;
+    private String status;
    
     public void setFID(int id){
         fID=id;
@@ -85,9 +85,12 @@ public class FlightBean {
         return arrivTime;
     }
     public void setStatus(int _status){
-        status=_status;
+        if(_status==0)
+            status="Delayed";
+        if(_status==1)
+            status="Normal";
     }
-    public int getStatus(){
+    public String getStatus(){
         return status;
     }
 }

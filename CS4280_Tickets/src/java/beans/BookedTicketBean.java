@@ -64,11 +64,13 @@ public class BookedTicketBean {
     }
     public void setStatus(int _status){
         if(_status==0)
-            status="refunded";
+            status="Pending for Refund";
         if(_status==1)
-            status="used";
+            status="Approved";
         if(_status==2)
-            status="unused";
+            status="Normal";
+        if(_status==3)
+            status="Refused";
     }
     public String getStatus(){
         return status;
