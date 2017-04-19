@@ -63,7 +63,7 @@
         <a href=''>Upgrade my account</a>
         <a href=''>show miles</a>
         <a href=''>show bonus</a>
-        <a href=''>purchase history</a> 
+        <a href='/CS4280_Tickets/ManageBookingHandler'>purchase history</a> 
        
     </body>
 </html>

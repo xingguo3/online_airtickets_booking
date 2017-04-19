@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Refund request</title>
+        <title>Booking History</title>
     </head>
     <body>
         <h1>My Booking</h1>
@@ -30,13 +30,14 @@
                 <td>Price</td>
             </tr>    
             <%for(BookedTicketBean b:blist){%>
-                <tr>
+                <tr >
                     <td><%= b.getBTime().toString()%></td>
                     <td><%= b.getFlight().getFlightNo()%></td>
                     <td><%= b.getFlight().getFrom()%> --- <%= b.getFlight().getTo()%></td>
                     <td><%= b.getFlight().getDeptTime()%> --- <%=b.getFlight().getArrivTime()%></td>
                     <td><%= b.getStatus()%></td>
                     <td><%= b.getActualPrice()%>HKD</td>
+                    <td><a href="/CS4280_Tickets/ViewDetailHandler?id=<%=b.getId()%>">view detail</a></td>
                 </tr>
             <%      }
                 }%>

@@ -68,6 +68,10 @@
         <servlet-name>ConfirmBookHandler</servlet-name>
         <servlet-class>handler.ConfirmBookHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewDetailHandler</servlet-name>
+        <servlet-class>handler.ViewDetailHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>ConfirmBookHandler</servlet-name>
         <url-pattern>/ConfirmBookHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailHandler</servlet-name>
+        <url-pattern>/ViewDetailHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
