@@ -142,4 +142,41 @@ public class CustFlights {
         }
          return blist;
     }
+
+    public static ArrayList<BookedTicketBean> findHistoryByStatus(int status) {
+        Connection con=null;
+        Statement stmt=null;
+        ResultSet rs=null;
+        ArrayList<BookedTicketBean> blist=new ArrayList<>();
+         try{
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             String sql="select * from dbo.history where status= "+status;
+             stmt=con.createStatement();
+             rs=stmt.executeQuery(sql);
+             while(rs.next()){
+                 BookedTicketBean b=new BookedTicketBean();
+                 b.setId(rs.getInt("ID"));
+                 b.setFlightId(rs.getInt("FID"));
+                 b.setLname(rs.getString("LastName"));
+                 b.setFname(rs.getString("FirstName"));
+                 b.setStatus(rs.getInt("BookingStatus"));
+                 b.setUserID(rs.getInt("UID"));
+                 b.setActualPrice(rs.getInt("ActualPrice"));
+                 b.setFStatus(rs.getInt("FlightStatus"));
+                 b.setBTime(rs.getDate("bookingTime"));
+                 FlightBean f=searchFlight.searchByFid(rs.getInt("FID"));
+                 b.setFlight(f);
+                 blist.add(b);
+             }
+             rs.close();
+             stmt.close();
+             con.close();
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return blist;
+    }
 }
