@@ -32,6 +32,7 @@
             <% }else if (deptList.size() != 0) { %>
             <tr>
                 <td>Flight No</td>
+                <td>Company</td>
                 <td>From</td>
                 <td>To</td>
                 <td>Departure Time</td>
@@ -39,18 +40,16 @@
                 <td>Price</td>
                 <td></td>
             </tr>
-            <% for (FlightBean dept : deptList) {
-                    out.print("</tr><td>" + dept.getFlightNo() + "</td>");
-                    out.print("<td>" + dept.getFrom() + "</td>");
-                    out.print("<td>" + dept.getTo() + "</td>");
-                    out.print("<td>" + dept.getDeptTime() + "</td>");
-                    out.print("<td>" + dept.getArrivTime() + "</td>");
-                    out.print("<td>" + dept.getPrice() + "HKD</td>");
-                    out.print("<td> <a href='"+request.getContextPath()+"/FlightBookHandler?fid=" + dept.getFID() 
-                            + "&trip=go'>Book</a></td></tr>");
-                }%>
-            
-            <% } %>
+            <% for (FlightBean dept : deptList) {%>
+                    </tr><td> <%=dept.getFlightNo() %></td>
+                    <td><%= dept.getFrom() %></td>
+                    <td><%=dept.getTo() %></td>
+                    <td><%= dept.getDeptTime() %></td>
+                    <td><%= dept.getArrivTime() %></td>
+                    <td><%= dept.getPrice() %>HKD</td>
+                    <td> <a href="<%=request.getContextPath()%>/FlightBookHandler?fid=<%=dept.getFID()%>&trip=go">Book</a></td></tr>
+              <%  }
+             } %>
 
             
         </table>
@@ -69,18 +68,17 @@
                 <td>Price</td>
                 <td></td>
             </tr>
-            <% for (FlightBean rt : rtList) {
-                    out.print("<td>" + rt.getFlightNo() + "</td>");
-                    out.print("<td>" + rt.getFrom() + "</td>");
-                    out.print("<td>" + rt.getTo() + "</td>");
-                    out.print("<td>" + rt.getDeptTime() + "</td>");
-                    out.print("<td>" + rt.getArrivTime() + "</td>");
-                    out.print("<td>" + rt.getPrice() + "HKD</td>");
-                    out.print("<td>  <a href='"+request.getContextPath()+"/FlightBookHandler?fid=" + rt.getFID() 
-                            +"&trip=back'>Book</a></td></tr>");
-                }%>
+            <% for (FlightBean rt : rtList) {%>
+                     </tr><td> <%=rt.getFlightNo() %></td>
+                    <td><%= rt.getFrom() %></td>
+                    <td><%=rt.getTo() %></td>
+                    <td><%= rt.getDeptTime() %></td>
+                    <td><%= rt.getArrivTime() %></td>
+                    <td><%= rt.getPrice() %>HKD</td>
+                    <td> <a href="<%=request.getContextPath()%>/FlightBookHandler?fid=<%=rt.getFID()%>&trip=back">Book</a></td></tr>
+            <%  }
             
-            <% } %>
+             } %>
 
             
         </table>

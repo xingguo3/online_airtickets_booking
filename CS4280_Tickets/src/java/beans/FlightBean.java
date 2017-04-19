@@ -21,7 +21,7 @@ public class FlightBean {
     private int remainSeat;
     private double discount;
     private int price;
-    private String airType;
+    private String company;
     private String status;
    
     public void setFID(int id){
@@ -66,11 +66,11 @@ public class FlightBean {
     public int getPrice(){
         return price;
     }
-     public void setAirType(String _airType){
-        airType=_airType;
+     public void setCompany(String _company){
+        company=_company;
     }
-    public String getAirType(){
-        return airType;
+    public String getCompany(){
+        return company;
     }
     public void setDeptTime(String _deptTime){
         deptTime=_deptTime;

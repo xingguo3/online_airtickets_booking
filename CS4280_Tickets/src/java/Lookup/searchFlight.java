@@ -55,6 +55,7 @@ public class searchFlight {
                 t=rs.getTimestamp("Land");
                 f.setArrivTime(t.toString());
                 f.setStatus(rs.getInt("Status"));
+                f.setCompany(rs.getString("Company"));
                 if(f.getRemainSeat()>0)
                     flightList.add(f);
             }
@@ -111,6 +112,7 @@ public class searchFlight {
                 t=rs.getTimestamp("Land");
                 f.setArrivTime(t.toString());
                 f.setStatus(rs.getInt("Status"));
+                f.setCompany(rs.getString("Company"));
             }
             rs.close();
             stmt.close();
