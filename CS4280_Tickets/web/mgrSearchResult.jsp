@@ -40,7 +40,7 @@
                 <td></td>
             </tr>
             <% for (FlightBean dept : deptList) {
-                    out.print("</tr><td>" + dept.getFlightNo() + "</td>");
+                    out.print("<tr><td>" + dept.getFlightNo() + "</td>");
                     out.print("<td>" + dept.getFrom() + "</td>");
                     out.print("<td>" + dept.getTo() + "</td>");
                     out.print("<td>" + dept.getDeptTime() + "</td>");

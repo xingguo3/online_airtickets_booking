@@ -2,6 +2,7 @@
     Document   : manageBooking
     Created on : Mar 20, 2017, 8:47:02 PM
     Author     : jzhang387
+    customer check purchase history
 --%>
 
 <%@page import="beans.BookedTicketBean"%>
@@ -13,7 +14,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<<<<<<< HEAD
         <title>Booking History</title>
+=======
+        <title>History</title>
+>>>>>>> origin/GUOXing
     </head>
     <body>
         <h1>My Booking</h1>

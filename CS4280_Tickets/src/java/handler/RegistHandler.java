@@ -93,10 +93,11 @@ public class RegistHandler extends HttpServlet {
                 html.append("<legend>Please fill in the form below</legend>");
                 html.append("<input type='hidden' name='page' value='2' />");
                 html.append("<p>user name *<br/><input type='text' name='username' style='width:100%;' value='' /></p>");
-                html.append("<p>gender *<br/>\n" +
-                            "  <input type=\"radio\" name=\"gender\" value=\"male\" checked> Male<br>\n" +
-                            "  <input type=\"radio\" name=\"gender\" value=\"female\"> Female<br>\n" +
-                            "  <input type=\"radio\" name=\"gender\" value=\"other\"> Other\n" +
+                html.append("<p>Gender: <select name='gender'>\n" +
+                            "  <option value=\"male\">Male</option>\n" +
+                            "  <option value=\"female\">Female</option>\n" +
+                            "  <option value=\"other\">Other</option>\n" +
+                            "</select>" +
                             "</p>");
                 html.append("<p>Password *<br/><input type='text' name='password' style='width:100%;' value='' /></p>");
                 html.append("<p>First Name *<br/><input type='text' name='firstname' style='width:100%;' value='' /></p>");
