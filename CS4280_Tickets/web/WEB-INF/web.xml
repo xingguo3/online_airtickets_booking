@@ -14,7 +14,7 @@
     </servlet>
     <servlet>
         <servlet-name>searchFlight</servlet-name>
-        <servlet-class>Lookup.searchFlight</servlet-class>
+        <servlet-class>Lookup.SearchFlight</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchFlightHandler</servlet-name>
@@ -71,6 +71,10 @@
     <servlet>
         <servlet-name>ViewDetailHandler</servlet-name>
         <servlet-class>handler.ViewDetailHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApplyRefundHandler</servlet-name>
+        <servlet-class>handler.ApplyRefundHandler</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>ViewDetailHandler</servlet-name>
         <url-pattern>/ViewDetailHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApplyRefundHandler</servlet-name>
+        <url-pattern>/ApplyRefundHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

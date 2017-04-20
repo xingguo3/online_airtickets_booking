@@ -20,7 +20,7 @@ import java.sql.Statement;
 public class MgrFlights {
     
     public static void DeleteFlights(FlightBean f) throws ClassNotFoundException, SQLException{
-        f =searchFlight.searchByFid(f.getFID());
+        f =SearchFlight.searchByFid(f.getFID());
         Connection con = null;
         Statement stmt = null;
         try{

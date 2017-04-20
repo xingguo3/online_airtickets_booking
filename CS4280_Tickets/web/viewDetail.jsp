@@ -21,7 +21,11 @@
         <p><%= b.getFlight().getDeptTime()%> To <%=b.getFlight().getArrivTime()%></p>
         <p>Passenger: <%= b.getLname()%><%=b.getFname()%></p>
         <p>Actual Price: <%= b.getActualPrice()%> HKD</p>
-        <p>Status:<%= b.getStatus()%></p>
-        <% if(b.getStatus().equals(""))%>
+        <p>Status:<%= b.getStatus()%>
+        <% if(b.getStatus().equals("Normal")){%>
+            <a href="/CS4280_Tickets/ApplyRefundHandler?id=<%= b.getId()%>">Apply for Refund</a>
+            <% }%>
+        </p>
+        <button onclick="window.print()">Print</button>
     </body>
 </html>

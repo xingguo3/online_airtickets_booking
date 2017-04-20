@@ -5,7 +5,7 @@
  */
 package handler;
 
-import Lookup.searchFlight;
+import Lookup.SearchFlight;
 import beans.FlightBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +37,7 @@ public class FlightBookHandler extends HttpServlet {
         int fid = Integer.parseInt(request.getParameter("fid"));
         String round = request.getParameter("trip");
         FlightBean f;
-        f = searchFlight.searchByFid(fid);
+        f = SearchFlight.searchByFid(fid);
         request.setAttribute("book", f);
         request.setAttribute("fid", f.getFID());
         request.setAttribute("round", round);

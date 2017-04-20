@@ -128,7 +128,7 @@ public class CustFlights {
                  b.setActualPrice(rs.getInt("ActualPrice"));
                  b.setFStatus(rs.getInt("FlightStatus"));
                  b.setBTime(rs.getDate("bookingTime"));
-                 FlightBean f=searchFlight.searchByFid(rs.getInt("FID"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
                  blist.add(b);
              }
@@ -166,7 +166,7 @@ public class CustFlights {
                  b.setActualPrice(rs.getInt("ActualPrice"));
                  b.setFStatus(rs.getInt("FlightStatus"));
                  b.setBTime(rs.getDate("bookingTime"));
-                 FlightBean f=searchFlight.searchByFid(rs.getInt("FID"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
                  blist.add(b);
              }
@@ -203,7 +203,7 @@ public class CustFlights {
                  b.setActualPrice(rs.getInt("ActualPrice"));
                  b.setFStatus(rs.getInt("FlightStatus"));
                  b.setBTime(rs.getDate("bookingTime"));
-                 FlightBean f=searchFlight.searchByFid(rs.getInt("FID"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
                  
              }
@@ -216,5 +216,34 @@ public class CustFlights {
             Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
         }
          return b;
+    }
+    
+    public static boolean applyForRefund(int id,int uid){
+         Connection con=null;
+      //  Statement stmt=null;
+        PreparedStatement prst=null;
+        try {
+            
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+            String sql="insert into dbo.refund values(?,?,0,'/',GETDATE())";
+            prst=con.prepareStatement(sql);
+            prst.setInt(1, id);
+            prst.setInt(2, uid);
+            prst.execute();
+            con.commit();
+            prst.close();
+            con.close();
+            return true;
+            
+            
+        
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 }

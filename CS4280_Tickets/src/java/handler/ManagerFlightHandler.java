@@ -6,7 +6,7 @@
 package handler;
 
 import Lookup.MgrFlights;
-import Lookup.searchFlight;
+import Lookup.SearchFlight;
 import beans.FlightBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,7 +63,7 @@ public class ManagerFlightHandler extends HttpServlet {
         int fid = Integer.parseInt(request.getParameter("fid"));
             String round = request.getParameter("trip");
             FlightBean f;
-            f = searchFlight.searchByFid(fid);
+            f = SearchFlight.searchByFid(fid);
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
@@ -143,7 +143,7 @@ public class ManagerFlightHandler extends HttpServlet {
     private void doUpdateProcess(HttpServletRequest request, HttpServletResponse response) {
         int fid = Integer.parseInt(request.getParameter("fid"));
         FlightBean f;
-        f = searchFlight.searchByFid(fid);
+        f = SearchFlight.searchByFid(fid);
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -207,7 +207,7 @@ public class ManagerFlightHandler extends HttpServlet {
         int fid = Integer.parseInt(request.getParameter("FID"));
         String round = request.getParameter("trip");
         FlightBean f;
-        f = searchFlight.searchByFid(fid);
+        f = SearchFlight.searchByFid(fid);
         MgrFlights.DeleteFlights(f);
         String time = f.getDeptTime();
         String[] dateParts=time.split(" ");
@@ -235,7 +235,7 @@ public class ManagerFlightHandler extends HttpServlet {
         int status = Integer.parseInt(request.getParameter("status"));
         MgrFlights.UpdateFlight(fid, takeoff, land, price, seats, status);
         FlightBean f;
-        f = searchFlight.searchByFid(fid);
+        f = SearchFlight.searchByFid(fid);
         String time = f.getDeptTime();
         String[] dateParts=time.split(" ");
         String ymd=(dateParts[0]);

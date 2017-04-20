@@ -5,22 +5,23 @@
  */
 package handler;
 
+import Lookup.CustFlights;
 import Lookup.SearchFlight;
+import beans.BookedTicketBean;
+import beans.FlightBean;
+import beans.UserBean;
 import java.io.IOException;
-import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import beans.FlightBean;
-import javax.servlet.RequestDispatcher;
 
 /**
  *
- * @author GUOXING
+ * @author User
  */
-public class SearchFlightHandler extends HttpServlet {
+public class ApplyRefundHandler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,41 +34,32 @@ public class SearchFlightHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-        String from, to, deptDate, returnDate;
-        from = request.getParameter("departure");
-        to = request.getParameter("destination");
-        deptDate = request.getParameter("startDate");
-        returnDate = request.getParameter("returnDate");
-        ArrayList deptFlight = new ArrayList<FlightBean>();
-        ArrayList returnFlight = new ArrayList<FlightBean>();
-        deptFlight = SearchFlight.searchSingleFlight(from, to, deptDate);
-        request.setAttribute("deptFlight", deptFlight);
-        if (!returnDate.equals("") && returnDate != null) {
-                returnFlight = SearchFlight.searchSingleFlight(to, from, returnDate);
-                request.setAttribute("returnFlight",returnFlight);
+        int id=Integer.parseInt(request.getParameter("id"));
+        BookedTicketBean b=CustFlights.findHistoryByid(id);
+        Boolean result=false;
+        UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+        int uid=u.getId();
+                if(b.getStatus().equals("Normal"))
+            result=CustFlights.applyForRefund(id,uid);
+        if(!result){
+         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("Apply failed.");
+            out.println("<a onclick='window.history.back()'>back</a>");
+            
         }
-        String role=null;
-        HttpSession httpSession = request.getSession(false);
-        role = request.getParameter("role");
-        if(role!=null&&role.equals("passager")){
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
-            dispatcher.forward(request, response);
         }
-        else{
-            role = (String) httpSession.getAttribute("role");
-            if (httpSession != null&&role=="customer") {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
-                dispatcher.forward(request, response);
-            }
-            else if (httpSession != null&&role=="manager") {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
-                    dispatcher.forward(request, response);
-            }  
-        }
-    }
-
-   
+         if(result){
+              try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("Apply successful.Please wait for admin to approve.");
+            out.println("<a href='/CS4280_Tickets/ManageBookingHandle'>back</a>");
+            
+        }  
+      }
+        
+    
+  }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
