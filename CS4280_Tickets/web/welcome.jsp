@@ -61,9 +61,8 @@
         </FORM>
         <a href=''>Show my account level</a>
         <a href=''>Upgrade my account</a>
-        <a href=''>show miles</a>
-        <a href=''>show bonus</a>
         <a href='/CS4280_Tickets/ManageBookingHandler'>purchase history</a> 
        
+        <br/><a href='./LogoutHandler'>Logout</a>
     </body>
 </html>

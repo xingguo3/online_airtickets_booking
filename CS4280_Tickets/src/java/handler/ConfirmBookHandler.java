@@ -32,21 +32,36 @@ public class ConfirmBookHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            int fid=Integer.parseInt(request.getParameter("fid"));
-            UserBean u=(UserBean)request.getSession().getAttribute("userbean");
-            String fname=request.getParameter("firstname");
-            String lname=request.getParameter("lastname");
-            int uid=u.getId();
-            Boolean result=CustFlights.bookFlight(fid,uid,fname,lname);
-            if(!result){
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("Book failed. Please search again");
-                out.println("<a href='./welcome.jsp'>Go To Search</a>");
-            }
-            else{
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManageBookingHandler");
-                dispatcher.forward(request, response);
+            if(request.getSession(false)!=null){
+                int fid=Integer.parseInt(request.getParameter("fid"));
+                UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+                String fname=request.getParameter("firstname");
+                String lname=request.getParameter("lastname");
+                int uid=u.getId();
+                Boolean result=CustFlights.bookFlight(fid,uid,fname,lname);
+                if(!result){
+                    response.setContentType("text/html;charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.println("Book failed. Please search again");
+                    out.println("<a href='./welcome.jsp'>Go To Search</a>");
+                }
+                else{
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManageBookingHandler");
+                    dispatcher.forward(request, response);
+                }
+            }else{
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Time out, please login again</title>");            
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<h3>Time out, please login again</h3>"); 
+                    out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
             }
     }
 

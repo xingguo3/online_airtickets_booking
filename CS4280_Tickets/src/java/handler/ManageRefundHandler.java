@@ -40,15 +40,29 @@ public class ManageRefundHandler extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         
         String action = request.getParameter("action");
-        
-        if (action != null) {
-            // call different action depends on the action parameter
-            if (action.equalsIgnoreCase("search")) {
-                this.doSearchProcess(request, response);
-            }else if(action.equalsIgnoreCase("approve")){
-                this.doApproveProcess(request, response);
-            }else if(action.equalsIgnoreCase("refuse")){
-                this.doRefuseProcess(request, response);
+        if (request.getSession(false)!=null) {
+            if (action != null) {
+                // call different action depends on the action parameter
+                if (action.equalsIgnoreCase("search")) {
+                    this.doSearchProcess(request, response);
+                }else if(action.equalsIgnoreCase("approve")){
+                    this.doApproveProcess(request, response);
+                }else if(action.equalsIgnoreCase("refuse")){
+                    this.doRefuseProcess(request, response);
+                }
+            }
+        }else{
+            try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Time out, please login again</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h3>Time out, please login again</h3>"); 
+                out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
+                out.println("</body>");
+                out.println("</html>");
             }
         }
             
