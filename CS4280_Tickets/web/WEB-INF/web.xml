@@ -72,6 +72,10 @@
         <servlet-name>ViewDetailHandler</servlet-name>
         <servlet-class>handler.ViewDetailHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutHandler</servlet-name>
+        <servlet-class>handler.LogoutHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>ViewDetailHandler</servlet-name>
         <url-pattern>/ViewDetailHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutHandler</servlet-name>
+        <url-pattern>/LogoutHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
