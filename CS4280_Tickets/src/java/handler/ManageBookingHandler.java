@@ -34,12 +34,27 @@ public class ManageBookingHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            UserBean u=(UserBean)request.getSession().getAttribute("userbean");
-            ArrayList<BookedTicketBean> blist=new ArrayList<>();
-            blist=CustFlights.findHistoryByUid(u.getId());
-            request.setAttribute("history", blist);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/manageBooking.jsp");
-                dispatcher.forward(request, response);
+            if(request.getSession(false)!=null){
+                UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+                ArrayList<BookedTicketBean> blist=new ArrayList<>();
+                blist=CustFlights.findHistoryByUid(u.getId());
+                request.setAttribute("history", blist);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/manageBooking.jsp");
+                    dispatcher.forward(request, response);
+            }else{   
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Time out, please login again</title>");            
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<h3>Time out, please login again</h3>"); 
+                    out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
