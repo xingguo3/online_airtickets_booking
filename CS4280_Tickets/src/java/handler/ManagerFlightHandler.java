@@ -40,22 +40,36 @@ public class ManagerFlightHandler extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8"); 
         
         String action = request.getParameter("action");
-        
-        if (action != null) {
-            // call different action depends on the action parameter
-            if (action.equalsIgnoreCase("update")) {
-                this.doUpdateProcess(request, response);
+        if (request.getSession(false)!=null) {
+            if (action != null) {
+                // call different action depends on the action parameter
+                if (action.equalsIgnoreCase("update")) {
+                    this.doUpdateProcess(request, response);
+                }
+                else if (action.equalsIgnoreCase("delete")) {
+                    this.doDeleteProcess(request, response);
+                }
+                else if (action.equalsIgnoreCase("addnew")) {
+                    this.doAddNewProcess(request, response);
+                }else if(action.equalsIgnoreCase("dodelete")){
+                    this.doDeleteFromJDBC(request, response);
+                }else if(action.equalsIgnoreCase("doupdate")){
+                    this.doUpdateFromJDBC(request, response);
+                }
             }
-            else if (action.equalsIgnoreCase("delete")) {
-                this.doDeleteProcess(request, response);
-            }
-            else if (action.equalsIgnoreCase("addnew")) {
-                this.doAddNewProcess(request, response);
-            }else if(action.equalsIgnoreCase("dodelete")){
-                this.doDeleteFromJDBC(request, response);
-            }else if(action.equalsIgnoreCase("doupdate")){
-                this.doUpdateFromJDBC(request, response);
-            }
+        }else{
+            try (PrintWriter out = response.getWriter()) {
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Time out, please login again</title>");            
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<h3>Time out, please login again</h3>"); 
+                    out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
         }
     }
 
