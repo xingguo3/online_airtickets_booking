@@ -21,7 +21,7 @@ import beans.FlightBean;
  *
  * @author User
  */
-public class searchFlight {
+public class SearchFlight {
     public static ArrayList<FlightBean> searchSingleFlight(String from,String to,String date){
         Connection con=null;
         PreparedStatement prst=null;
@@ -68,9 +68,9 @@ public class searchFlight {
         
                 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(searchFlight.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(searchFlight.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flightList;
 
@@ -118,7 +118,7 @@ public class searchFlight {
             stmt.close();
             con.close();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(searchFlight.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
         }
         return f;
     }
