@@ -27,7 +27,7 @@ public class LoginHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            response.setContentType("text/html;charset=UTF-8");
+            
             String username="", password="";
             username = request.getParameter("username");
             password = request.getParameter("password");
@@ -59,13 +59,13 @@ public class LoginHandler extends HttpServlet {
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);
                     httpSession.setAttribute("role", role);
-                    if(request.getParameter("action")!=null&&request.getParameter("action").equals("book")){
-                        int fid=Integer.parseInt(request.getParameter("fid"));
-                        String round=(String)request.getParameter("round");
-                        request.getRequestDispatcher(request.getContextPath()+"/FlightBookHandler?fid="+fid+"&trip="+round).forward(request, response);
-                        request.getRequestDispatcher("/FlightBookHandler?fid="+fid+"&trip="+round).forward(request, response);//NOT SUPPORTED
-                   
-                    }
+//                    if(request.getParameter("action")!=null&&request.getParameter("action").equals("book")){
+//                        int fid=Integer.parseInt(request.getParameter("fid"));
+//                        String round=(String)request.getParameter("round");
+//                        request.getRequestDispatcher(request.getContextPath()+"/FlightBookHandler?fid="+fid+"&trip="+round);
+//                        request.getRequestDispatcher("/FlightBookHandler?fid="+fid+"&trip="+round).forward(request, response);//NOT SUPPORTED
+//                   
+//                    }
                         
                     request.getRequestDispatcher("./welcome.jsp").forward(request, response);
                 }
@@ -73,6 +73,7 @@ public class LoginHandler extends HttpServlet {
 //                if(){}
                 String email = lg.getEmail();
                 int bonus = lg.getBonus();
+                response.setContentType("text/html;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) {
                     /* TODO output your page here. You may use following sample code. */
                     out.println("<!DOCTYPE html>");
