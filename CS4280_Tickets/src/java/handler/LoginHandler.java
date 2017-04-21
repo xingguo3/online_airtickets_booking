@@ -62,7 +62,7 @@ public class LoginHandler extends HttpServlet {
                     if(request.getParameter("action")!=null&&request.getParameter("action").equals("book")){
                         int fid=Integer.parseInt(request.getParameter("fid"));
                         String round=(String)request.getParameter("round");
-                      //  request.getRequestDispatcher(request.getContextPath()+"/FlightBookHandler?fid="+fid+"&trip="+round).forward(request, response);
+                        request.getRequestDispatcher(request.getContextPath()+"/FlightBookHandler?fid="+fid+"&trip="+round).forward(request, response);
                         request.getRequestDispatcher("/FlightBookHandler?fid="+fid+"&trip="+round).forward(request, response);//NOT SUPPORTED
                    
                     }

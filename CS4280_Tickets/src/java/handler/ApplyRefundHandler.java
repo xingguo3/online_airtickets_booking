@@ -44,16 +44,21 @@ public class ApplyRefundHandler extends HttpServlet {
         if(!result){
          try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("Apply failed.");
-            out.println("<a onclick='window.history.back()'>back</a>");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Apply failed!')");
+            out.println("</script>");
+            response.sendRedirect("/welcome.jsp");
             
         }
         }
          if(result){
               try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("Apply successful.Please wait for admin to approve.");
-            out.println("<a href='/CS4280_Tickets/ManageBookingHandle'>back</a>");
+           out.println("<script type=\"text/javascript\">");
+            out.println("alert('Apply successful!')");
+            out.println("</script>");
+            response.sendRedirect("/welcome.jsp");
+        
             
         }  
       }
