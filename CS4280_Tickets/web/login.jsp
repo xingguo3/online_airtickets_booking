@@ -21,4 +21,5 @@
             <p><input type='submit' value='Login' /></p>
         </FORM>
     </body>
+    <footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.
 </html>

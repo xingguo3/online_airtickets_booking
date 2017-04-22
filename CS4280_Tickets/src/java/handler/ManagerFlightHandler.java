@@ -67,7 +67,7 @@ public class ManagerFlightHandler extends HttpServlet {
                     out.println("<body>");
                     out.println("<h3>Time out, please login again</h3>"); 
                     out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
-                    out.println("</body>");
+                    out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
                     out.println("</html>");
                 }
         }
@@ -94,7 +94,7 @@ public class ManagerFlightHandler extends HttpServlet {
                 out.println("<a href='/CS4280_Tickets/ManagerFlightHandler?action=dodelete&FID=" + fid + "'>Delete</a>");
                 out.println("<button onclick = 'window.history.back()'>Cancel</button>");
 
-                out.println("</body>");
+                out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
                 out.println("</html>");
             } catch (IOException ex) {
             Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,7 +185,7 @@ public class ManagerFlightHandler extends HttpServlet {
             out.println("<input type='submit' value='Update'/></form>");
             out.println("<button onclick = 'window.history.back()'>Cancel</button>");
 
-            out.println("</body>");
+            out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
             out.println("</html>");
         } catch (IOException ex) {
             Logger.getLogger(ManagerFlightHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,7 +213,7 @@ public class ManagerFlightHandler extends HttpServlet {
                 out.println("<head>");
                 out.println("<body><p>Successful! </p>");
                 out.println("<p><a href='./managerIndex.jsp'>Click here to continue.<a></p>");
-        out.println("</body>");
+        out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
     }
 
@@ -234,7 +234,7 @@ public class ManagerFlightHandler extends HttpServlet {
         out.println("<body>");
                 
         out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate="+mdy+"&returnDate='>Done</a>");
-        out.println("</body>");
+        out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
 //        RequestDispatcher rd = getServletContext().getRequestDispatcher("/SearchFlightHandler?departure=HKG&destination=BKK&startDate=04-25-2017");
 //        rd.forward(request, response);   
@@ -260,7 +260,7 @@ public class ManagerFlightHandler extends HttpServlet {
         out.println("<html>");
         out.println("<body>");
         out.println("<a href='"+request.getContextPath()+"/SearchFlightHandler?departure=HKG&destination=BKK&startDate="+mdy+"&returnDate='>Done</a>");
-        out.println("</body>");
+        out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
             
     }

@@ -109,6 +109,8 @@ public class RegistHandler extends HttpServlet {
             //onclick='javascript: return SubmitForm()'
             html.append("</fieldset>");
             html.append("</form>");
+            html.append("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
+            html.append("</html>");
                         
             out.print (html.toString());
         }

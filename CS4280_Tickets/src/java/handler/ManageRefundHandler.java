@@ -61,7 +61,7 @@ public class ManageRefundHandler extends HttpServlet {
                 out.println("<body>");
                 out.println("<h3>Time out, please login again</h3>"); 
                 out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
-                out.println("</body>");
+                out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
                 out.println("</html>");
             }
         }
@@ -86,7 +86,7 @@ public class ManageRefundHandler extends HttpServlet {
         out.println("<html>");
         out.println("<body>");
         out.println("<a href='"+request.getContextPath()+"/ManageRefundHandler?action=search>Done</a>");
-        out.println("</body>");
+        out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
     }
 
@@ -98,7 +98,7 @@ public class ManageRefundHandler extends HttpServlet {
         out.println("<html>");
         out.println("<body>");
         out.println("<a href='"+request.getContextPath()+"/ManageRefundHandler?action=search>Done</a>");
-        out.println("</body>");
+        out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

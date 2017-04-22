@@ -58,5 +58,5 @@
         <p><a href="./login.jsp">login</a><p/>
         <p>No Account? <a href="./RegistHandler">Register</a></p>
     </body>
-
+    <footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.
 </html>

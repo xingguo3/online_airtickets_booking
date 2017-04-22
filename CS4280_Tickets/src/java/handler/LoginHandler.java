@@ -87,7 +87,7 @@ public class LoginHandler extends HttpServlet {
 //                    out.println("<p>"+lg.getRole()+"</p>");
                     out.println("<h1>wrong username or password, please try again</h1>");
                     out.println("<a href = \"login.jsp\">Click here to login again</a>");
-                    out.println("</body>");
+                    out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
                     out.println("</html>");
                 }
             }

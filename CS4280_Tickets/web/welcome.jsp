@@ -65,4 +65,5 @@
        
         <br/><a href='./LogoutHandler'>Logout</a>
     </body>
+    <footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.
 </html>

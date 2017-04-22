@@ -61,7 +61,7 @@ public class ViewStatHandler extends HttpServlet {
                 out.println("<body>");
                 out.println("<h3>Time out, please login again</h3>"); 
                 out.println("<p><a href='./login.jsp'>Click here to log in again</a></p>");
-                out.println("</body>");
+                out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
                 out.println("</html>");
             }
         }

@@ -40,7 +40,7 @@ public class LogoutHandler extends HttpServlet {
             out.println("<h1>Logout Page</h1>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p>Return to <a href='./index.jsp'>Home Page</a></p>");
-            out.println("</body>");
+            out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
             out.println("</html>");
         } finally { 
             out.close();
