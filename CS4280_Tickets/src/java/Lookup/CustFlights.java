@@ -233,18 +233,12 @@ public class CustFlights {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-<<<<<<< HEAD
             String sql="UPDATE dbo.history SET BookingStatus = ? WHERE ID = ?";
+            PreparedStatement prst=null;
             prst=con.prepareStatement(sql);
             prst.setInt(1, 0);
             prst.setInt(2, id);
-            prst.execute();
-=======
-
-            String sql="update dbo.history set bookingstatus=0 where id="+id;     
-            stmt=con.createStatement();
-            stmt.execute(sql);
->>>>>>> origin/GUOXing
+            prst.execute();    
             con.commit();
             stmt.close();
             con.close();
