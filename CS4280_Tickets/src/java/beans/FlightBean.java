@@ -86,9 +86,11 @@ public class FlightBean {
     }
     public void setStatus(int _status){
         if(_status==0)
-            status="Delayed";
+            status="Canceled";
         if(_status==1)
             status="Normal";
+        if(_status==2)
+            status="Delayed";
     }
     public String getStatus(){
         return status;

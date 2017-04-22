@@ -16,13 +16,14 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Date ;
 import beans.FlightBean;
+import beans.UserBean;
 import java.util.Calendar;
 /**
  *
  * @author GUOXING
  */
 public class CustFlights {
-    public static boolean bookFlight(int fid,int uid,String fname,String lname){
+    public static boolean bookFlight(int fid,int uid,String fname,String lname,int membership){
         Connection con=null;
       //  Statement stmt=null;
         PreparedStatement prst=null;
@@ -32,6 +33,7 @@ public class CustFlights {
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
             int status=getFlightStatus(fid,con);
             int price=getFlightPrice(fid,con);
+            price=Discount.giveDiscountByMem(price, membership);
             int id=getHisColNo(con);
             String sql="Insert into dbo.history values(?,?,?,?,?,2,?,?,GETDATE())";
             prst=con.prepareStatement(sql);

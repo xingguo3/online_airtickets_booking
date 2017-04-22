@@ -5,8 +5,10 @@
  */
 package handler;
 
+import Lookup.Discount;
 import Lookup.SearchFlight;
 import beans.FlightBean;
+import beans.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -61,6 +63,8 @@ public class FlightBookHandler extends HttpServlet {
         }
         else if (httpSession != null&&role=="customer") {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
+            UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+            f.setPrice(Discount.giveDiscountByMem(f.getPrice(), u.getMembership()));
             dispatcher.forward(request, response);
         }
         else if (httpSession != null&&role=="manager") {

@@ -56,7 +56,10 @@ public class SearchFlight {
                 f.setArrivTime(t.toString());
                 f.setStatus(rs.getInt("Status"));
                 f.setCompany(rs.getString("Company"));
-                if(f.getRemainSeat()>0)
+                //give discount by remaining seats
+                int p=Discount.giveDicountByRemainSeat(f.getPrice(), f.getRemainSeat());
+                f.setPrice(p);
+                if(f.getRemainSeat()>0&&!f.getStatus().equals("Canceled"))
                     flightList.add(f);
             }
         
@@ -113,6 +116,9 @@ public class SearchFlight {
                 f.setArrivTime(t.toString());
                 f.setStatus(rs.getInt("Status"));
                 f.setCompany(rs.getString("Company"));
+                //give discount by remaining seats
+                int p=Discount.giveDicountByRemainSeat(f.getPrice(), f.getRemainSeat());
+                f.setPrice(p);
             }
             rs.close();
             stmt.close();

@@ -5,6 +5,7 @@
  */
 package handler;
 
+import Lookup.Discount;
 import Lookup.SearchFlight;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import beans.FlightBean;
+import beans.UserBean;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -33,22 +35,23 @@ public class SearchFlightHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-        String from, to, deptDate, returnDate;
+         String from, to, deptDate, returnDate;
         from = request.getParameter("departure");
         to = request.getParameter("destination");
         deptDate = request.getParameter("startDate");
         returnDate = request.getParameter("returnDate");
-        ArrayList deptFlight = new ArrayList<FlightBean>();
-        ArrayList returnFlight = new ArrayList<FlightBean>();
+        ArrayList<FlightBean> deptFlight = new ArrayList<>();
+        ArrayList<FlightBean> returnFlight = new ArrayList<>();
         deptFlight = SearchFlight.searchSingleFlight(from, to, deptDate);
         request.setAttribute("deptFlight", deptFlight);
         if (!returnDate.equals("") && returnDate != null) {
                 returnFlight = SearchFlight.searchSingleFlight(to, from, returnDate);
                 request.setAttribute("returnFlight",returnFlight);
         }
+        
         String role=null;
         HttpSession httpSession = request.getSession(false);
+        UserBean u=(UserBean)request.getSession().getAttribute("userbean");
         role = request.getParameter("role");
         if(role!=null&&role.equals("passager")){
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
@@ -59,6 +62,10 @@ public class SearchFlightHandler extends HttpServlet {
             if (httpSession != null&&role=="customer") {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
                 dispatcher.forward(request, response);
+                for(FlightBean d:deptFlight)
+                    d.setPrice(Discount.giveDiscountByMem(d.getPrice(), u.getMembership()));
+                for(FlightBean r:returnFlight)
+                    r.setPrice(Discount.giveDiscountByMem(r.getPrice(), u.getMembership()));
             }
             else if (httpSession != null&&role=="manager") {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
