@@ -321,88 +321,38 @@ public class CustFlights {
 
          return blist;
     }
-
-    private static BookedTicketBean findHistoryByFID(int flightID) {
+    
+    public static ArrayList<BookedTicketBean> findHistoryByPlace(String from, String to) {
         Connection con=null;
         Statement stmt=null;
         ResultSet rs=null;
-        BookedTicketBean b=new BookedTicketBean();
-         try{
-             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where FlightStatus!=0 AND FID= "+flightID;
-             stmt=con.createStatement();
-             rs=stmt.executeQuery(sql);
-             while(rs.next()){
-                 b.setId(rs.getInt("ID"));
-                 b.setFlightId(flightID);
-                 b.setLname(rs.getString("LastName"));
-                 b.setFname(rs.getString("FirstName"));
-                 b.setStatus(rs.getInt("BookingStatus"));
-                 
-                 b.setUserID(rs.getInt("UID"));
-                 b.setActualPrice(rs.getInt("ActualPrice"));
-                 //b.setFStatus(rs.getInt("FlightStatus"));
-                 b.setBTime(rs.getDate("bookingTime"));
-                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
-                 b.setFlight(f);
-                 
-             }
-             rs.close();
-             stmt.close();
-             con.close();
-    }   catch (ClassNotFoundException ex) {
-            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         return b;
-    }
-    
-    public static ArrayList<BookedTicketBean> findHistoryByPlace(String from, String to) {
-        Connection con=null, con2=null;
-        //PreparedStatement prst=null;
-        Statement stmt=null, stmt2=null;
-        ResultSet rs=null, rs2=null;
-        int flightID=0;
         ArrayList<BookedTicketBean> blist=new ArrayList<>();
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             con2 = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="SELECT FID FROM dbo.Flight Status!=0 AND WHERE Departure='"+from+"' AND Destina='"+to+"'";
-//             prst=con.prepareStatement(sql);
-//             prst.setString(1, from);
-//             prst.setString(2, to);
-                stmt=con.createStatement();
-             rs = stmt.executeQuery(sql);
-             
+             String sql="SELECT * FROM dbo.history WHERE FlightStatus!=0";
+             stmt=con.createStatement();
+             rs=stmt.executeQuery(sql);
              while(rs.next()){
-                 flightID = rs.getInt("FID");
-                 String sql2="SELECT * FROM dbo.history WHERE FlightStatus!=0 AND FID="+flightID;
-                 stmt2=con2.createStatement();
-                 rs2 = stmt2.executeQuery(sql2);
-                 while(rs2.next()){
-                    BookedTicketBean b=new BookedTicketBean();
-                    b.setId(rs.getInt("ID"));
-                    b.setFlightId(flightID);
-                    b.setLname(rs.getString("LastName"));
-                    b.setFname(rs.getString("FirstName"));
-                    b.setStatus(rs.getInt("BookingStatus"));
-
-                    b.setUserID(rs.getInt("UID"));
-                    b.setActualPrice(rs.getInt("ActualPrice"));
-                    //b.setFStatus(rs.getInt("FlightStatus"));
-                    b.setBTime(rs.getDate("bookingTime"));
-                    FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
-                    b.setFlight(f);
-                    blist.add(b);
-                }
-                 rs2.close();
-                 stmt2.close();
-                 con2.close();
+                 BookedTicketBean b=new BookedTicketBean();
+                 b.setId(rs.getInt("ID"));
+                 b.setFlightId(rs.getInt("FID"));
+                 b.setLname(rs.getString("LastName"));
+                 b.setFname(rs.getString("FirstName"));
+                 b.setStatus(rs.getInt("BookingStatus"));
+                 b.setUserID(rs.getInt("UID"));
+                 b.setActualPrice(rs.getInt("ActualPrice"));
+//                 b.setFStatus(rs.getInt("FlightStatus"));
+                 b.setBTime(rs.getDate("bookingTime"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
+                 b.setFlight(f);
+                 if(f.getFrom().equals("HKG")&&f.getTo().equals("BKK")){
+                       blist.add(b);
+                 }else{
+                     continue;
+                 }
+                 
              }
-             
              rs.close();
              stmt.close();
              con.close();
