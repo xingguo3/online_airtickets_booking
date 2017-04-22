@@ -158,7 +158,13 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="SELECT * FROM dbo.history WHERE BookingStatus= '"+status+"'";
+             String sql=null;
+             if(status==10){
+                 sql="SELECT * FROM dbo.history WHERE BookingStatus!= 2";
+             }else{
+                 sql="SELECT * FROM dbo.history WHERE BookingStatus= '"+status+"'";
+             }
+             
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -276,4 +282,45 @@ public class CustFlights {
         }
             return 1;
     }
+
+    public static ArrayList<BookedTicketBean> findHistoryByDate(int period) {
+        Connection con=null;
+        Statement stmt=null;
+        ResultSet rs=null;
+        period=-period;
+        ArrayList<BookedTicketBean> blist=new ArrayList<>();
+         try{
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             String sql="SELECT * FROM dbo.history WHERE bookingTime>=DATEADD(DAY,"+period+",GETDATE())" ;
+             stmt=con.createStatement();
+             rs=stmt.executeQuery(sql);
+             while(rs.next()){
+                 BookedTicketBean b=new BookedTicketBean();
+                 b.setId(rs.getInt("ID"));
+                 b.setFlightId(rs.getInt("FID"));
+                 b.setLname(rs.getString("LastName"));
+                 b.setFname(rs.getString("FirstName"));
+                 b.setStatus(rs.getInt("BookingStatus"));
+                 b.setUserID(rs.getInt("UID"));
+                 b.setActualPrice(rs.getInt("ActualPrice"));
+//                 b.setFStatus(rs.getInt("FlightStatus"));
+                 b.setBTime(rs.getDate("bookingTime"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
+                 b.setFlight(f);
+                 blist.add(b);
+             }
+             rs.close();
+             stmt.close();
+             con.close();
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         return blist;
+    }
+
+
 }
