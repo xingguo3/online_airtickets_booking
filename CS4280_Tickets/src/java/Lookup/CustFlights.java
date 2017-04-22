@@ -71,7 +71,7 @@ public class CustFlights {
     }
     public static int getFlightStatus(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql="select status from dbo.flight where fid="+fid;
+        String sql="select status from dbo.flight where FlightStatus!=0 AND fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         int status=1;
         while(rs.next())
@@ -84,7 +84,7 @@ public class CustFlights {
     
     public static int getFlightPrice(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql="select price from dbo.flight where fid="+fid;
+        String sql="select price from dbo.flight where FlightStatus!=0 AND fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         int price=1;
         while(rs.next())
@@ -97,7 +97,7 @@ public class CustFlights {
     
     public static int getHisColNo(Connection con) throws SQLException{
         Statement stmt=con.createStatement();
-        String sql="select count(*) FROM dbo.history";
+        String sql="select count(*) FROM dbo.history WHERE FlightStatus!=0";
         ResultSet rs=stmt.executeQuery(sql);
         int n=1;
         while(rs.next())
@@ -115,7 +115,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where uid= "+uid;
+             String sql="select * from dbo.history where FlightStatus!=0 AND uid= "+uid;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -160,9 +160,9 @@ public class CustFlights {
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
              String sql=null;
              if(status==10){
-                 sql="SELECT * FROM dbo.history WHERE BookingStatus!= 2";
+                 sql="SELECT * FROM dbo.history WHERE BookingStatus!= 2 AND FlightStatus!=0";
              }else{
-                 sql="SELECT * FROM dbo.history WHERE BookingStatus= '"+status+"'";
+                 sql="SELECT * FROM dbo.history WHERE FlightStatus!=0 AND BookingStatus= '"+status+"'";
              }
              
              stmt=con.createStatement();
@@ -202,7 +202,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where ID= "+id;
+             String sql="select * from dbo.history where FlightStatus!=0 AND ID= "+id;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -292,7 +292,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="SELECT * FROM dbo.history WHERE bookingTime>=DATEADD(DAY,"+period+",GETDATE())" ;
+             String sql="SELECT * FROM dbo.history WHERE FlightStatus!=0 AND bookingTime>=DATEADD(DAY,"+period+",GETDATE())" ;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -330,7 +330,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where FID= "+flightID;
+             String sql="select * from dbo.history where FlightStatus!=0 AND FID= "+flightID;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -370,7 +370,7 @@ public class CustFlights {
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
              con2 = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="SELECT FID FROM dbo.Flight WHERE Departure='"+from+"' AND Destina='"+to+"'";
+             String sql="SELECT FID FROM dbo.Flight Status!=0 AND WHERE Departure='"+from+"' AND Destina='"+to+"'";
 //             prst=con.prepareStatement(sql);
 //             prst.setString(1, from);
 //             prst.setString(2, to);
@@ -379,7 +379,7 @@ public class CustFlights {
              
              while(rs.next()){
                  flightID = rs.getInt("FID");
-                 String sql2="SELECT * FROM dbo.history WHERE FID="+flightID;
+                 String sql2="SELECT * FROM dbo.history WHERE FlightStatus!=0 AND FID="+flightID;
                  stmt2=con2.createStatement();
                  rs2 = stmt2.executeQuery(sql2);
                  while(rs2.next()){
