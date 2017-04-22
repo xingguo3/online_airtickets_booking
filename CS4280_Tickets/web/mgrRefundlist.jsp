@@ -36,9 +36,9 @@
                     out.print("<td>"+ b.getFlight().getDeptTime()+"---"+b.getFlight().getArrivTime()+"</td>");
                     out.print("<td>"+ b.getStatus()+"</td>");
                     out.print("<td>"+ b.getActualPrice()+"HKD</td>");
-                    out.print("<td><a href='"+request.getContextPath()+"/ManagerRefundHandler?action=approve&id=" + b.getId()
+                    out.print("<td><a href='"+request.getContextPath()+"/ManageRefundHandler?action=approve&id=" + b.getId()
                             + "'>Approve</a></td>");
-                    out.print("<td><a href='"+request.getContextPath()+"/ManagerRefundHandler?action=refuse&id=" + b.getId() 
+                    out.print("<td><a href='"+request.getContextPath()+"/ManageRefundHandler?action=refuse&id=" + b.getId() 
                             + "'>Refuse</a></td></tr>");
             }%>
             <% } %>

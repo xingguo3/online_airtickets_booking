@@ -73,7 +73,7 @@ public class CustFlights {
     }
     public static int getFlightStatus(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql="select status from dbo.flight where fid="+fid;
+        String sql="select status from dbo.flight where FlightStatus!=0 AND fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         int status=1;
         while(rs.next())
@@ -86,7 +86,7 @@ public class CustFlights {
     
     public static int getFlightPrice(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql="select price from dbo.flight where fid="+fid;
+        String sql="select price from dbo.flight where FlightStatus!=0 AND fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         int price=1;
         while(rs.next())
@@ -99,7 +99,7 @@ public class CustFlights {
     
     public static int getHisColNo(Connection con) throws SQLException{
         Statement stmt=con.createStatement();
-        String sql="select count(*) FROM dbo.history";
+        String sql="select count(*) FROM dbo.history WHERE FlightStatus!=0";
         ResultSet rs=stmt.executeQuery(sql);
         int n=1;
         while(rs.next())
@@ -117,7 +117,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where uid= "+uid;
+             String sql="select * from dbo.history where FlightStatus!=0 AND uid= "+uid;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -160,7 +160,13 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where status= "+status;
+             String sql=null;
+             if(status==10){
+                 sql="SELECT * FROM dbo.history WHERE BookingStatus!= 2 AND FlightStatus!=0";
+             }else{
+                 sql="SELECT * FROM dbo.history WHERE FlightStatus!=0 AND BookingStatus= '"+status+"'";
+             }
+             
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -198,7 +204,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where id= "+id;
+             String sql="select * from dbo.history where FlightStatus!=0 AND ID= "+id;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -235,10 +241,12 @@ public class CustFlights {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-
-            String sql="update dbo.history set bookingstatus=0 where id="+id;     
-            stmt=con.createStatement();
-            stmt.execute(sql);
+            String sql="UPDATE dbo.history SET BookingStatus = ? WHERE ID = ?";
+            PreparedStatement prst=null;
+            prst=con.prepareStatement(sql);
+            prst.setInt(1, 0);
+            prst.setInt(2, id);
+            prst.execute();    
             con.commit();
             stmt.close();
             con.close();
@@ -276,4 +284,90 @@ public class CustFlights {
         }
             return 1;
     }
+
+    public static ArrayList<BookedTicketBean> findHistoryByDate(int period) {
+        Connection con=null;
+        Statement stmt=null;
+        ResultSet rs=null;
+        period=-period;
+        ArrayList<BookedTicketBean> blist=new ArrayList<>();
+         try{
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             String sql="SELECT * FROM dbo.history WHERE FlightStatus!=0 AND bookingTime>=DATEADD(DAY,"+period+",GETDATE())" ;
+             stmt=con.createStatement();
+             rs=stmt.executeQuery(sql);
+             while(rs.next()){
+                 BookedTicketBean b=new BookedTicketBean();
+                 b.setId(rs.getInt("ID"));
+                 b.setFlightId(rs.getInt("FID"));
+                 b.setLname(rs.getString("LastName"));
+                 b.setFname(rs.getString("FirstName"));
+                 b.setStatus(rs.getInt("BookingStatus"));
+                 b.setUserID(rs.getInt("UID"));
+                 b.setActualPrice(rs.getInt("ActualPrice"));
+//                 b.setFStatus(rs.getInt("FlightStatus"));
+                 b.setBTime(rs.getDate("bookingTime"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
+                 b.setFlight(f);
+                 blist.add(b);
+             }
+             rs.close();
+             stmt.close();
+             con.close();
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         return blist;
+    }
+    
+    public static ArrayList<BookedTicketBean> findHistoryByPlace(String from, String to) {
+        Connection con=null;
+        Statement stmt=null;
+        ResultSet rs=null;
+        ArrayList<BookedTicketBean> blist=new ArrayList<>();
+         try{
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             String sql="SELECT * FROM dbo.history WHERE FlightStatus!=0";
+             stmt=con.createStatement();
+             rs=stmt.executeQuery(sql);
+             while(rs.next()){
+                 BookedTicketBean b=new BookedTicketBean();
+                 b.setId(rs.getInt("ID"));
+                 b.setFlightId(rs.getInt("FID"));
+                 b.setLname(rs.getString("LastName"));
+                 b.setFname(rs.getString("FirstName"));
+                 b.setStatus(rs.getInt("BookingStatus"));
+                 b.setUserID(rs.getInt("UID"));
+                 b.setActualPrice(rs.getInt("ActualPrice"));
+//                 b.setFStatus(rs.getInt("FlightStatus"));
+                 b.setBTime(rs.getDate("bookingTime"));
+                 FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
+                 b.setFlight(f);
+                 if(f.getFrom().equals("HKG")&&f.getTo().equals("BKK")){
+                       blist.add(b);
+                 }else{
+                     continue;
+                 }
+                 
+             }
+             rs.close();
+             stmt.close();
+             con.close();
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         return blist;
+    }
+
+    
+
+
 }

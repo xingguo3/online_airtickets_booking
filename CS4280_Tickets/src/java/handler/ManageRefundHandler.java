@@ -85,7 +85,7 @@ public class ManageRefundHandler extends HttpServlet {
         out = response.getWriter();
         out.println("<html>");
         out.println("<body>");
-        out.println("<a href='"+request.getContextPath()+"/ManageFlightHandler?action=search>Done</a>");
+        out.println("<a href='"+request.getContextPath()+"/ManageRefundHandler?action=search>Done</a>");
         out.println("</body>");
         out.println("</html>");
     }
@@ -97,7 +97,7 @@ public class ManageRefundHandler extends HttpServlet {
         out = response.getWriter();
         out.println("<html>");
         out.println("<body>");
-        out.println("<a href='"+request.getContextPath()+"/ManageFlightHandler?action=search>Done</a>");
+        out.println("<a href='"+request.getContextPath()+"/ManageRefundHandler?action=search>Done</a>");
         out.println("</body>");
         out.println("</html>");
     }

@@ -5,9 +5,15 @@
  */
 package handler;
 
+import Lookup.CustFlights;
+import beans.BookedTicketBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,20 +37,20 @@ public class ViewStatHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
         if (request.getSession(false)!=null) {
-            
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet ViewStatHandler</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet ViewStatHandler at " + request.getContextPath() + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
+            if (action != null) {
+                // call different action depends on the action parameter
+                if (action.equalsIgnoreCase("sale")) {
+                    this.doSearchSale(request, response);
+                }
+                else if(action.equalsIgnoreCase("refund")){
+                    this.doSearchRefund(request, response);
+                }else if(action.equalsIgnoreCase("placesale")){
+                    this.doSearchPlace(request, response);
+                }
             }
+        
         }else {
              try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
@@ -99,5 +105,51 @@ public class ViewStatHandler extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+ 
+    private void doSearchRefund(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        
+        ArrayList<BookedTicketBean> b=CustFlights.findHistoryByStatus(10);
+        request.setAttribute("searchRefund", b);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/refundResult.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewStatHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void doSearchSale(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        String period = request.getParameter("period");
+        
+        if(period!=null){
+            ArrayList<BookedTicketBean> b=CustFlights.findHistoryByDate(Integer.parseInt(request.getParameter("period")));
+            request.setAttribute("historyStat", b);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/statResult.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (IOException ex) {
+                Logger.getLogger(ViewStatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+
+    private void doSearchPlace(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+            
+            ArrayList<BookedTicketBean> b=CustFlights.findHistoryByPlace(from, to);
+            
+            request.setAttribute("historyPlaceStat", b);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/statPlaceResult.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (IOException ex) {
+                Logger.getLogger(ViewStatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    }
+  
 
 }

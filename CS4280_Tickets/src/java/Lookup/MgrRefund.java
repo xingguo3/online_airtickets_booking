@@ -26,10 +26,11 @@ public class MgrRefund {
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
            
            String strQl = null;
-           strQl = "UPDATE FROM dbo.history SET status=? WHERE id= '"+id+"'";
+           int ID=Integer.parseInt(id);
+           strQl = "UPDATE dbo.history SET BookingStatus=? WHERE id= '"+ID+"'";
            PreparedStatement ps = con.prepareStatement(strQl);
            ps.setInt(1, 4);
-           stmt.execute(strQl);
+           ps.execute();
            // add thic action into another database
            // action: add, fid:
         }finally{
@@ -54,10 +55,11 @@ public class MgrRefund {
            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
            
            String strQl = null;
-           strQl = "UPDATE FROM dbo.history SET status=? WHERE id= '"+id+"'";
+           int ID=Integer.parseInt(id);
+           strQl = "UPDATE dbo.history SET BookingStatus=? WHERE id= '"+ID+"'";
            PreparedStatement ps = con.prepareStatement(strQl);
            ps.setInt(1, 3);
-           stmt.execute(strQl);
+           ps.execute();
            // add thic action into another database
            // action: add, fid:
         }finally{

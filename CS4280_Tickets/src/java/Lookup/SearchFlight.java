@@ -37,7 +37,7 @@ public class SearchFlight {
             
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
             String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina LIKE ? AND year="
-                    +year+" AND month="+month+" AND day="+day;
+                    +year+" AND month="+month+" AND day="+day +" AND Status != 0";
             prst=con.prepareStatement(sql);
             prst.setString(1, "%"+from+"%");
             prst.setString(2,"%"+to+"%");
@@ -100,7 +100,7 @@ public class SearchFlight {
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
             
             Statement stmt=con.createStatement();
-            String sql="select * from dbo.flight where fid="+fid;
+            String sql="select * from dbo.flight where fid="+fid+" AND Status != 0";
             ResultSet rs=stmt.executeQuery(sql);
             while(rs.next()){
                 
