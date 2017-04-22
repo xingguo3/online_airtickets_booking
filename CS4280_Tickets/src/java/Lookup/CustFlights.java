@@ -348,7 +348,7 @@ public class CustFlights {
                  b.setBTime(rs.getDate("bookingTime"));
                  FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
-                 if(f.getFrom().equals("HKG")&&f.getTo().equals("BKK")){
+                 if(f.getFrom().contains(from)&&f.getTo().contains(to)){
                        blist.add(b);
                  }else{
                      continue;
