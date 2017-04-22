@@ -202,7 +202,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where id= "+id;
+             String sql="select * from dbo.history where ID= "+id;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -360,29 +360,51 @@ public class CustFlights {
     }
     
     public static ArrayList<BookedTicketBean> findHistoryByPlace(String from, String to) {
-        Connection con=null;
-        PreparedStatement prst=null;
-        ResultSet rs=null, rs0=null;
-    
+        Connection con=null, con2=null;
+        //PreparedStatement prst=null;
+        Statement stmt=null, stmt2=null;
+        ResultSet rs=null, rs2=null;
+        int flightID=0;
         ArrayList<BookedTicketBean> blist=new ArrayList<>();
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="SELECT FID FROM dbo.Flight WHERE Departure=? AND Destina=?";
-             prst=con.prepareStatement(sql);
-             prst.setString(1, from);
-             prst.setString(2, to);
-             rs = prst.executeQuery();
+             con2 = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             String sql="SELECT FID FROM dbo.Flight WHERE Departure='"+from+"' AND Destina='"+to+"'";
+//             prst=con.prepareStatement(sql);
+//             prst.setString(1, from);
+//             prst.setString(2, to);
+                stmt=con.createStatement();
+             rs = stmt.executeQuery(sql);
              
              while(rs.next()){
-                 BookedTicketBean b=new BookedTicketBean();
-                 int flightID = rs.getInt("FID");
-                 b=findHistoryByFID(flightID);
-                 blist.add(b);
+                 flightID = rs.getInt("FID");
+                 String sql2="SELECT * FROM dbo.history WHERE FID="+flightID;
+                 stmt2=con2.createStatement();
+                 rs2 = stmt2.executeQuery(sql2);
+                 while(rs2.next()){
+                    BookedTicketBean b=new BookedTicketBean();
+                    b.setId(rs.getInt("ID"));
+                    b.setFlightId(flightID);
+                    b.setLname(rs.getString("LastName"));
+                    b.setFname(rs.getString("FirstName"));
+                    b.setStatus(rs.getInt("BookingStatus"));
+
+                    b.setUserID(rs.getInt("UID"));
+                    b.setActualPrice(rs.getInt("ActualPrice"));
+                    //b.setFStatus(rs.getInt("FlightStatus"));
+                    b.setBTime(rs.getDate("bookingTime"));
+                    FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
+                    b.setFlight(f);
+                    blist.add(b);
+                }
+                 rs2.close();
+                 stmt2.close();
+                 con2.close();
              }
              
              rs.close();
-             prst.close();
+             stmt.close();
              con.close();
     }   catch (ClassNotFoundException ex) {
             Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);

@@ -138,8 +138,9 @@ public class ViewStatHandler extends HttpServlet {
     private void doSearchPlace(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String from = request.getParameter("from");
         String to = request.getParameter("to");
-       
+            
             ArrayList<BookedTicketBean> b=CustFlights.findHistoryByPlace(from, to);
+            
             request.setAttribute("historyPlaceStat", b);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/statPlaceResult.jsp");
             try {
