@@ -23,14 +23,19 @@
             <input type='submit' value='Search'/>
             
         </form>
+        <form action='./ViewStatHandler' method='POST'>
+            <input type='hidden' name='action' value='placesale'>
+
+            <p>Departure: <input type="text" name='from' value='' /><p/>
+            <p>Destination: <input type="text" name='to' value='' /><p/>
+
+            <input type='submit' value='Search'/>
+            
+        </form>
         
         <p>view all refund history</p>
         <form action='./ViewStatHandler' method='POST'>
             <input type='hidden' name='action' value='refund'>
-            <select name='period'>
-                <option value='week'>Past 7 days</option>
-                <option value='month'>Past 30 days Month</option>
-            </select>
             <input type='submit' value='Search'/>
             
         </form>

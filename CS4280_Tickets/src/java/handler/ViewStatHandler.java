@@ -46,6 +46,8 @@ public class ViewStatHandler extends HttpServlet {
                 }
                 else if(action.equalsIgnoreCase("refund")){
                     this.doSearchRefund(request, response);
+                }else if(action.equalsIgnoreCase("placesale")){
+                    this.doSearchPlace(request, response);
                 }
             }
         
@@ -118,15 +120,34 @@ public class ViewStatHandler extends HttpServlet {
     }
 
     private void doSearchSale(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        int period = Integer.parseInt(request.getParameter("period"));
-        ArrayList<BookedTicketBean> b=CustFlights.findHistoryByDate(period);
-        request.setAttribute("historyStat", b);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/statResult.jsp");
-        try {
-            dispatcher.forward(request, response);
-        } catch (IOException ex) {
-            Logger.getLogger(ViewStatHandler.class.getName()).log(Level.SEVERE, null, ex);
+        String period = request.getParameter("period");
+        
+        if(period!=null){
+            ArrayList<BookedTicketBean> b=CustFlights.findHistoryByDate(Integer.parseInt(request.getParameter("period")));
+            request.setAttribute("historyStat", b);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/statResult.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (IOException ex) {
+                Logger.getLogger(ViewStatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
+    }
+
+    private void doSearchPlace(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+       
+            ArrayList<BookedTicketBean> b=CustFlights.findHistoryByPlace(from, to);
+            request.setAttribute("historyPlaceStat", b);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/statPlaceResult.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (IOException ex) {
+                Logger.getLogger(ViewStatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
     }
   
 
