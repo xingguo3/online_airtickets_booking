@@ -226,10 +226,10 @@ public class CustFlights {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-            String sql="insert into dbo.refund values(?,?,0,'/',GETDATE())";
+            String sql="UPDATE dbo.hirtory SET BookingStatus = ? WHERE ID = ?";
             prst=con.prepareStatement(sql);
-            prst.setInt(1, id);
-            prst.setInt(2, uid);
+            prst.setInt(1, 0);
+            prst.setInt(2, id);
             prst.execute();
             con.commit();
             prst.close();

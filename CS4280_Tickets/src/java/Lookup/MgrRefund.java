@@ -28,7 +28,7 @@ public class MgrRefund {
            String strQl = null;
            strQl = "UPDATE FROM dbo.history SET status=? WHERE id= '"+id+"'";
            PreparedStatement ps = con.prepareStatement(strQl);
-           ps.setInt(1, 2);
+           ps.setInt(1, 4);
            stmt.execute(strQl);
            // add thic action into another database
            // action: add, fid:

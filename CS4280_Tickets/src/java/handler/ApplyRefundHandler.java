@@ -47,7 +47,7 @@ public class ApplyRefundHandler extends HttpServlet {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Apply failed!')");
             out.println("</script>");
-            response.sendRedirect("/welcome.jsp");
+            response.sendRedirect("./welcome.jsp");
             
         }
         }
