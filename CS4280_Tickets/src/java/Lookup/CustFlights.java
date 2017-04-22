@@ -11,11 +11,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.Date ;
 import beans.FlightBean;
+import java.util.Calendar;
 /**
  *
  * @author GUOXING
@@ -124,9 +125,14 @@ public class CustFlights {
                  b.setLname(rs.getString("LastName"));
                  b.setFname(rs.getString("FirstName"));
                  b.setStatus(rs.getInt("BookingStatus"));
+                 if(b.getStatus().equals("Unused")){
+                      int i=updateStatus(b.getId(),b.getFlightId(),con);
+                      b.setStatus(i);
+                 }
+                    
                  b.setUserID(rs.getInt("UID"));
                  b.setActualPrice(rs.getInt("ActualPrice"));
-                 b.setFStatus(rs.getInt("FlightStatus"));
+//                 b.setFStatus(rs.getInt("FlightStatus"));
                  b.setBTime(rs.getDate("bookingTime"));
                  FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
@@ -164,7 +170,7 @@ public class CustFlights {
                  b.setStatus(rs.getInt("BookingStatus"));
                  b.setUserID(rs.getInt("UID"));
                  b.setActualPrice(rs.getInt("ActualPrice"));
-                 b.setFStatus(rs.getInt("FlightStatus"));
+//                 b.setFStatus(rs.getInt("FlightStatus"));
                  b.setBTime(rs.getDate("bookingTime"));
                  FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
@@ -199,9 +205,10 @@ public class CustFlights {
                  b.setLname(rs.getString("LastName"));
                  b.setFname(rs.getString("FirstName"));
                  b.setStatus(rs.getInt("BookingStatus"));
+                 
                  b.setUserID(rs.getInt("UID"));
                  b.setActualPrice(rs.getInt("ActualPrice"));
-                 b.setFStatus(rs.getInt("FlightStatus"));
+                 //b.setFStatus(rs.getInt("FlightStatus"));
                  b.setBTime(rs.getDate("bookingTime"));
                  FlightBean f=SearchFlight.searchByFid(rs.getInt("FID"));
                  b.setFlight(f);
@@ -220,19 +227,26 @@ public class CustFlights {
     
     public static boolean applyForRefund(int id,int uid){
          Connection con=null;
-      //  Statement stmt=null;
-        PreparedStatement prst=null;
+        Statement stmt=null;
+        //PreparedStatement prst=null;
         try {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+<<<<<<< HEAD
             String sql="UPDATE dbo.history SET BookingStatus = ? WHERE ID = ?";
             prst=con.prepareStatement(sql);
             prst.setInt(1, 0);
             prst.setInt(2, id);
             prst.execute();
+=======
+
+            String sql="update dbo.history set bookingstatus=0 where id="+id;     
+            stmt=con.createStatement();
+            stmt.execute(sql);
+>>>>>>> origin/GUOXing
             con.commit();
-            prst.close();
+            stmt.close();
             con.close();
             return true;
             
@@ -245,5 +259,27 @@ public class CustFlights {
         }
         
         return false;
+    }
+    
+    public static int updateStatus(int hid,int fid,Connection con) throws SQLException{
+        FlightBean f=SearchFlight.searchByFid(fid);
+        String[] date=f.getDeptTime().substring(0, 10).split("-");
+        Boolean b=false;
+        Calendar c=Calendar.getInstance();
+        if(Integer.parseInt(date[0])>c.get(Calendar.YEAR))
+            b=true;
+        if(Integer.parseInt(date[0])==c.get(Calendar.YEAR)&&Integer.parseInt(date[1])>c.get(Calendar.MONTH))
+            b=true;
+        if(Integer.parseInt(date[0])==c.get(Calendar.YEAR)&&Integer.parseInt(date[1])==c.get(Calendar.MONTH)
+                &&Integer.parseInt(date[2])>c.get(Calendar.DATE))
+            b=true;
+        if(!b){
+            String sql="update dbo.history set BookingStatus=1 where id="+hid;
+            Statement stmt=con.createStatement();
+            stmt.execute(sql);
+            stmt.close();
+            return 2;
+        }
+            return 1;
     }
 }

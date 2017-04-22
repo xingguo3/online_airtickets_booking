@@ -39,7 +39,7 @@ public class ApplyRefundHandler extends HttpServlet {
         Boolean result=false;
         UserBean u=(UserBean)request.getSession().getAttribute("userbean");
         int uid=u.getId();
-                if(b.getStatus().equals("Normal"))
+                if(b.getStatus().equals("Unused"))
             result=CustFlights.applyForRefund(id,uid);
         if(!result){
          try (PrintWriter out = response.getWriter()) {
@@ -57,7 +57,7 @@ public class ApplyRefundHandler extends HttpServlet {
            out.println("<script type=\"text/javascript\">");
             out.println("alert('Apply successful!')");
             out.println("</script>");
-            response.sendRedirect("/welcome.jsp");
+            response.sendRedirect("./welcome.jsp");
         
             
         }  

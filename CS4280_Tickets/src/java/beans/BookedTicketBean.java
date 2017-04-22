@@ -21,7 +21,6 @@ public class BookedTicketBean {
     private String lname;
     private String fname;
     private Date bTime; 
-    private String fStatus;
     private FlightBean f;
     
     public void setFlight(FlightBean fb ){
@@ -53,7 +52,7 @@ public class BookedTicketBean {
     public void setFlightId(int _flightId){
         flightId=_flightId;
     }
-    public int getFlightNo(){
+    public int getFlightId(){
         return flightId;
     }
     public void setActualPrice(int _actPrice){
@@ -65,14 +64,24 @@ public class BookedTicketBean {
     public void setStatus(int _status){
         if(_status==0)
             status="Pending for Refund";
+<<<<<<< HEAD
         if(_status==1)
             status="Used";
-        if(_status==2)
-            status="Normal";
-        if(_status==3)
-            status="Refused";
+=======
         if(_status==4)
             status="Approved";
+>>>>>>> origin/GUOXing
+        if(_status==2)
+            status="Unused";
+        if(_status==3)
+            status="Refused";
+<<<<<<< HEAD
+        if(_status==4)
+            status="Approved";
+=======
+        if(_status==1)
+            status="Used";
+>>>>>>> origin/GUOXing
     }
     public String getStatus(){
         return status;
@@ -89,15 +98,5 @@ public class BookedTicketBean {
     public String getFname(){
         return fname;
     }
-     public void setFStatus(int _fstatus){
-        if(_fstatus==0)
-            fStatus="cancelled";
-        if(_fstatus==1)
-            fStatus="normal";
-        if(_fstatus==2)
-            fStatus="delayed";
-    }
-    public String getFStatus(){
-        return fStatus;
-    }
+ 
 }

@@ -22,7 +22,7 @@
         <p>Passenger: <%= b.getLname()%><%=b.getFname()%></p>
         <p>Actual Price: <%= b.getActualPrice()%> HKD</p>
         <p>Status:<%= b.getStatus()%>
-        <% if(b.getStatus().equals("Normal")){%>
+        <% if(b.getStatus().equals("Unused")){%>
             <a href="/CS4280_Tickets/ApplyRefundHandler?id=<%= b.getId()%>">Apply for Refund</a>
             <% }%>
         </p>
