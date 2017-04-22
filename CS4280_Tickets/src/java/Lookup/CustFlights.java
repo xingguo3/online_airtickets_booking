@@ -233,8 +233,8 @@ public class CustFlights {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-            String sql="update dbo.history set bookingstatus=0 where id="+id;
-         
+
+            String sql="update dbo.history set bookingstatus=0 where id="+id;     
             stmt=con.createStatement();
             stmt.execute(sql);
             con.commit();
