@@ -30,7 +30,7 @@ public class MgrFlights {
 
            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
            String cancelTick=null;
-           cancelTick = "SELECT UID, ActualPrice FROM dbo.history WHERE fid = '"+f.getFID()+"'";
+           cancelTick = "SELECT UID, ActualPrice FROM dbo.history WHERE FID = '"+f.getFID()+"'";
            ResultSet rs = stmt.executeQuery(cancelTick);
            while(rs.next()){
                int UID = rs.getInt("UID");

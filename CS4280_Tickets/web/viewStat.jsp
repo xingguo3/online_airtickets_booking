@@ -12,7 +12,14 @@
         <title>Statistic</title>
     </head>
     <body>
-        <p></p>
+        <p>view sold tickets information</p>
+        <form action='./ViewStatHandler' method='POST'>
+            <select name='period'>
+                <option value='week'>Past 7 days</option>
+                <option value='month'>Past 30 days Month</option>
+            </select>
+            
+        </form>
         <p></p>
     </body>
 </html>

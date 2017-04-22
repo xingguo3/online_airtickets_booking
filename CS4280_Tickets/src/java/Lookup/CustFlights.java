@@ -152,7 +152,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-             String sql="select * from dbo.history where status= "+status;
+             String sql="SELECT * FROM dbo.history WHERE BookingStatus= '"+status+"'";
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -226,7 +226,7 @@ public class CustFlights {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-            String sql="UPDATE dbo.hirtory SET BookingStatus = ? WHERE ID = ?";
+            String sql="UPDATE dbo.history SET BookingStatus = ? WHERE ID = ?";
             prst=con.prepareStatement(sql);
             prst.setInt(1, 0);
             prst.setInt(2, id);
