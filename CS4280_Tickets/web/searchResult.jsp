@@ -42,6 +42,7 @@
             </tr>
             <% for (FlightBean dept : deptList) {%>
                     </tr><td> <%=dept.getFlightNo() %></td>
+                    <td><%=dept.getCompany() %></td>
                     <td><%= dept.getFrom() %></td>
                     <td><%=dept.getTo() %></td>
                     <td><%= dept.getDeptTime() %></td>

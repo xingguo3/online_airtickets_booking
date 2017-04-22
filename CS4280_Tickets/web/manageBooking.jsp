@@ -14,11 +14,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<<<<<<< HEAD
+
         <title>Booking History</title>
-=======
-        <title>History</title>
->>>>>>> origin/GUOXing
+
     </head>
     <body>
         <h1>My Booking</h1>
