@@ -35,7 +35,7 @@ public class SearchFlightHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String from, to, deptDate, returnDate;
+        String from, to, deptDate, returnDate;
         from = request.getParameter("departure");
         to = request.getParameter("destination");
         deptDate = request.getParameter("startDate");
@@ -48,18 +48,16 @@ public class SearchFlightHandler extends HttpServlet {
                 returnFlight = SearchFlight.searchSingleFlight(to, from, returnDate);
                 request.setAttribute("returnFlight",returnFlight);
         }
-        
-        String role=null;
-        HttpSession httpSession = request.getSession(false);
-        UserBean u=(UserBean)request.getSession().getAttribute("userbean");
-        role = request.getParameter("role");
-        if(role!=null&&role.equals("passager")){
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
-            dispatcher.forward(request, response);
-        }
-        else{
-            role = (String) httpSession.getAttribute("role");
-            if (httpSession != null&&role=="customer") {
+        int role=0;
+        String mem =null;
+        mem=request.getParameter("role");
+        if (!mem.equals("passager")&&request.getSession(false)!=null) {
+            UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+            role = u.getMembership();
+            if(role==4){
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
+                dispatcher.forward(request, response);
+            }else{
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
                 dispatcher.forward(request, response);
                 for(FlightBean d:deptFlight)
@@ -67,11 +65,14 @@ public class SearchFlightHandler extends HttpServlet {
                 for(FlightBean r:returnFlight)
                     r.setPrice(Discount.giveDiscountByMem(r.getPrice(), u.getMembership()));
             }
-            else if (httpSession != null&&role=="manager") {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
-                    dispatcher.forward(request, response);
-            }  
+        }else{
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
+            dispatcher.forward(request, response);
         }
+        
+       
+        
+        
     }
 
    
