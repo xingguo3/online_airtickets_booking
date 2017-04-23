@@ -64,6 +64,7 @@ public class FlightBookHandler extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bookTicket.jsp");
             UserBean u=(UserBean)request.getSession().getAttribute("userbean");
             f.setPrice(Discount.giveDiscountByMem(f.getPrice(), u.getMembership()));
+            request.setAttribute("book", f);
             dispatcher.forward(request, response);
         }
         else if (httpSession != null&&role=="manager") {

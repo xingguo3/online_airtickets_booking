@@ -36,11 +36,12 @@
     </head>
     <body>
         <h1>Welcome to Air Web</h1><BR>
-        <input type="button" value="single trip" onclick="disableReturn()">
-        <input type="button" value="round trip" onclick="enableReturn()">
         
         <FORM id="form" ACTION="SearchFlightHandler" METHOD="POST">
             <input type='hidden' name='role' value='passager' />
+            <input type="radio" name="type" value="single" onclick="disableReturn()">single trip
+            <input type="radio" name="type" value="round" onclick="enableReturn()">round trip<BR>
+        
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
             Departure Date: 

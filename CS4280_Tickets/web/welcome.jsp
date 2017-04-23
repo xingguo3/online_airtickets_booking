@@ -36,14 +36,13 @@
         <jsp:useBean id="userbean" class="beans.UserBean" scope="session" />
         <h1>Hello,  <%= userbean.getFirstName()%> <%= userbean.getLastName()%></h1>
         <h1>Welcome to Air Web</h1><BR>
-        <input type="button" value="single trip" onclick="disableReturn()">
-        <input type="button" value="round trip" onclick="enableReturn()">
         
 
         <FORM name="form" ACTION="SearchFlightHandler" METHOD="POST">
-
-        <FORM id="round" ACTION="SearchFlightHandler" METHOD="POST">
             <input type='hidden' name='role' value='customer' />
+            <input type="radio" name="type" value="single" onclick="disableReturn()">single trip
+            <input type="radio" name="type" value="round" onclick="enableReturn()">round trip<br>
+        
 
             Departure from: <INPUT TYPE="TEXT" NAME="departure"><BR>
             Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>

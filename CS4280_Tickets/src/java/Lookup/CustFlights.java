@@ -33,10 +33,12 @@ public class CustFlights {
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
             int status=getFlightStatus(fid,con);
             int price=getFlightPrice(fid,con);
+          //  System.out.println("debug1");
             price=Discount.giveDiscountByMem(price, membership);
             int id=getHisColNo(con);
             String sql="Insert into dbo.history values(?,?,?,?,?,2,?,?,GETDATE())";
             prst=con.prepareStatement(sql);
+            //System.out.println("debug2");
             prst.setInt(1, id);
             prst.setInt(2, fid);
             prst.setInt(3, uid);
@@ -45,7 +47,9 @@ public class CustFlights {
             prst.setInt(6, status);
             prst.setInt(7, price);
             prst.execute();
+            //System.out.println("debug3");
             updateSeatNo(fid,con);
+            //System.out.println("debug4");
             con.commit();
             prst.close();
             con.close();
@@ -73,7 +77,7 @@ public class CustFlights {
     }
     public static int getFlightStatus(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql="select status from dbo.flight where FlightStatus!=0 AND fid="+fid;
+        String sql="select status from dbo.flight where Status!=0 AND fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         int status=1;
         while(rs.next())
@@ -86,20 +90,24 @@ public class CustFlights {
     
     public static int getFlightPrice(int fid, Connection con) throws SQLException{
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        String sql="select price from dbo.flight where FlightStatus!=0 AND fid="+fid;
+        String sql="select price,remainseat from dbo.flight where Status!=0 AND fid="+fid;
         ResultSet rs=stmt.executeQuery(sql);
         int price=1;
-        while(rs.next())
+        int r=0;
+        while(rs.next()){
             price=rs.getInt(1);
+            r=rs.getInt(2);
+        }
         stmt.close();
         rs.close();
+        price=Discount.giveDicountByRemainSeat(price, r);
         return price;
         
     }
     
     public static int getHisColNo(Connection con) throws SQLException{
         Statement stmt=con.createStatement();
-        String sql="select count(*) FROM dbo.history WHERE FlightStatus!=0";
+        String sql="select MAX(id)) FROM dbo.history";
         ResultSet rs=stmt.executeQuery(sql);
         int n=1;
         while(rs.next())
@@ -117,6 +125,7 @@ public class CustFlights {
          try{
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+             updateStatus(con);
              String sql="select * from dbo.history where FlightStatus!=0 AND uid= "+uid;
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
@@ -127,10 +136,7 @@ public class CustFlights {
                  b.setLname(rs.getString("LastName"));
                  b.setFname(rs.getString("FirstName"));
                  b.setStatus(rs.getInt("BookingStatus"));
-                 if(b.getStatus().equals("Unused")){
-                      int i=updateStatus(b.getId(),b.getFlightId(),con);
-                      b.setStatus(i);
-                 }
+                 
                     
                  b.setUserID(rs.getInt("UID"));
                  b.setActualPrice(rs.getInt("ActualPrice"));
@@ -263,26 +269,11 @@ public class CustFlights {
         return false;
     }
     
-    public static int updateStatus(int hid,int fid,Connection con) throws SQLException{
-        FlightBean f=SearchFlight.searchByFid(fid);
-        String[] date=f.getDeptTime().substring(0, 10).split("-");
-        Boolean b=false;
-        Calendar c=Calendar.getInstance();
-        if(Integer.parseInt(date[0])>c.get(Calendar.YEAR))
-            b=true;
-        if(Integer.parseInt(date[0])==c.get(Calendar.YEAR)&&Integer.parseInt(date[1])>c.get(Calendar.MONTH))
-            b=true;
-        if(Integer.parseInt(date[0])==c.get(Calendar.YEAR)&&Integer.parseInt(date[1])==c.get(Calendar.MONTH)
-                &&Integer.parseInt(date[2])>c.get(Calendar.DATE))
-            b=true;
-        if(!b){
-            String sql="update dbo.history set BookingStatus=1 where id="+hid;
+    public static void updateStatus(Connection con) throws SQLException{
+            String sql="update dbo.history set BookingStatus=1 where getdate()>(select takeoff from dbo.flight b where dbo.history.fid=b.FID)";
             Statement stmt=con.createStatement();
             stmt.execute(sql);
             stmt.close();
-            return 2;
-        }
-            return 1;
     }
 
     public static ArrayList<BookedTicketBean> findHistoryByDate(int period) {

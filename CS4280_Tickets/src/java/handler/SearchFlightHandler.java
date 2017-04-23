@@ -42,40 +42,59 @@ public class SearchFlightHandler extends HttpServlet {
         returnDate = request.getParameter("returnDate");
         ArrayList<FlightBean> deptFlight = new ArrayList<>();
         ArrayList<FlightBean> returnFlight = new ArrayList<>();
-        deptFlight = SearchFlight.searchSingleFlight(from, to, deptDate);
-        request.setAttribute("deptFlight", deptFlight);
-        if (!returnDate.equals("") && returnDate != null) {
-                returnFlight = SearchFlight.searchSingleFlight(to, from, returnDate);
-                request.setAttribute("returnFlight",returnFlight);
+        if (request.getParameter("type").equals("single")) {
+            if (deptDate != null && !deptDate.equals("")) {
+                deptFlight = SearchFlight.searchSingleFlight(from, to, deptDate);
+            } else {
+                deptFlight = SearchFlight.searchFlightWithoutDate(from, to);
+            }
+            request.setAttribute("deptFlight", deptFlight);
         }
-        int role=0;
-        String mem =null;
-        mem=request.getParameter("role");
-        if (!mem.equals("passager")&&request.getSession(false)!=null) {
-            UserBean u=(UserBean)request.getSession().getAttribute("userbean");
+        if (request.getParameter("type").equals("round")) {
+            if (deptDate != null && !deptDate.equals("") && !returnDate.equals("") && returnDate != null) {
+                deptFlight = SearchFlight.searchSingleFlight(from, to, deptDate);
+                returnFlight = SearchFlight.searchSingleFlight(to, from, returnDate);
+            } else {
+                deptFlight = SearchFlight.searchFlightWithoutDate(from, to);
+                returnFlight = SearchFlight.searchFlightWithoutDate(from, to);
+            }
+            request.setAttribute("deptFlight", deptFlight);
+            request.setAttribute("returnFlight", returnFlight);
+        }
+
+        int role = 0;
+        String mem = null;
+        mem = request.getParameter("role");
+        if (!mem.equals("passager") && request.getSession(false) != null) {
+            UserBean u = (UserBean) request.getSession().getAttribute("userbean");
             role = u.getMembership();
-            if(role==4){
+            if (role == 4) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mgrSearchResult.jsp");
                 dispatcher.forward(request, response);
-            }else{
+            } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
                 dispatcher.forward(request, response);
-                for(FlightBean d:deptFlight)
+                for (FlightBean d : deptFlight) {
                     d.setPrice(Discount.giveDiscountByMem(d.getPrice(), u.getMembership()));
-                for(FlightBean r:returnFlight)
+                }
+                for (FlightBean r : returnFlight) {
                     r.setPrice(Discount.giveDiscountByMem(r.getPrice(), u.getMembership()));
-            }
-        }else{
+                }
+                if (request.getParameter("type").equals("single")) {
+                    request.setAttribute("deptFlight", deptFlight);
+                }if (request.getParameter("type").equals("round")) {
+                    request.setAttribute("deptFlight", deptFlight);
+                    request.setAttribute("returnFlight", returnFlight);
+                }
+                }
+        } else {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/searchResult.jsp");
             dispatcher.forward(request, response);
         }
-        
-       
-        
-        
+
     }
 
-   
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
