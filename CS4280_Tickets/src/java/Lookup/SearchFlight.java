@@ -33,21 +33,12 @@ public class SearchFlight {
             int month=Integer.parseInt(dateParts[0]);
             int day=Integer.parseInt(dateParts[1]);
             int year=Integer.parseInt(dateParts[2]);
-             Boolean b=false;
-        Calendar c=Calendar.getInstance();
-        if(year>c.get(Calendar.YEAR))
-            b=true;
-        if(year==c.get(Calendar.YEAR)&&month>c.get(Calendar.MONTH))
-            b=true;
-        if(year==c.get(Calendar.YEAR)&&month==c.get(Calendar.MONTH)
-                &&day>c.get(Calendar.DATE))
-            b=true;
-            if(b){
+            
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
             String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina LIKE ? AND year="
-                    +year+" AND month="+month+" AND day="+day +" AND Status != 0";
+                    +year+" AND month="+month+" AND day="+day +" AND Status != 0 AND TakeOff>GETDATE()";
             prst=con.prepareStatement(sql);
             prst.setString(1, "%"+from+"%");
             prst.setString(2,"%"+to+"%");
@@ -78,7 +69,7 @@ public class SearchFlight {
             prst.close();
      
             con.close();
-            }
+            
                 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
@@ -137,6 +128,58 @@ public class SearchFlight {
             Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
         }
         return f;
+    }
+    
+    
+     public static ArrayList<FlightBean> searchFlightWithoutDate(String from,String to){
+        Connection con=null;
+        PreparedStatement prst=null;
+        ArrayList<FlightBean> flightList;
+        flightList = new ArrayList<>();
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            
+            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+            String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina LIKE ? AND TakeOff>GETDATE()";
+            prst=con.prepareStatement(sql);
+            prst.setString(1, "%"+from+"%");
+            prst.setString(2,"%"+to+"%");
+            ResultSet rs =prst.executeQuery();
+            while(rs.next()){
+                FlightBean f=new FlightBean();
+                f.setFID(rs.getInt("FID"));
+                f.setFlightNo(rs.getString("fNumber"));
+                f.setFrom(rs.getString("Departure"));
+                f.setTo(rs.getString("Destina"));
+                f.setPrice(rs.getInt("Price"));
+                f.setRemainSeat(rs.getInt("RemainSeat"));
+                Timestamp t=rs.getTimestamp("TakeOff");
+                f.setDeptTime(t.toString());
+                t=rs.getTimestamp("Land");
+                f.setArrivTime(t.toString());
+                f.setStatus(rs.getInt("Status"));
+                f.setCompany(rs.getString("Company"));
+                //give discount by remaining seats
+                int p=Discount.giveDicountByRemainSeat(f.getPrice(), f.getRemainSeat());
+                f.setPrice(p);
+                if(f.getRemainSeat()>0&&!f.getStatus().equals("Canceled"))
+                    flightList.add(f);
+            }
+            
+            rs.close();
+  
+            prst.close();
+     
+            con.close();
+            
+                
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return flightList;
+
     }
 }
 
