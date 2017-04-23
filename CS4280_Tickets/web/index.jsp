@@ -24,6 +24,7 @@
             alert   ("You must input all fields");
              return false;  
          }
+        
          return true;
                
          }
