@@ -257,7 +257,7 @@ header nav .login_btn:hover{
     height: 130px;
     background: #bfd9f2;
     position: absolute;
-    top:450px;
+    top:500px;
     left:0px;
 }
 
@@ -307,7 +307,15 @@ section.search{
 
 
 
-
+/*button*/
+.button{
+    background-color: #ffffff;
+    color:#95badf;
+    font-family: "lato-regular", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 
 

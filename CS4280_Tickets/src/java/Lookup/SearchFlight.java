@@ -140,7 +140,7 @@ public class SearchFlight {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
-            String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina LIKE ? AND TakeOff>GETDATE()";
+            String sql = "SELECT * FROM dbo.flight WHERE departure LIKE ? AND destina LIKE ? AND TakeOff>DATEADD(day,-7, GETDATE())";
             prst=con.prepareStatement(sql);
             prst.setString(1, "%"+from+"%");
             prst.setString(2,"%"+to+"%");
