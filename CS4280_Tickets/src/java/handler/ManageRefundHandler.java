@@ -85,7 +85,7 @@ public class ManageRefundHandler extends HttpServlet {
         out = response.getWriter();
         out.println("<html>");
         out.println("<body>");
-        out.println("<a href='"+request.getContextPath()+"/ManageRefundHandler?action=search>Done</a>");
+        out.println("<a href='./ManageRefundHandler?action=search'>Done</a>");
         out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
     }
@@ -97,7 +97,7 @@ public class ManageRefundHandler extends HttpServlet {
         out = response.getWriter();
         out.println("<html>");
         out.println("<body>");
-        out.println("<a href='"+request.getContextPath()+"/ManageRefundHandler?action=search>Done</a>");
+        out.println("<a href='./ManageRefundHandler?action=search'>Done</a>");
         out.println("</body><footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.");
         out.println("</html>");
     }
