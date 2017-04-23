@@ -38,6 +38,7 @@ public class LoginHandler extends HttpServlet {
                     UserBean ub = new UserBean();
 //                    ub.setBonus(lg.getBonus());
 //                    ub.setEmail(lg.getEmail());
+                    
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
                     ub.setId(lg.getUserId());
@@ -52,6 +53,7 @@ public class LoginHandler extends HttpServlet {
                     UserBean ub = new UserBean();
                     //ub.setBonus(lg.getBonus());
                     //ub.setEmail(lg.getEmail());
+                    ub.setMembership(lg.getRole());
                     ub.setFirstName(lg.getUsername());
                     ub.setLastName(lg.getPassword());
                     ub.setId(lg.getUserId());
