@@ -107,7 +107,7 @@ public class CustFlights {
     
     public static int getHisColNo(Connection con) throws SQLException{
         Statement stmt=con.createStatement();
-        String sql="select MAX(id)) FROM dbo.history";
+        String sql="select MAX(id) FROM dbo.history";
         ResultSet rs=stmt.executeQuery(sql);
         int n=1;
         while(rs.next())
