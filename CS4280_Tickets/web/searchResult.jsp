@@ -36,8 +36,10 @@
 
                     <nav>
                         <ul>
+                            <% if(request.getSession().getAttribute("userbean")==null){%>
                             <li><a href="./ManageBookingHandler">History</a></li>
                             <li><a href="">My Account Level</a></li>
+                            <%}%>
                             <li><a href="#">Contact</a></li>
                         </ul>
                         <% if (request.getSession().getAttribute("userbean") == null) {%>

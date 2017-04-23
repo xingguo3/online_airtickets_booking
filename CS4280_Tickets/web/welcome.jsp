@@ -70,7 +70,7 @@
 
                 <FORM id="form" ACTION="SearchFlightHandler" METHOD="POST">
                     <input type='hidden' name='role' value='passager' />
-                    <input type="radio" name="type" value="single" onclick="disableReturn()">single trip
+                    <input type="radio" name="type" value="single" onclick="disableReturn()" checked="checked">single trip
                     <input type="radio" name="type" value="round" onclick="enableReturn()">round trip<BR>
 
                     Departure: <INPUT TYPE="TEXT" NAME="departure">
