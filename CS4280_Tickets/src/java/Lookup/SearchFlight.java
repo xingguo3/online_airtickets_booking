@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import beans.FlightBean;
+import java.util.Calendar;
 
 /**
  *
@@ -32,7 +33,16 @@ public class SearchFlight {
             int month=Integer.parseInt(dateParts[0]);
             int day=Integer.parseInt(dateParts[1]);
             int year=Integer.parseInt(dateParts[2]);
-            
+             Boolean b=false;
+        Calendar c=Calendar.getInstance();
+        if(year>c.get(Calendar.YEAR))
+            b=true;
+        if(year==c.get(Calendar.YEAR)&&month>c.get(Calendar.MONTH))
+            b=true;
+        if(year==c.get(Calendar.YEAR)&&month==c.get(Calendar.MONTH)
+                &&day>c.get(Calendar.DATE))
+            b=true;
+            if(b){
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
@@ -62,13 +72,13 @@ public class SearchFlight {
                 if(f.getRemainSeat()>0&&!f.getStatus().equals("Canceled"))
                     flightList.add(f);
             }
-        
+            
             rs.close();
   
             prst.close();
      
             con.close();
-        
+            }
                 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SearchFlight.class.getName()).log(Level.SEVERE, null, ex);
