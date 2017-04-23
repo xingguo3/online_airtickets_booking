@@ -98,6 +98,7 @@
             <% }else if (rtList!=null&&rtList.size() != 0) { %>
             <tr>
                 <td>Flight No</td>
+                <td>Company</td>
                 <td>From</td>
                 <td>To</td>
                 <td>Departure Time</td>
@@ -107,6 +108,7 @@
             </tr>
             <% for (FlightBean rt : rtList) {%>
                      </tr><td> <%=rt.getFlightNo() %></td>
+                     <td><%=rt.getCompany() %></td>
                     <td><%= rt.getFrom() %></td>
                     <td><%=rt.getTo() %></td>
                     <td><%= rt.getDeptTime() %></td>

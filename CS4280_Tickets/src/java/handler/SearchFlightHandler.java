@@ -56,7 +56,7 @@ public class SearchFlightHandler extends HttpServlet {
                 returnFlight = SearchFlight.searchSingleFlight(to, from, returnDate);
             } else {
                 deptFlight = SearchFlight.searchFlightWithoutDate(from, to);
-                returnFlight = SearchFlight.searchFlightWithoutDate(from, to);
+                returnFlight = SearchFlight.searchFlightWithoutDate(to, from);
             }
             request.setAttribute("deptFlight", deptFlight);
             request.setAttribute("returnFlight", returnFlight);

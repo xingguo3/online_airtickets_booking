@@ -126,7 +126,7 @@ public class CustFlights {
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
              updateStatus(con);
-             String sql="select * from dbo.history where FlightStatus!=0 AND uid= "+uid;
+             String sql="select * from dbo.history where FlightStatus!=0 AND uid= "+uid+" order by bookingTime DESC";
              stmt=con.createStatement();
              rs=stmt.executeQuery(sql);
              while(rs.next()){
@@ -270,7 +270,8 @@ public class CustFlights {
     }
     
     public static void updateStatus(Connection con) throws SQLException{
-            String sql="update dbo.history set BookingStatus=1 where getdate()>(select takeoff from dbo.flight b where dbo.history.fid=b.FID)";
+            String sql="update dbo.history set BookingStatus=1 where getdate()>(select takeoff from dbo.flight b where dbo.history.fid=b.FID)"
+                    + " AND BookingStatus=2";
             Statement stmt=con.createStatement();
             stmt.execute(sql);
             stmt.close();
