@@ -18,7 +18,7 @@
             
          }
          function validate(){
-             if(document.forms["form"].departure.value==""||document.forms["form"].destination.value==""||document.forms["form"].startDate.value==""){
+             if(document.forms["form"].departure.value==""||document.forms["form"].destination.value==""){
             alert   ("You must input all fields");
              return false;  
          }
