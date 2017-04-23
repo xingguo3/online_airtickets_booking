@@ -38,9 +38,6 @@
 
         <link rel="stylesheet" type="text/css" href="css/reset.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
-
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
         <title>A TRIP Home</title>
     </head>
     <body>
@@ -94,8 +91,9 @@
         </section><!--  end search section  -->
 
         <!-- <p>No Account? <a href="./RegistHandler">Register</a></p>-->
+      
     </body>
-    <footer>
+      <footer>
 
         <div class="copyrights wrapper">
             This web site exists to fulfill the coursework requirement of CS4280.
