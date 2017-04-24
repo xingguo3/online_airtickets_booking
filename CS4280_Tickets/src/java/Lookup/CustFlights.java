@@ -355,8 +355,29 @@ public class CustFlights {
 
          return blist;
     }
-
     
+    public static boolean updateMem(int uid,int membership){
+         Connection con=null;
+        Statement stmt=null;
+        try{
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+            membership=membership+1;
+             String sql="update dbo.userslist set membership="+membership+"where userid="+uid;
+             stmt=con.createStatement();
+             stmt.execute(sql);
+             stmt.close();
+             con.close();
+             return true;
+        
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustFlights.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    return false;
+    }
 
 
 }

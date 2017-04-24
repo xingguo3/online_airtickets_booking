@@ -5,9 +5,11 @@
  */
 package handler;
 
+import Lookup.CustFlights;
 import beans.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,26 @@ public class AccountLevelHandler extends HttpServlet {
             throws ServletException, IOException {
         if(request.getSession(false)!=null){
             UserBean u=(UserBean)request.getSession().getAttribute("userbean");
-               
+            int membership=u.getMembership();
+            Boolean b=CustFlights.updateMem(u.getId(), membership);
+               if(b){
+                   u.setMembership(membership+1);
+                   request.getSession().setAttribute("userbean", u);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/accountLevel.jsp");
+                    dispatcher.forward(request, response);
+                   
+               }
+               else{
+                   try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Update failed!')");
+            out.println("</script>");
+            response.sendRedirect("/accountLevel.jsp");
+            
+        }
+               }
+                   
         }else{
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<!DOCTYPE html>");

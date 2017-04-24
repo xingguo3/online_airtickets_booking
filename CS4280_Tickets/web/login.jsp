@@ -26,8 +26,10 @@
                     <nav>
                         <ul>
                             <li><a href="#">Contact</a></li>
-                        </ul>
+                        
                         <% if (request.getSession().getAttribute("userbean") == null) {%>
+                        <li><a href="./RegistHandler">Register</a></li>
+                        </ul>
                         <a href="./login.jsp" class="login_btn">Login</a>
                         <%} else {%>
                         <a href='./LogoutHandler' class="login_btn">Logout</a>
