@@ -30,11 +30,44 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <meta charset="utf-8">
+
+
+        <link rel="stylesheet" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.css">
         <title>Manage Tickets</title>
     </head>
 
     <body>
-        <FORM action='./SearchFlightHandler' method ='POST'>
+        <section class="hero">
+            <header>
+                <div class="wrapper">
+                    <a href="./index.jsp"><img src="img/logo.png" class="logo" alt="" titl=""/></a>
+
+                    <nav>
+                        <ul>
+                            <li><a href="./ManageBookingHandler">History</a></li>
+                            <li><a href="./accountLevel.jsp">My Account Level</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                        <% if (request.getSession().getAttribute("userbean") == null) {%>
+                        <a href="./login.jsp" class="login_btn">Login</a>
+                        <%} else {%>
+                        <a href='./LogoutHandler' class="login_btn">Logout</a>
+                        <%}%>
+                    </nav>
+                </div>
+            </header><!--  end header section  -->
+
+            <section class="caption">
+                <h2 class="caption">Book Ticket For Your Trip</h2>
+                <h3 class="properties">cheap-fast-convenient</h3>
+            </section>
+        </section><!--  end hero section  -->
+        <section class="search">
+            <div class="wrapper">
+        <FORM id="form" action='./SearchFlightHandler' method ='POST'>
             <LEGEND>Search Tickets</legend>
             <input type='hidden' name='role' value='manager' />
             <input name='departure' type='text' value=''/>
@@ -45,6 +78,17 @@
             <input type='submit' value='Submit'/>
         </FORM>
         <a href='./managerAddTick.jsp'>add new flights</a>
+     
+            </div>
+
+
+        </section><!--  end search section  -->
     </body>
-    <footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.
-</html>
+     <footer>
+
+        <div class="copyrights wrapper">
+            This web site exists to fulfill the coursework requirement of CS4280.
+            <br/>Do not use your real personal data as input.
+            <br/>Copyright © 2017 atrip.com. All Rights Reserved.
+        </div>
+    </footer><!--  end footer  --></html>
