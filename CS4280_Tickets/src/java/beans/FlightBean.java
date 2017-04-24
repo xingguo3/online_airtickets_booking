@@ -73,13 +73,13 @@ public class FlightBean {
         return company;
     }
     public void setDeptTime(String _deptTime){
-        deptTime=_deptTime;
+        deptTime=_deptTime.substring(0, 16);
     }
     public String getDeptTime(){
         return deptTime;
     }
     public void setArrivTime(String _arrivTime){
-        arrivTime=_arrivTime;
+        arrivTime=_arrivTime.substring(0, 16);
     }
     public String getArrivTime(){
         return arrivTime;
