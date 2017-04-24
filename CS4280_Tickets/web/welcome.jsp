@@ -74,6 +74,7 @@
                     <input type="radio" name="type" value="round" onclick="enableReturn()">round trip<BR>
 
                     Departure: <INPUT TYPE="TEXT" NAME="departure">
+                    <input 
                     Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
                     Departure Date: 
                     <INPUT TYPE="TEXT" class="date" NAME="startDate" style='width:10%'>

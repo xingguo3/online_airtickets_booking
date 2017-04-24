@@ -266,6 +266,7 @@ header nav .login_btn:hover{
     top:500px;
     left:0px;
     margin: 10px;
+    margin-bottom: 200px;
 }
 
 
@@ -331,6 +332,9 @@ section.search{
 #content{
     margin: 0 auto;
     text-align: center;
+}
+#return{
+    visibility: hidden;
 }
 
 

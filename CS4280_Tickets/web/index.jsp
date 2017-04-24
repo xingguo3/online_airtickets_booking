@@ -79,7 +79,7 @@
                     Departure Date: 
                     <INPUT TYPE="TEXT" class="date" NAME="startDate" style='width:10%'>
                     <input type=button class="button" value="Select Date" onclick="displayDatePicker('startDate', this);">
-                    <div id="return">
+                    <div id="return" >
                         Return Date : 
                         <INPUT TYPE="TEXT" class="date" NAME="returnDate" style='width:10%'>
                         <input type=button class="button" name="rdCalendar" value="Select Date" onclick="displayDatePicker('returnDate', this);"><BR>
