@@ -40,9 +40,29 @@
         <section class="caption">
                 <h2 class="caption">Book Ticket For Your Trip</h2>
                 <h3 class="properties">cheap-fast-convenient</h3>
-            </section>
+         </section>
+            
         </section><!--  end hero section  -->
+        
+         <section class="search">
+            <div class="wrapper">
+        <p style="font-size: 25px">Currently, there are <%= request.getSession().getAttribute("number") %> customers online.</p>
+        
+        
+            </div>
 
+
+        </section> 
+
+        <!-- <p>No Account? <a href="./RegistHandler">Register</a></p>-->
     </body>
-    <footer>This web site exists to fulfill the coursework requirement of CS4280.<br/>Do not use your real personal data as input.
+    <footer>
+
+        <div class="copyrights wrapper">
+            This web site exists to fulfill the coursework requirement of CS4280.
+            <br/>Do not use your real personal data as input.
+            <br/>Copyright © 2017 atrip.com. All Rights Reserved.
+        </div>
+    </footer><!--  end footer  -->
+
 </html>

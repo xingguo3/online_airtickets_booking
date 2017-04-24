@@ -15,6 +15,66 @@ public class Login {
    
     static final String USER = "aiad092";
     static final String PASS = "aiad092";
+
+    public static void logout(int id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        Statement stmt = null;
+        String pswd = null;
+        boolean isV = false;
+
+        try{
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+           con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+           stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           String strQl = "SELECT * FROM dbo.userList";
+           //, Email, firstName, lastName, bonus
+          
+             stmt.execute("UPDATE dbo.usersList SET Online = 0 WHERE UserID = "+id+"");
+            
+        }finally{
+            if (stmt!=null) {
+                con.close();
+            } 
+           try{
+              if(con!=null)
+                 con.close();
+           }catch(SQLException se){
+              se.printStackTrace();
+           }
+        }
+    }
+
+    public static int count() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        Statement stmt = null;
+        String pswd = null;
+        int number=0;
+        ResultSet rs = null;
+
+        try{
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+           con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+           stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           //, Email, firstName, lastName, bonus
+          
+           rs = stmt.executeQuery("SELECT COUNT(*)[1] FROM dbo.usersList WHERE Online = 1 AND Membership!=4");
+            while(rs.next()){
+                number = rs.getInt(1);
+            }
+        }finally{
+            if (stmt!=null) {
+                stmt.close();
+            } 
+           try{
+              if(con!=null)
+                 con.close();
+           }catch(SQLException se){
+              se.printStackTrace();
+           }
+        }
+        
+        return number;
+    }
     
     private int userID;
     private String username;
@@ -83,10 +143,40 @@ public class Login {
               se.printStackTrace();
            }
         }
-        
+        if(isV){
+            login();
+        }
         return isV;
     }
 
+    public void login() throws ClassNotFoundException, SQLException{
+        Connection con = null;
+        Statement stmt = null;
+        String pswd = null;
+        boolean isV = false;
+
+        try{
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+           con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
+           stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+           String strQl = "SELECT * FROM dbo.userList";
+           //, Email, firstName, lastName, bonus
+          
+             stmt.execute("UPDATE dbo.usersList SET Online = 1 WHERE UserName = '"+this.getUsername()+"'");
+            
+        }finally{
+            if (stmt!=null) {
+                con.close();
+            } 
+           try{
+              if(con!=null)
+                 con.close();
+           }catch(SQLException se){
+              se.printStackTrace();
+           }
+        }
+
+    }
     public String getLastname() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

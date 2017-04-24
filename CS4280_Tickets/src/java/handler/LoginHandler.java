@@ -46,6 +46,9 @@ public class LoginHandler extends HttpServlet {
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("userbean", ub);
                     httpSession.setAttribute("role", role);
+                    int number=0;
+                    number=Login.count();
+                    httpSession.setAttribute("number", number);
                     request.getRequestDispatcher("./managerIndex.jsp").forward(request, response);
                 }
                 else{ // customer
