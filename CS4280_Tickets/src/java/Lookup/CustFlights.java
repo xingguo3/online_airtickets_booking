@@ -241,20 +241,17 @@ public class CustFlights {
     
     public static boolean applyForRefund(int id,int uid){
          Connection con=null;
-        Statement stmt=null;
-        //PreparedStatement prst=null;
+        PreparedStatement prst=null;
         try {
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad092_db", "aiad092", "aiad092");
             String sql="UPDATE dbo.history SET BookingStatus = ? WHERE ID = ?";
-            PreparedStatement prst=null;
             prst=con.prepareStatement(sql);
             prst.setInt(1, 0);
             prst.setInt(2, id);
             prst.execute();    
             con.commit();
-            stmt.close();
             con.close();
             return true;
             

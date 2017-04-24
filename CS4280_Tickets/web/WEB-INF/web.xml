@@ -80,6 +80,10 @@
         <servlet-name>LogoutHandler</servlet-name>
         <servlet-class>handler.LogoutHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountLevelHandler</servlet-name>
+        <servlet-class>handler.AccountLevelHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/index.do</url-pattern>
@@ -157,9 +161,12 @@
         <url-pattern>/ApplyRefundHandler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-                
         <servlet-name>LogoutHandler</servlet-name>
         <url-pattern>/LogoutHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountLevelHandler</servlet-name>
+        <url-pattern>/AccountLevelHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -27,7 +27,7 @@
                     <nav>
                         <ul>
                             <li><a href="./ManageBookingHandler">History</a></li>
-                            <li><a href="">My Account Level</a></li>
+                            <li><a href="./accountLevel.jsp">My Account Level</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                         <% if (request.getSession().getAttribute("userbean") == null) {%>

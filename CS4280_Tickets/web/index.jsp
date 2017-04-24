@@ -50,7 +50,7 @@
                         <ul>
                             <% if(request.getSession().getAttribute("userbean")!=null){%>
                             <li><a href="./ManageBookingHandler">History</a></li>
-                            <li><a href="">My Account Level</a></li>
+                            <li><a href="./accountLevel.jsp">My Account Level</a></li>
                             <%}else%>
                             <li><a href="./RegistHandler">Register</a></li>
                             <li><a href="#">Contact</a></li>
