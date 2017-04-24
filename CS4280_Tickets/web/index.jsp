@@ -74,8 +74,25 @@
                     <input type="radio" name="type" value="single" onclick="disableReturn()" checked="checked">single trip
                     <input type="radio" name="type" value="round" onclick="enableReturn()">round trip<BR>
 
-                    Departure: <INPUT TYPE="TEXT" NAME="departure">
-                    Destination: <INPUT TYPE="TEXT" NAME="destination"><BR>
+                    Departure: 
+                    <select name="departure">
+                    <option selected disabled>Choose a City</option>
+                    <option  value="HKG">Hong Kong</option>
+                    <option value="BKK">Bankok, Thailand</option>
+                    <option value="SZX">Shenzhen, China</option>
+                    <option value="SHA">Shanghai, China</option>
+                    <option value="CDG">Paris, France</option>
+                    </select>
+                    Destination:
+                    <select name="destination">
+                    <option selected disabled>Choose a City</option>
+                    <option  value="HKG">Hong Kong</option>
+                    <option value="BKK">Bankok, Thailand</option>
+                    <option value="SZX">Shenzhen, China</option>
+                    <option value="SHA">Shanghai, China</option>
+                    <option value="CDG">Paris, France</option>
+                    </select>
+                    <BR>
                     Departure Date: 
                     <INPUT TYPE="TEXT" class="date" NAME="startDate" style='width:10%'>
                     <input type=button class="button" value="Select Date" onclick="displayDatePicker('startDate', this);">
